@@ -6,7 +6,7 @@ DOCKER_COMPOSE=docker-compose -p ${PROJECT_NAME} -f ${CURRENT_PATH}/ops/docker/d
 
 restart: stop start
 
-start: docker-build docker-up
+start: docker-build docker-up logs
 
 stop:
 	@${DOCKER_COMPOSE} down --remove-orphans
@@ -68,8 +68,15 @@ fix-codestyle:
 
 #CONSUME ORDER
 
-consume-order:
+enqueue-hardcore:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} supervisord -c ops/supervisor/supervisor.conf
+
+enqueue-orders:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:process-oldest-purchase
 
-import-orders:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:import-orders
+consume-orders:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume async -vv
+
+#OPEN
+open-rabbitmq-manager:
+	open http://localhost:15672

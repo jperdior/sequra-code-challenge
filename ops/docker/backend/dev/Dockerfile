@@ -20,14 +20,12 @@ RUN apk upgrade && apk add $PHPIZE_DEPS sqlite-dev && apk add rabbitmq-c-dev
 RUN apk add --update linux-headers
 RUN pecl install xdebug
 RUN pecl install amqp
-RUN pecl install mongodb
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-enable amqp
-RUN docker-php-ext-enable mongodb
 RUN docker-php-ext-install pdo_mysql pdo_sqlite
 
 ## copy extensions to somewhere we can grab them
-RUN cd $(php -r 'echo ini_get("extension_dir");') && cp xdebug.so pdo_mysql.so pdo_sqlite.so amqp.so mongodb.so /
+RUN cd $(php -r 'echo ini_get("extension_dir");') && cp xdebug.so pdo_mysql.so pdo_sqlite.so amqp.so /
 
 
 
@@ -39,12 +37,12 @@ USER root
 COPY --from=cache /etc/apk/cache /etc/apk/cache
 RUN apk upgrade
 ## install packages
-RUN apk add nginx sqlite rabbitmq-c-dev supervisor mongodb-tools
+RUN apk add nginx sqlite rabbitmq-c-dev supervisor
 
 RUN apk add --no-cache bash
-COPY --from=extensions /xdebug.so /pdo_mysql.so /pdo_sqlite.so /amqp.so /mongodb.so /
-RUN mv /xdebug.so /pdo_mysql.so /pdo_sqlite.so /amqp.so /mongodb.so $(php -r 'echo ini_get("extension_dir");')
-RUN docker-php-ext-enable xdebug pdo_mysql pdo_sqlite amqp mongodb
+COPY --from=extensions /xdebug.so /pdo_mysql.so /pdo_sqlite.so /amqp.so /
+RUN mv /xdebug.so /pdo_mysql.so /pdo_sqlite.so /amqp.so $(php -r 'echo ini_get("extension_dir");')
+RUN docker-php-ext-enable xdebug pdo_mysql pdo_sqlite amqp
 
 RUN echo "max_execution_time = 200s" >> /usr/local/etc/php/php.ini
 

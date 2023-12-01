@@ -13,23 +13,13 @@ services:
       - MONGO_DB_HOST=mongo
       - MONGO_DB_PORT=27017
       - MONGO_DB_DATABASE=sequra
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
     networks:
       - sequra
 
-#  mongo:
-#    ports:
-#      - "27017:27017"
-##    environment:
-##      MONGO_INITDB_ROOT_USERNAME: root
-##      MONGO_INITDB_ROOT_PASSWORD: verysecretpass
-#    networks:
-#      - sequra
-#
-#  mongo-express:
-#      ports:
-#        - "8888:8081"
-#      networks:
-#        - sequra
+  rabbitmq:
+    networks:
+      - sequra
 
   database:
     ports:

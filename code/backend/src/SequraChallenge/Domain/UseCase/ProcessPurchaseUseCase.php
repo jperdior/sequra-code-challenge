@@ -9,7 +9,7 @@ use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Domain\Service\DisbursementCalculatorService;
 
-class ProcessOldestPurchaseUseCase
+class ProcessPurchaseUseCase
 {
 
     public function __construct(
@@ -23,17 +23,16 @@ class ProcessOldestPurchaseUseCase
      * @throws \Exception
      */
     public function execute(
-    ): Disbursement
+        string $purchaseId
+    ): void
     {
-        $purchase = $this->purchaseRepository->getOldestPendingPurchase();
+        $purchase = $this->purchaseRepository->findById($purchaseId);
         if (null === $purchase) {
-            throw new \Exception('No pending purchases found');
+            throw new \Exception('Not found purchase with id: ' . $purchaseId);
         }
-        $purchase->setStatus(PurchaseStatusEnum::PROCESSING->value);
-        $disbursement = $this->disbursementCalculatorService->calculateDisbursement($purchase);
+        $this->disbursementCalculatorService->calculateDisbursement($purchase);
         $purchase->setStatus(PurchaseStatusEnum::PROCESSED->value);
         $this->purchaseRepository->save($purchase);
-        return $disbursement;
     }
 
 }

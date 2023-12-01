@@ -6,25 +6,27 @@ namespace App\SequraChallenge\Application\Command;
 
 use App\SequraChallenge\Domain\Logging\LoggingInterface;
 use App\SequraChallenge\Domain\Repository\TransactionRepositoryInterface;
-use App\SequraChallenge\Domain\UseCase\ProcessOldestPurchaseUseCase;
+use App\SequraChallenge\Domain\UseCase\MarkPurchaseProcessingUseCase;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class ProcessOldestPurchaseMessageHandler
+class MarkPurchaseProcessingMessageHandler
 {
     public function __construct(
-        private readonly ProcessOldestPurchaseUseCase $processOldestPurchaseUseCase,
+        private readonly MarkPurchaseProcessingUseCase  $markPurchaseProcessingUseCase,
         private readonly TransactionRepositoryInterface $transactionRepository,
-        private readonly LoggingInterface $logging
+        private readonly LoggingInterface               $logging
     ) {
     }
 
-    public function __invoke(ProcessOldestPurchaseMessage $message): void
+    public function __invoke(MarkPurchaseProcessingMessage $message): void
     {
         try{
             $this->logging->info('Processing oldest purchase');
             $this->transactionRepository->open();
-            $this->processOldestPurchaseUseCase->execute();
+            $this->markPurchaseProcessingUseCase->execute(
+                purchaseId: $message->getPurchaseId()
+            );
             $this->transactionRepository->commit();
             $this->logging->info('Oldest purchase processed');
         }

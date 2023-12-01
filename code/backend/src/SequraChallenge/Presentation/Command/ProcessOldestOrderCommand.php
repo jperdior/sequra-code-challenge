@@ -4,37 +4,50 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Presentation\Command;
 
-use App\SequraChallenge\Application\Command\ProcessOldestPurchaseMessage;
+use App\SequraChallenge\Application\Command\MarkPurchaseProcessingMessage;
+use App\SequraChallenge\Application\Command\ProcessPurchaseMessage;
+use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
+use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
+use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
-use App\SequraChallenge\Infrastructure\Messenger\SimpleQueryBus;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use ApiPlatform\Symfony\Validator\Exception\ValidationException;
 
-#[AsCommand(name: 'app:process-oldest-purchase', description: 'Processes the oldest purchase in the queues')]
+#[AsCommand(name: 'app:enqueue-orders', description: 'Enqueue orders')]
 class ProcessOldestOrderCommand extends Command
 {
     public function __construct(
-        private readonly ValidatorInterface $validator,
-        private readonly SimpleQueryBus $queryBus,
-        private readonly SimpleCommandBus $commandBus
+        private readonly SimpleCommandBus $commandBus,
+        private readonly PurchaseRepositoryInterface $purchaseRepository,
+        private readonly DisbursementLineRepositoryInterface $disbursementLineRepository
     ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->setDescription('Processes the oldest purchase in the queues');
+        $this->setDescription('Enqueue purchases');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        $this->commandBus->dispatch(new ProcessOldestPurchaseMessage());
+        $pendingPurchases = $this->purchaseRepository->findBy(
+            [],
+            ['createdAt' => 'ASC'],
+            '100'
+        );
+
+        foreach ($pendingPurchases as $purchase) {
+            if ($this->disbursementLineRepository->existsByPurchase($purchase->getId())) {
+                continue;
+            }
+            $this->commandBus->dispatch(new ProcessPurchaseMessage(
+                purchaseId: $purchase->getId())
+            );
+        }
 
         return Command::SUCCESS;
     }

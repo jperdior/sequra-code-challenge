@@ -15,10 +15,20 @@ class DisbursementLineRepository extends AbstractOrmRepository implements Disbur
         return DisbursementLine::class;
     }
 
-    public function save(DisbursementLine $disbursementLine)
+    public function save(DisbursementLine $disbursementLine): void
     {
         $this->getEntityManager()->persist($disbursementLine);
         $this->getEntityManager()->flush();
+    }
+
+    public function existsByPurchase(string $purchaseId): bool
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(dl.id)')
+            ->from(DisbursementLine::class, 'dl')
+            ->where('dl.purchase = :purchaseId')
+            ->setParameter('purchaseId', $purchaseId);
+        return $qb->getQuery()->getSingleScalarResult() > 0;
     }
 
 }

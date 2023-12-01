@@ -8,10 +8,13 @@ framework:
             # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
+            async:
+                dsn: '%env(RABBITMQ_URL)%'
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
+            'App\SequraChallenge\Application\Command\ProcessPurchaseMessage': async
 
 # when@test:
 #    framework:

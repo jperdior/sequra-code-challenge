@@ -17,33 +17,24 @@ services:
     depends_on:
       - database
 
-  #  rabbitmq:
-  #    image: rabbitmq:3.11-management
-  #    ports:
-  #      - "5672:5672"
-  #      - "15672:15672"
-
-#  mongo:
-#    image: mongo:4.2.24-bionic
-#    restart: always
-#    healthcheck:
-#      test: mongo --eval "print(\"waited for connection\")"
-#      interval: 5s
-#      timeout: 10s
-#      retries: 5
-#
-#  mongo-express:
-#    image: mongo-express:0.54
-#    restart: always
-
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   database:
     image: mariadb:latest
     environment:
       - MARIADB_ROOT_PASSWORD=verysecretpass
+    volumes:
+      - db:/var/lib/mysql
     restart: always
     healthcheck:
       test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root --password=verysecretpass" ]
       interval: 5s
       timeout: 10s
       retries: 5
+
+volumes:
+    db:
