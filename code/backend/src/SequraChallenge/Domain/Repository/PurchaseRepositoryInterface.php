@@ -7,4 +7,6 @@ namespace App\SequraChallenge\Domain\Repository;
 interface PurchaseRepositoryInterface
 {
     public function getOldestPendingPurchase();
+
+    public function detach(\App\SequraChallenge\Domain\Entity\Purchase $purchase);
 }

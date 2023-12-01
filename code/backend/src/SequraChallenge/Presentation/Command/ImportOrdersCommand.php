@@ -58,6 +58,7 @@ class ImportOrdersCommand extends Command
             $purchase->setCreatedAt(new \DateTime($purchasesCsvRow[3]));
             $purchase->setStatus(PurchaseStatusEnum::PENDING->value);
             $this->purchaseRepository->save($purchase);
+            $this->purchaseRepository->detach($purchase);
             if ($i % $batchSize === 0) {
                 $this->transactionRepository->commit();
                 $this->transactionRepository->clear();

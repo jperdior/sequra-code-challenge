@@ -9,7 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PurchasesFixtures extends Fixture implements DependentFixtureInterface
+class PurchasesFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -46,10 +46,10 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
 //        $manager->clear();
     }
 
-    public function getDependencies(): array
-    {
-        return [
-            MerchantFixtures::class,
-        ];
-    }
+//    public function getDependencies(): array
+//    {
+//        return [
+//            MerchantFixtures::class,
+//        ];
+//    }
 }

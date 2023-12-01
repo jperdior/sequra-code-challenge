@@ -31,4 +31,9 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
         $this->getEntityManager()->persist($purchase);
         $this->getEntityManager()->flush();
     }
+
+    public function detach(Purchase $purchase): void
+    {
+        $this->getEntityManager()->detach($purchase);
+    }
 }
