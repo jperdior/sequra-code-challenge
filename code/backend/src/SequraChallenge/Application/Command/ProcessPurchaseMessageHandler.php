@@ -13,15 +13,15 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class ProcessPurchaseMessageHandler
 {
     public function __construct(
-        private readonly ProcessPurchaseUseCase         $processOldestPurchaseUseCase,
+        private readonly ProcessPurchaseUseCase $processOldestPurchaseUseCase,
         private readonly TransactionRepositoryInterface $transactionRepository,
-        private readonly LoggingInterface               $logging
+        private readonly LoggingInterface $logging
     ) {
     }
 
     public function __invoke(ProcessPurchaseMessage $message): void
     {
-        try{
+        try {
             $this->logging->info('Processing oldest purchase');
             $this->transactionRepository->open();
             $this->processOldestPurchaseUseCase->execute(
@@ -29,11 +29,9 @@ class ProcessPurchaseMessageHandler
             );
             $this->transactionRepository->commit();
             $this->logging->info('Oldest purchase processed');
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->logging->error('Error processing oldest purchase: '.$e->getMessage());
             $this->transactionRepository->rollback();
         }
-
     }
 }

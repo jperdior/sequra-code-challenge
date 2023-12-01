@@ -16,5 +16,4 @@ interface DisbursementRepositoryInterface
     public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float;
 
     public function save(Disbursement $disbursement): void;
-
 }

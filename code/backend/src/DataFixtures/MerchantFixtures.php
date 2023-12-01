@@ -11,11 +11,10 @@ class MerchantFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
-        $merchantCsvPath = __DIR__ . '/merchants.csv';
+        $merchantCsvPath = __DIR__.'/merchants.csv';
         $merchantCsv = fopen($merchantCsvPath, 'r');
 
-        //skip first line
+        // skip first line
         fgetcsv($merchantCsv);
         while (($merchantCsvRow = fgetcsv($merchantCsv, null, ';')) !== false) {
             $merchant = new Merchant();

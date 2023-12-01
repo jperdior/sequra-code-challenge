@@ -10,13 +10,11 @@ readonly class MarkPurchaseProcessingMessage implements CommandMessage
 {
     public function __construct(
         private string $purchaseId
-    )
-    {
+    ) {
     }
 
     public function getPurchaseId(): string
     {
         return $this->purchaseId;
     }
-
 }

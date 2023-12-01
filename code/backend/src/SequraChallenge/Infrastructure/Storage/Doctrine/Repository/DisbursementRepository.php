@@ -10,7 +10,6 @@ use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 
 class DisbursementRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {
-
     protected function getClass(): string
     {
         return Disbursement::class;
@@ -23,6 +22,7 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
             ->andWhere('d.disbursedAt = :createdAt')
             ->setParameter('merchant', $merchant)
             ->setParameter('createdAt', $createdAt->format('Y-m-d'));
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -33,6 +33,7 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
             ->andWhere('d.createdAt = :createdAt')
             ->setParameter('merchant', $merchant)
             ->setParameter('createdAt', $dateTime);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -44,7 +45,8 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
             ->andWhere('d.createdAt >= :createdAt')
             ->setParameter('merchant', $merchant)
             ->setParameter('createdAt', $date);
-        return (float)$qb->getQuery()->getSingleScalarResult();
+
+        return (float) $qb->getQuery()->getSingleScalarResult();
     }
 
     public function save(Disbursement $disbursement): void
@@ -52,5 +54,4 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
         $this->getEntityManager()->persist($disbursement);
         $this->getEntityManager()->flush();
     }
-
 }

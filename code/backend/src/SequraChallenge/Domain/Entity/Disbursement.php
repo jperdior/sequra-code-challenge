@@ -6,7 +6,6 @@ namespace App\SequraChallenge\Domain\Entity;
 
 class Disbursement
 {
-
     private string $id;
 
     private string $reference;
@@ -31,6 +30,7 @@ class Disbursement
     public function setId(string $id): Disbursement
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -42,6 +42,7 @@ class Disbursement
     public function setReference(string $reference): Disbursement
     {
         $this->reference = $reference;
+
         return $this;
     }
 
@@ -53,6 +54,7 @@ class Disbursement
     public function setMerchant(Merchant $merchant): Disbursement
     {
         $this->merchant = $merchant;
+
         return $this;
     }
 
@@ -64,6 +66,7 @@ class Disbursement
     public function setFees(float $fees): Disbursement
     {
         $this->fees = $fees;
+
         return $this;
     }
 
@@ -75,6 +78,7 @@ class Disbursement
     public function setAmount(float $amount): Disbursement
     {
         $this->amount = $amount;
+
         return $this;
     }
 
@@ -86,6 +90,7 @@ class Disbursement
     public function setCreatedAt(\DateTime $createdAt): Disbursement
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -97,6 +102,7 @@ class Disbursement
     public function setDisbursedAt(\DateTime $disbursedAt): Disbursement
     {
         $this->disbursedAt = $disbursedAt;
+
         return $this;
     }
 
@@ -108,8 +114,7 @@ class Disbursement
     public function setMonthlyFee(float $monthlyFee): Disbursement
     {
         $this->monthlyFee = $monthlyFee;
+
         return $this;
     }
-
-
 }

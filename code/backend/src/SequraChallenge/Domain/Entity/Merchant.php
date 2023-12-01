@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Domain\Entity;
 
-
 use App\SequraChallenge\Domain\Entity\Enum\DisbursementFrequencyEnum;
 
 class Merchant
 {
-
     private string $id;
 
     private string $reference;
@@ -30,6 +28,7 @@ class Merchant
     public function setId(string $id): Merchant
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -41,6 +40,7 @@ class Merchant
     public function setReference(string $reference): Merchant
     {
         $this->reference = $reference;
+
         return $this;
     }
 
@@ -52,6 +52,7 @@ class Merchant
     public function setEmail(string $email): Merchant
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -63,6 +64,7 @@ class Merchant
     public function setLiveOn(\DateTime $liveOn): Merchant
     {
         $this->liveOn = $liveOn;
+
         return $this;
     }
 
@@ -74,6 +76,7 @@ class Merchant
     public function setDisbursementFrequency(int $disbursementFrequency): Merchant
     {
         $this->disbursementFrequency = $disbursementFrequency;
+
         return $this;
     }
 
@@ -85,8 +88,7 @@ class Merchant
     public function setMinimumMonthlyFee(float $minimumMonthlyFee): Merchant
     {
         $this->minimumMonthlyFee = $minimumMonthlyFee;
+
         return $this;
     }
-
 }
-

@@ -9,7 +9,6 @@ use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 
 class DisbursementLineRepository extends AbstractOrmRepository implements DisbursementLineRepositoryInterface
 {
-
     protected function getClass(): string
     {
         return DisbursementLine::class;
@@ -28,7 +27,7 @@ class DisbursementLineRepository extends AbstractOrmRepository implements Disbur
             ->from(DisbursementLine::class, 'dl')
             ->where('dl.purchase = :purchaseId')
             ->setParameter('purchaseId', $purchaseId);
+
         return $qb->getQuery()->getSingleScalarResult() > 0;
     }
-
 }

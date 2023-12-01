@@ -8,7 +8,6 @@ use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
 
 class Purchase
 {
-
     private string $id;
 
     private Merchant $merchant;
@@ -27,9 +26,9 @@ class Purchase
     public function setId(string $id): Purchase
     {
         $this->id = $id;
+
         return $this;
     }
-
 
     public function getMerchant(): Merchant
     {
@@ -39,6 +38,7 @@ class Purchase
     public function setMerchant(Merchant $merchant): Purchase
     {
         $this->merchant = $merchant;
+
         return $this;
     }
 
@@ -50,6 +50,7 @@ class Purchase
     public function setAmount(float $amount): Purchase
     {
         $this->amount = $amount;
+
         return $this;
     }
 
@@ -61,6 +62,7 @@ class Purchase
     public function setCreatedAt(\DateTime $createdAt): Purchase
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -72,6 +74,7 @@ class Purchase
     public function setStatus(int $status): Purchase
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -83,8 +86,7 @@ class Purchase
     public function setDisbursement(Disbursement $disbursement): Purchase
     {
         $this->disbursement = $disbursement;
+
         return $this;
     }
-
-
 }

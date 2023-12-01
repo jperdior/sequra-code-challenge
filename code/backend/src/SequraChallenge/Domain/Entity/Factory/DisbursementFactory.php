@@ -10,7 +10,6 @@ use App\SequraChallenge\Domain\Identifiers\UniqueIdGeneratorInterface;
 
 class DisbursementFactory
 {
-
     public function __construct(
         private UniqueIdGeneratorInterface $uniqueIdGenerator
     ) {
@@ -19,17 +18,14 @@ class DisbursementFactory
     public function create(
         Merchant $merchant,
         \DateTime $disbursementDate,
-    ): Disbursement
-    {
+    ): Disbursement {
         $disbursement = new Disbursement();
         $disbursement->setId($this->uniqueIdGenerator->generateUlid());
         $disbursement->setReference($disbursement->getId());
         $disbursement->setMerchant($merchant);
         $disbursement->setCreatedAt(new \DateTime());
         $disbursement->setDisbursedAt($disbursementDate);
+
         return $disbursement;
     }
-
-
-
 }

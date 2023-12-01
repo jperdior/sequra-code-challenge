@@ -9,10 +9,8 @@ use App\SequraChallenge\Domain\Repository\MerchantRepositoryInterface;
 
 class MerchantRepository extends AbstractOrmRepository implements MerchantRepositoryInterface
 {
-
     protected function getClass(): string
     {
         return Merchant::class;
     }
-
 }

@@ -16,19 +16,16 @@ use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 
 class DisbursementCalculatorService
 {
-
     private const SMALL_ORDER_PERCENTAGE = 1.00;
     private const MEDIUM_ORDER_PERCENTAGE = 0.95;
     private const LARGE_ORDER_PERCENTAGE = 0.85;
-
 
     public function __construct(
         private readonly DisbursementRepositoryInterface $disbursementRepository,
         private readonly DisbursementLineRepositoryInterface $disbursementLineRepository,
         private readonly DisbursementFactory $disbursementFactory,
         private readonly DisbursementLineFactory $disbursementLineFactory,
-    )
-    {
+    ) {
     }
 
     /**
@@ -43,6 +40,7 @@ class DisbursementCalculatorService
         $this->disbursementRepository->save($disbursement);
         $disbursementLine->setDisbursement($disbursement);
         $this->disbursementLineRepository->save($disbursementLine);
+
         return $disbursement;
     }
 
@@ -53,8 +51,9 @@ class DisbursementCalculatorService
             purchaseAmount: $purchase->getAmount()
         );
         $disbursementLine->setFeePercentage($this->calculateFeePercentage($purchase));
-        $disbursementLine->setFeeAmount(round($purchase->getAmount() * $disbursementLine->getFeePercentage()/100,2));
+        $disbursementLine->setFeeAmount(round($purchase->getAmount() * $disbursementLine->getFeePercentage() / 100, 2));
         $disbursementLine->setAmount($purchase->getAmount() - $disbursementLine->getFeeAmount());
+
         return $disbursementLine;
     }
 
@@ -68,6 +67,7 @@ class DisbursementCalculatorService
         } elseif ($purchase->getAmount() >= 300) {
             $feePercentage = self::LARGE_ORDER_PERCENTAGE;
         }
+
         return $feePercentage;
     }
 
@@ -81,6 +81,7 @@ class DisbursementCalculatorService
         if (null === $disbursement) {
             $disbursement = $this->createDisbursement($merchant, $purchase);
         }
+
         return $disbursement;
     }
 
@@ -91,16 +92,16 @@ class DisbursementCalculatorService
             disbursementDate: $purchase->getCreatedAt()
         );
         $this->checkMinimumMonthlyFee($disbursement, $purchase);
+
         return $disbursement;
     }
 
     private function checkMinimumMonthlyFee(Disbursement $disbursement, Purchase $purchase): void
     {
-
         $lastMonthFees = $this->getLastMonthDisbursementFees($disbursement->getMerchant(), $purchase->getCreatedAt());
         if (
-            $this->isFirstDisbursementOfTheMonth($disbursement) &&
-            $lastMonthFees < $disbursement->getMerchant()->getMinimumMonthlyFee()
+            $this->isFirstDisbursementOfTheMonth($disbursement)
+            && $lastMonthFees < $disbursement->getMerchant()->getMinimumMonthlyFee()
         ) {
             $monthlyFee = $disbursement->getMerchant()->getMinimumMonthlyFee() - $lastMonthFees;
             $disbursement->setMonthlyFee($monthlyFee);
@@ -121,13 +122,14 @@ class DisbursementCalculatorService
                 $purchaseDayOfWeek = $purchase->getCreatedAt()->format('N');
                 if ($dayOfWeek < $purchaseDayOfWeek) {
                     $daysDifference = $purchaseDayOfWeek - $dayOfWeek;
-                    $disbursementDate = $purchase->getCreatedAt()->modify('-' . $daysDifference . ' days');
+                    $disbursementDate = $purchase->getCreatedAt()->modify('-'.$daysDifference.' days');
                 } elseif ($dayOfWeek > $purchaseDayOfWeek) {
                     $daysDifference = $dayOfWeek - $purchaseDayOfWeek;
-                    $disbursementDate = $purchase->getCreatedAt()->modify('+' . $daysDifference . ' days');
+                    $disbursementDate = $purchase->getCreatedAt()->modify('+'.$daysDifference.' days');
                 } else {
                     $disbursementDate = $purchase->getCreatedAt();
                 }
+
                 return $disbursementDate;
             default:
                 throw new \Exception('Invalid disbursement frequency');
@@ -137,6 +139,7 @@ class DisbursementCalculatorService
     private function isFirstDisbursementOfTheMonth(Disbursement $disbursement): bool
     {
         $firstDisbursementOfTheMonth = $this->disbursementRepository->getFirstOfMonth($disbursement->getMerchant(), $disbursement->getCreatedAt());
+
         return null === $firstDisbursementOfTheMonth;
     }
 
@@ -144,6 +147,4 @@ class DisbursementCalculatorService
     {
         return $this->disbursementRepository->getSumOfLastMonthFees($merchant, $date);
     }
-
-
 }

@@ -17,11 +17,11 @@ readonly class MarkPurchaseProcessingUseCase
 
     public function execute(
         string $purchaseId
-    ): Purchase
-    {
+    ): Purchase {
         $purchase = $this->purchaseRepository->findById($purchaseId);
         $purchase->setStatus(PurchaseStatusEnum::PROCESSING->value);
         $this->purchaseRepository->save($purchase);
+
         return $purchase;
     }
 }

@@ -10,7 +10,6 @@ use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 
 class PurchaseRepository extends AbstractOrmRepository implements PurchaseRepositoryInterface
 {
-
     protected function getClass(): string
     {
         return Purchase::class;
@@ -23,6 +22,7 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
             ->setParameter('status', PurchaseStatusEnum::PENDING->value)
             ->orderBy('p.createdAt', 'ASC')
             ->setMaxResults(1);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -36,5 +36,4 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
     {
         return $this->find($id);
     }
-
 }

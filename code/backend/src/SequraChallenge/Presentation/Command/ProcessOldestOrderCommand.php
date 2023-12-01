@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Presentation\Command;
 
-use App\SequraChallenge\Application\Command\MarkPurchaseProcessingMessage;
 use App\SequraChallenge\Application\Command\ProcessPurchaseMessage;
-use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
@@ -33,7 +31,6 @@ class ProcessOldestOrderCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         $pendingPurchases = $this->purchaseRepository->findBy(
             [],
             ['createdAt' => 'ASC'],

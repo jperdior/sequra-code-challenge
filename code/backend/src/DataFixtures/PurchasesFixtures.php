@@ -13,11 +13,10 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-
-        $purchasesCsvPath = __DIR__ . '/orders.csv';
+        $purchasesCsvPath = __DIR__.'/orders.csv';
         $purchasesCsv = fopen($purchasesCsvPath, 'r');
 
-        //skip first line
+        // skip first line
         fgetcsv($purchasesCsv);
 
         $batchSize = 20;
@@ -34,11 +33,11 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
             $purchase->setCreatedAt(new \DateTime($purchasesCsvRow[3]));
             $purchase->setStatus(PurchaseStatusEnum::PENDING->value);
             $manager->persist($purchase);
-            if ($i % $batchSize === 0) {
+            if (0 === $i % $batchSize) {
                 $manager->flush();
                 $manager->clear();
             }
-            $i++;
+            ++$i;
         }
 
         $manager->flush();
