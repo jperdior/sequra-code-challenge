@@ -1,0 +1,49 @@
+version: "3.6"
+
+services:
+
+
+  backend:
+    tty: true
+    build:
+      context: ../../code/backend
+      dockerfile: ../../ops/docker/backend/dev/Dockerfile
+    volumes:
+      - ../../code/backend:/app
+      - ../../ops:/ops
+    healthcheck:
+      test: curl --fail http://localhost:8080 || exit 1
+    restart: on-failure
+    depends_on:
+      - database
+
+  #  rabbitmq:
+  #    image: rabbitmq:3.11-management
+  #    ports:
+  #      - "5672:5672"
+  #      - "15672:15672"
+
+#  mongo:
+#    image: mongo:4.2.24-bionic
+#    restart: always
+#    healthcheck:
+#      test: mongo --eval "print(\"waited for connection\")"
+#      interval: 5s
+#      timeout: 10s
+#      retries: 5
+#
+#  mongo-express:
+#    image: mongo-express:0.54
+#    restart: always
+
+
+  database:
+    image: mariadb:latest
+    environment:
+      - MARIADB_ROOT_PASSWORD=verysecretpass
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root --password=verysecretpass" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5

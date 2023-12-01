@@ -1,0 +1,217 @@
+2023-12-01 13:17:16,340 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-12-01 13:17:16,344 INFO supervisord started with pid 64
+2023-12-01 13:17:17,355 INFO spawned: 'consume_translation_requests_00' with pid 65
+2023-12-01 13:17:18,262 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:19,271 INFO spawned: 'consume_translation_requests_00' with pid 68
+2023-12-01 13:17:19,814 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:21,838 INFO spawned: 'consume_translation_requests_00' with pid 71
+2023-12-01 13:17:22,412 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:25,430 INFO spawned: 'consume_translation_requests_00' with pid 74
+2023-12-01 13:17:25,967 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:30,001 INFO spawned: 'consume_translation_requests_00' with pid 77
+2023-12-01 13:17:30,504 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:35,539 INFO spawned: 'consume_translation_requests_00' with pid 80
+2023-12-01 13:17:36,192 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:42,255 INFO spawned: 'consume_translation_requests_00' with pid 90
+2023-12-01 13:17:43,265 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:17:44,332 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:17:45,353 INFO spawned: 'consume_translation_requests_00' with pid 93
+2023-12-01 13:17:46,273 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:47,284 INFO spawned: 'consume_translation_requests_00' with pid 96
+2023-12-01 13:17:47,791 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:49,812 INFO spawned: 'consume_translation_requests_00' with pid 99
+2023-12-01 13:17:50,311 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:53,331 INFO spawned: 'consume_translation_requests_00' with pid 102
+2023-12-01 13:17:53,815 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:17:57,832 INFO spawned: 'consume_translation_requests_00' with pid 105
+2023-12-01 13:17:58,356 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:03,409 INFO spawned: 'consume_translation_requests_00' with pid 108
+2023-12-01 13:18:04,096 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:10,127 INFO spawned: 'consume_translation_requests_00' with pid 118
+2023-12-01 13:18:10,648 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:17,676 INFO spawned: 'consume_translation_requests_00' with pid 121
+2023-12-01 13:18:18,221 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:26,301 INFO spawned: 'consume_translation_requests_00' with pid 124
+2023-12-01 13:18:26,989 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:36,040 INFO spawned: 'consume_translation_requests_00' with pid 127
+2023-12-01 13:18:37,074 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:18:37,349 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:18:38,373 INFO spawned: 'consume_translation_requests_00' with pid 137
+2023-12-01 13:18:38,931 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:39,942 INFO spawned: 'consume_translation_requests_00' with pid 140
+2023-12-01 13:18:40,447 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:42,469 INFO spawned: 'consume_translation_requests_00' with pid 143
+2023-12-01 13:18:42,979 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:46,012 INFO spawned: 'consume_translation_requests_00' with pid 146
+2023-12-01 13:18:46,594 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:50,648 INFO spawned: 'consume_translation_requests_00' with pid 149
+2023-12-01 13:18:51,387 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:18:56,440 INFO spawned: 'consume_translation_requests_00' with pid 152
+2023-12-01 13:18:57,077 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:19:03,129 INFO spawned: 'consume_translation_requests_00' with pid 155
+2023-12-01 13:19:03,649 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:19:10,705 INFO spawned: 'consume_translation_requests_00' with pid 165
+2023-12-01 13:19:11,403 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:19:19,456 INFO spawned: 'consume_translation_requests_00' with pid 168
+2023-12-01 13:19:20,193 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:19:29,261 INFO spawned: 'consume_translation_requests_00' with pid 171
+2023-12-01 13:19:29,881 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:20:40,136 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-12-01 13:20:40,142 INFO supervisord started with pid 63
+2023-12-01 13:20:41,164 INFO spawned: 'consume_translation_requests_00' with pid 64
+2023-12-01 13:20:42,179 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:20:44,049 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:20:45,059 INFO spawned: 'consume_translation_requests_00' with pid 67
+2023-12-01 13:20:46,064 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:20:47,430 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:20:48,454 INFO spawned: 'consume_translation_requests_00' with pid 70
+2023-12-01 13:20:49,067 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:20:50,076 INFO spawned: 'consume_translation_requests_00' with pid 73
+2023-12-01 13:20:50,597 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:20:52,618 INFO spawned: 'consume_translation_requests_00' with pid 76
+2023-12-01 13:20:53,347 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:20:56,365 INFO spawned: 'consume_translation_requests_00' with pid 79
+2023-12-01 13:20:56,839 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:00,873 INFO spawned: 'consume_translation_requests_00' with pid 89
+2023-12-01 13:21:01,450 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:06,479 INFO spawned: 'consume_translation_requests_00' with pid 92
+2023-12-01 13:21:06,945 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:12,969 INFO spawned: 'consume_translation_requests_00' with pid 95
+2023-12-01 13:21:13,435 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:20,490 INFO spawned: 'consume_translation_requests_00' with pid 98
+2023-12-01 13:21:21,081 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:29,121 INFO spawned: 'consume_translation_requests_00' with pid 108
+2023-12-01 13:21:29,771 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:38,841 INFO spawned: 'consume_translation_requests_00' with pid 111
+2023-12-01 13:21:39,572 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:21:49,625 INFO spawned: 'consume_translation_requests_00' with pid 114
+2023-12-01 13:21:50,215 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:22:01,269 INFO spawned: 'consume_translation_requests_00' with pid 124
+2023-12-01 13:22:01,897 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:22:13,980 INFO spawned: 'consume_translation_requests_00' with pid 127
+2023-12-01 13:22:14,754 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:22:27,847 INFO spawned: 'consume_translation_requests_00' with pid 130
+2023-12-01 13:22:28,543 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:22:42,625 INFO spawned: 'consume_translation_requests_00' with pid 140
+2023-12-01 13:22:43,306 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:22:58,397 INFO spawned: 'consume_translation_requests_00' with pid 143
+2023-12-01 13:22:59,412 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:23:01,503 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:23:02,518 INFO spawned: 'consume_translation_requests_00' with pid 153
+2023-12-01 13:23:02,966 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:03,983 INFO spawned: 'consume_translation_requests_00' with pid 156
+2023-12-01 13:23:04,447 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:06,466 INFO spawned: 'consume_translation_requests_00' with pid 159
+2023-12-01 13:23:06,943 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:09,960 INFO spawned: 'consume_translation_requests_00' with pid 162
+2023-12-01 13:23:10,410 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:14,440 INFO spawned: 'consume_translation_requests_00' with pid 165
+2023-12-01 13:23:14,925 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:19,959 INFO spawned: 'consume_translation_requests_00' with pid 168
+2023-12-01 13:23:20,523 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:26,565 INFO spawned: 'consume_translation_requests_00' with pid 171
+2023-12-01 13:23:27,263 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:34,299 INFO spawned: 'consume_translation_requests_00' with pid 181
+2023-12-01 13:23:34,779 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:23:42,843 INFO spawned: 'consume_translation_requests_00' with pid 184
+2023-12-01 13:23:43,454 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:24:54,021 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-12-01 13:24:54,025 INFO supervisord started with pid 63
+2023-12-01 13:24:55,030 INFO spawned: 'consume_translation_requests_00' with pid 64
+2023-12-01 13:24:55,948 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:24:56,958 INFO spawned: 'consume_translation_requests_00' with pid 67
+2023-12-01 13:24:57,589 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:24:59,596 INFO spawned: 'consume_translation_requests_00' with pid 70
+2023-12-01 13:25:00,599 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:25:00,746 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:25:01,751 INFO spawned: 'consume_translation_requests_00' with pid 73
+2023-12-01 13:25:02,755 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:25:03,058 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:25:04,080 INFO spawned: 'consume_translation_requests_00' with pid 76
+2023-12-01 13:25:05,408 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:25:05,422 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:25:06,428 INFO spawned: 'consume_translation_requests_00' with pid 86
+2023-12-01 13:25:07,326 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:08,337 INFO spawned: 'consume_translation_requests_00' with pid 89
+2023-12-01 13:25:09,140 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:11,149 INFO spawned: 'consume_translation_requests_00' with pid 92
+2023-12-01 13:25:11,642 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:14,680 INFO spawned: 'consume_translation_requests_00' with pid 95
+2023-12-01 13:25:15,220 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:19,237 INFO spawned: 'consume_translation_requests_00' with pid 98
+2023-12-01 13:25:19,674 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:24,713 INFO spawned: 'consume_translation_requests_00' with pid 101
+2023-12-01 13:25:25,238 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:31,277 INFO spawned: 'consume_translation_requests_00' with pid 104
+2023-12-01 13:25:31,740 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:38,794 INFO spawned: 'consume_translation_requests_00' with pid 114
+2023-12-01 13:25:39,352 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:47,394 INFO spawned: 'consume_translation_requests_00' with pid 117
+2023-12-01 13:25:47,864 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:25:56,907 INFO spawned: 'consume_translation_requests_00' with pid 120
+2023-12-01 13:25:57,370 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:07,434 INFO spawned: 'consume_translation_requests_00' with pid 130
+2023-12-01 13:26:07,982 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:19,052 INFO spawned: 'consume_translation_requests_00' with pid 133
+2023-12-01 13:26:19,564 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:31,618 INFO spawned: 'consume_translation_requests_00' with pid 136
+2023-12-01 13:26:32,183 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:45,269 INFO spawned: 'consume_translation_requests_00' with pid 146
+2023-12-01 13:26:46,278 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:26:49,688 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:26:50,705 INFO spawned: 'consume_translation_requests_00' with pid 149
+2023-12-01 13:26:51,177 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:52,186 INFO spawned: 'consume_translation_requests_00' with pid 152
+2023-12-01 13:26:52,838 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:54,873 INFO spawned: 'consume_translation_requests_00' with pid 155
+2023-12-01 13:26:55,880 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:26:56,312 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:26:57,331 INFO spawned: 'consume_translation_requests_00' with pid 158
+2023-12-01 13:26:57,932 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:26:58,949 INFO spawned: 'consume_translation_requests_00' with pid 161
+2023-12-01 13:26:59,459 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:01,481 INFO spawned: 'consume_translation_requests_00' with pid 164
+2023-12-01 13:27:02,172 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:05,218 INFO spawned: 'consume_translation_requests_00' with pid 167
+2023-12-01 13:27:05,849 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:09,872 INFO spawned: 'consume_translation_requests_00' with pid 177
+2023-12-01 13:27:10,458 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:15,495 INFO spawned: 'consume_translation_requests_00' with pid 180
+2023-12-01 13:27:15,978 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:22,001 INFO spawned: 'consume_translation_requests_00' with pid 183
+2023-12-01 13:27:22,474 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:29,524 INFO spawned: 'consume_translation_requests_00' with pid 186
+2023-12-01 13:27:30,034 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:38,068 INFO spawned: 'consume_translation_requests_00' with pid 196
+2023-12-01 13:27:38,599 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:47,636 INFO spawned: 'consume_translation_requests_00' with pid 199
+2023-12-01 13:27:48,103 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:27:58,162 INFO spawned: 'consume_translation_requests_00' with pid 202
+2023-12-01 13:27:58,973 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:28:10,063 INFO spawned: 'consume_translation_requests_00' with pid 212
+2023-12-01 13:28:10,638 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:28:22,715 INFO spawned: 'consume_translation_requests_00' with pid 215
+2023-12-01 13:28:23,313 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:37,840 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2023-12-01 13:31:37,844 INFO supervisord started with pid 57
+2023-12-01 13:31:38,863 INFO spawned: 'consume_translation_requests_00' with pid 58
+2023-12-01 13:31:39,866 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:31:40,024 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:31:41,046 INFO spawned: 'consume_translation_requests_00' with pid 61
+2023-12-01 13:31:41,897 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:42,903 INFO spawned: 'consume_translation_requests_00' with pid 64
+2023-12-01 13:31:43,358 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:45,376 INFO spawned: 'consume_translation_requests_00' with pid 74
+2023-12-01 13:31:45,775 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:48,800 INFO spawned: 'consume_translation_requests_00' with pid 77
+2023-12-01 13:31:49,263 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:53,286 INFO spawned: 'consume_translation_requests_00' with pid 80
+2023-12-01 13:31:53,716 WARN exited: consume_translation_requests_00 (exit status 0; not expected)
+2023-12-01 13:31:58,756 INFO spawned: 'consume_translation_requests_00' with pid 83
+2023-12-01 13:31:59,766 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:32:00,397 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:32:01,412 INFO spawned: 'consume_translation_requests_00' with pid 86
+2023-12-01 13:32:02,423 INFO success: consume_translation_requests_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2023-12-01 13:32:03,551 INFO exited: consume_translation_requests_00 (exit status 0; expected)
+2023-12-01 13:32:04,586 INFO spawned: 'consume_translation_requests_00' with pid 89
+2023-12-01 13:32:05,132 WARN exited: consume_translation_requests_00 (exit status 0; not expected)

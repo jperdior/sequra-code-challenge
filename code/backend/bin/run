@@ -1,0 +1,41 @@
+#!/bin/sh
+
+PHP_FPM_PID=
+NGINX_PID=
+
+export XDEBUG_CONFIG='start_with_request=yes'
+
+quit() {
+    kill -QUIT $NGINX_PID
+    kill -QUIT $PHP_FPM_PID
+}
+
+nginx -c "/app/ops/nginx/dev.conf" -t || exit 1
+php-fpm &
+PHP_FPM_PID=$!
+nginx -c "/app/ops/nginx/dev.conf" -g "daemon off;" &
+NGINX_PID=$!
+
+composer install --no-interaction
+
+#script to wait for database container to start
+while ! nc -z database 3306; do
+  sleep 1
+done
+
+/app/bin/console doctrine:database:create --if-not-exists
+/app/bin/console --no-interaction doctrine:migrations:migrate
+/app/bin/console doctrine:fixtures:load --no-interaction
+/app/bin/console app:import-orders --no-debug
+
+#drop collection if exists
+#mongoimport --host mongo --db sequra --collection purchases --type json --file /app/src/DataFixtures/sequra.purchases.json --jsonArray
+
+/app/bin/console cache:clear
+chown -R www-data:www-data /app
+
+supervisord -c /app/ops/supervisor/supervisor.conf
+
+trap quit QUIT
+wait
+
