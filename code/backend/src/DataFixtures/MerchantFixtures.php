@@ -17,7 +17,6 @@ class MerchantFixtures extends Fixture
 
         //skip first line
         fgetcsv($merchantCsv);
-
         while (($merchantCsvRow = fgetcsv($merchantCsv, null, ';')) !== false) {
             $merchant = new Merchant();
             $merchant->setId($merchantCsvRow[0]);

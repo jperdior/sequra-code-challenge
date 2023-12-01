@@ -34,7 +34,7 @@ done
 /app/bin/console cache:clear
 chown -R www-data:www-data /app
 
-supervisord -c /app/ops/supervisor/supervisor.conf
+#supervisord -c /app/ops/supervisor/supervisor.conf
 
 trap quit QUIT
 wait

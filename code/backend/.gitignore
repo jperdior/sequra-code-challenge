@@ -10,6 +10,8 @@
 ###< symfony/framework-bundle ###
 nginx.pid
 php-fpm.pid
+supervisord.pid
+supervisord.log
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
