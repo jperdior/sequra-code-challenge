@@ -72,10 +72,10 @@ enqueue-hardcore:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} supervisord -c ops/supervisor/supervisor.conf
 
 enqueue-orders:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:process-oldest-purchase
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:enqueue-orders
 
 consume-orders:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume async -vv
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume async
 
 #OPEN
 open-rabbitmq-manager:

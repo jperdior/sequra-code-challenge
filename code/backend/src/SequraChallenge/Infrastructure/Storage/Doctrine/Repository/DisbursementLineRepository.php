@@ -25,7 +25,7 @@ class DisbursementLineRepository extends AbstractOrmRepository implements Disbur
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(dl.id)')
             ->from(DisbursementLine::class, 'dl')
-            ->where('dl.purchase = :purchaseId')
+            ->where('dl.purchaseId = :purchaseId')
             ->setParameter('purchaseId', $purchaseId);
 
         return $qb->getQuery()->getSingleScalarResult() > 0;

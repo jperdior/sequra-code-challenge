@@ -10,7 +10,7 @@ class DisbursementLine
 
     private Disbursement $disbursement;
 
-    private string $purchaseId;
+    private Purchase $purchase;
 
     private float $purchaseAmount;
 
@@ -46,14 +46,14 @@ class DisbursementLine
         return $this;
     }
 
-    public function getPurchaseId(): string
+    public function getPurchase(): Purchase
     {
-        return $this->purchaseId;
+        return $this->purchase;
     }
 
-    public function setPurchaseId(string $purchaseId): DisbursementLine
+    public function setPurchase(Purchase $purchase): DisbursementLine
     {
-        $this->purchaseId = $purchaseId;
+        $this->purchase = $purchase;
 
         return $this;
     }

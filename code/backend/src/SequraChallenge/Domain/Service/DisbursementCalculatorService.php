@@ -33,8 +33,8 @@ class DisbursementCalculatorService
      */
     public function calculateDisbursement(Purchase $purchase): Disbursement
     {
-        $disbursement = $this->getDisbursement($purchase->getMerchant(), $purchase);
-        $disbursementLine = $this->calculateDisbursementLine($purchase);
+        $disbursement = $this->getDisbursement(purchase: $purchase);
+        $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase);
         $disbursement->setFees($disbursement->getFees() + $disbursementLine->getFeeAmount());
         $disbursement->setAmount($disbursement->getAmount() + $disbursementLine->getAmount() - $disbursementLine->getFeeAmount());
         $this->disbursementRepository->save($disbursement);
@@ -47,8 +47,7 @@ class DisbursementCalculatorService
     private function calculateDisbursementLine(Purchase $purchase): DisbursementLine
     {
         $disbursementLine = $this->disbursementLineFactory->create(
-            purchaseId: $purchase->getId(),
-            purchaseAmount: $purchase->getAmount()
+            purchase: $purchase
         );
         $disbursementLine->setFeePercentage($this->calculateFeePercentage($purchase));
         $disbursementLine->setFeeAmount(round($purchase->getAmount() * $disbursementLine->getFeePercentage() / 100, 2));
@@ -74,12 +73,26 @@ class DisbursementCalculatorService
     /**
      * @throws \Exception
      */
-    private function getDisbursement(Merchant $merchant, Purchase $purchase): Disbursement
+    private function getDisbursement(Purchase $purchase): Disbursement
     {
-        $disbursementDate = $this->getDisbursementDate($merchant, $purchase);
-        $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate($merchant, $disbursementDate);
+        $merchant = $purchase->getMerchant();
+        $disbursementDate = $this->getDisbursementDate(
+            merchant: $merchant,
+            purchase: $purchase
+        );
+        $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate(
+            merchant: $merchant,
+            createdAt: $disbursementDate
+        );
         if (null === $disbursement) {
-            $disbursement = $this->createDisbursement($merchant, $purchase);
+            $disbursement = $this->createDisbursement(
+                merchant: $merchant,
+                purchase: $purchase
+            );
+            $this->checkPreviousMonthMinimumFeeAchieved(
+                disbursement: $disbursement,
+                purchase: $purchase
+            );
         }
 
         return $disbursement;
@@ -87,17 +100,25 @@ class DisbursementCalculatorService
 
     private function createDisbursement(Merchant $merchant, Purchase $purchase): Disbursement
     {
-        $disbursement = $this->disbursementFactory->create(
+        return $this->disbursementFactory->create(
             merchant: $merchant,
             disbursementDate: $purchase->getCreatedAt()
         );
-        $this->checkMinimumMonthlyFee($disbursement, $purchase);
-
-        return $disbursement;
     }
 
-    private function checkMinimumMonthlyFee(Disbursement $disbursement, Purchase $purchase): void
+    private function checkPreviousMonthMinimumFeeAchieved(Disbursement $disbursement, Purchase $purchase): void
     {
+        $merchant = $disbursement->getMerchant();
+
+        $lastDayOfPreviousMonth = clone $purchase->getCreatedAt();
+        $lastDayOfPreviousMonth->modify('first day of this month');
+        $lastDayOfPreviousMonth->modify('last day of previous month');
+        $lastDayOfPreviousMonth->setTime(23, 59, 59);
+
+        if ($merchant->getLiveOn() > $lastDayOfPreviousMonth) {
+            return;
+        }
+
         $lastMonthFees = $this->getLastMonthDisbursementFees($disbursement->getMerchant(), $purchase->getCreatedAt());
         if (
             $this->isFirstDisbursementOfTheMonth($disbursement)

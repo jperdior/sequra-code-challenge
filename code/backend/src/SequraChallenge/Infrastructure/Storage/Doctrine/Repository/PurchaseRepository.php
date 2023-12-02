@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Infrastructure\Storage\Doctrine\Repository;
 
-use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
+use App\SequraChallenge\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Domain\Entity\Purchase;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 
@@ -15,15 +15,18 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
         return Purchase::class;
     }
 
-    public function getOldestPendingPurchase()
+    public function getNotProcessed(int $limit): array
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->where('p.status = :status')
-            ->setParameter('status', PurchaseStatusEnum::PENDING->value)
-            ->orderBy('p.createdAt', 'ASC')
-            ->setMaxResults(1);
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $qb->select('p')
+            ->from(Purchase::class, 'p')
+            ->leftJoin(DisbursementLine::class, 'dl', 'WITH', 'p.id = dl.purchase')
+            ->where('dl.purchase IS NULL')
+            ->orderBy('p.createdAt', 'ASC')
+            ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function save(Purchase $purchase): void

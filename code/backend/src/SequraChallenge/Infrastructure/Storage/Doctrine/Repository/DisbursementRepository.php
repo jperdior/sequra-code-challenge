@@ -39,12 +39,21 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
 
     public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float
     {
+        $firstDayOfPreviousMonth = clone $date;
+        $firstDayOfPreviousMonth->modify('first day of previous month');
+        $firstDayOfPreviousMonth->setTime(0, 0, 0);
+
+        $lastDayOfPreviousMonth = clone $date;
+        $lastDayOfPreviousMonth->modify('last day of previous month');
+        $lastDayOfPreviousMonth->setTime(23, 59, 59);
+
         $qb = $this->createQueryBuilder('d');
         $qb->select('SUM(d.fees) as fees')
             ->where('d.merchant = :merchant')
-            ->andWhere('d.createdAt >= :createdAt')
+            ->andWhere($qb->expr()->between('d.createdAt', ':startDate', ':endDate'))
             ->setParameter('merchant', $merchant)
-            ->setParameter('createdAt', $date);
+            ->setParameter('startDate', $firstDayOfPreviousMonth)
+            ->setParameter('endDate', $lastDayOfPreviousMonth);
 
         return (float) $qb->getQuery()->getSingleScalarResult();
     }

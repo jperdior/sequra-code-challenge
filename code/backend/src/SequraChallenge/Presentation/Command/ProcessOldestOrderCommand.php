@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Presentation\Command;
 
 use App\SequraChallenge\Application\Command\ProcessPurchaseMessage;
-use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -18,8 +17,7 @@ class ProcessOldestOrderCommand extends Command
 {
     public function __construct(
         private readonly SimpleCommandBus $commandBus,
-        private readonly PurchaseRepositoryInterface $purchaseRepository,
-        private readonly DisbursementLineRepositoryInterface $disbursementLineRepository
+        private readonly PurchaseRepositoryInterface $purchaseRepository
     ) {
         parent::__construct();
     }
@@ -31,16 +29,11 @@ class ProcessOldestOrderCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $pendingPurchases = $this->purchaseRepository->findBy(
-            [],
-            ['createdAt' => 'ASC'],
-            '100'
+        $pendingPurchases = $this->purchaseRepository->getNotProcessed(
+            limit: 1
         );
 
         foreach ($pendingPurchases as $purchase) {
-            if ($this->disbursementLineRepository->existsByPurchase($purchase->getId())) {
-                continue;
-            }
             $this->commandBus->dispatch(new ProcessPurchaseMessage(
                 purchaseId: $purchase->getId())
             );
