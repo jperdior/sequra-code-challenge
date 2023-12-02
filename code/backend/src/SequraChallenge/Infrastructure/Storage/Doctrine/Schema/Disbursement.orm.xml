@@ -6,6 +6,10 @@
     <entity name="App\SequraChallenge\Domain\Entity\Disbursement" table="disbursement" read-only="false"
             repository-class="App\SequraChallenge\Infrastructure\Storage\Doctrine\Repository\DisbursementRepository">
 
+        <unique-constraints>
+            <unique-constraint columns="merchant_id,disbursed_at" name="merchant_disburse_date" />
+        </unique-constraints>
+
         <id name="id" column="id" type="string" length="26" >
         </id>
 

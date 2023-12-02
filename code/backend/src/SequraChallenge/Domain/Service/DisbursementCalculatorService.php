@@ -11,6 +11,8 @@ use App\SequraChallenge\Domain\Entity\Factory\DisbursementFactory;
 use App\SequraChallenge\Domain\Entity\Factory\DisbursementLineFactory;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
+use App\SequraChallenge\Domain\Exception\ConcurrentException;
+use App\SequraChallenge\Domain\Exception\InvalidDisbursementFrequencyException;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 
@@ -28,27 +30,29 @@ class DisbursementCalculatorService
     ) {
     }
 
+
     /**
-     * @throws \Exception
+     * @throws InvalidDisbursementFrequencyException
+     * @throws ConcurrentException
      */
     public function calculateDisbursement(Purchase $purchase): Disbursement
     {
         $disbursement = $this->getDisbursement(purchase: $purchase);
-        $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase);
+        $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase, disbursement: $disbursement);
         $disbursement->setFees($disbursement->getFees() + $disbursementLine->getFeeAmount());
         $disbursement->setAmount($disbursement->getAmount() + $disbursementLine->getAmount() - $disbursementLine->getFeeAmount());
         $this->disbursementRepository->save($disbursement);
-        $disbursementLine->setDisbursement($disbursement);
         $this->disbursementLineRepository->save($disbursementLine);
 
         return $disbursement;
     }
 
-    private function calculateDisbursementLine(Purchase $purchase): DisbursementLine
+    private function calculateDisbursementLine(Purchase $purchase, Disbursement $disbursement): DisbursementLine
     {
         $disbursementLine = $this->disbursementLineFactory->create(
             purchase: $purchase
         );
+        $disbursementLine->setDisbursement($disbursement);
         $disbursementLine->setFeePercentage($this->calculateFeePercentage($purchase));
         $disbursementLine->setFeeAmount(round($purchase->getAmount() * $disbursementLine->getFeePercentage() / 100, 2));
         $disbursementLine->setAmount($purchase->getAmount() - $disbursementLine->getFeeAmount());
@@ -71,7 +75,8 @@ class DisbursementCalculatorService
     }
 
     /**
-     * @throws \Exception
+     * @throws ConcurrentException
+     * @throws InvalidDisbursementFrequencyException
      */
     private function getDisbursement(Purchase $purchase): Disbursement
     {
@@ -80,30 +85,27 @@ class DisbursementCalculatorService
             merchant: $merchant,
             purchase: $purchase
         );
-        $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate(
-            merchant: $merchant,
-            createdAt: $disbursementDate
-        );
-        if (null === $disbursement) {
-            $disbursement = $this->createDisbursement(
+        try {
+            $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate(
                 merchant: $merchant,
-                purchase: $purchase
+                disbursementDate: $disbursementDate
             );
-            $this->checkPreviousMonthMinimumFeeAchieved(
-                disbursement: $disbursement,
-                purchase: $purchase
-            );
+            if (null === $disbursement) {
+                $disbursement = $this->disbursementFactory->create(
+                    merchant: $merchant,
+                    disbursementDate: $purchase->getCreatedAt()
+                );
+                $this->checkPreviousMonthMinimumFeeAchieved(
+                    disbursement: $disbursement,
+                    purchase: $purchase
+                );
+            }
+        }
+        catch (\Exception $e) {
+            throw new ConcurrentException($e->getMessage());
         }
 
         return $disbursement;
-    }
-
-    private function createDisbursement(Merchant $merchant, Purchase $purchase): Disbursement
-    {
-        return $this->disbursementFactory->create(
-            merchant: $merchant,
-            disbursementDate: $purchase->getCreatedAt()
-        );
     }
 
     private function checkPreviousMonthMinimumFeeAchieved(Disbursement $disbursement, Purchase $purchase): void
@@ -130,7 +132,7 @@ class DisbursementCalculatorService
     }
 
     /**
-     * @throws \Exception
+     * @throws InvalidDisbursementFrequencyException
      */
     private function getDisbursementDate(Merchant $merchant, Purchase $purchase): \DateTime
     {
@@ -153,7 +155,7 @@ class DisbursementCalculatorService
 
                 return $disbursementDate;
             default:
-                throw new \Exception('Invalid disbursement frequency');
+                throw new InvalidDisbursementFrequencyException();
         }
     }
 

@@ -9,7 +9,7 @@ use App\SequraChallenge\Domain\Entity\Merchant;
 
 interface DisbursementRepositoryInterface
 {
-    public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $createdAt): ?Disbursement;
+    public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $disbursementDate): ?Disbursement;
 
     public function getFirstOfMonth(Merchant $merchant, \DateTime $dateTime): ?Disbursement;
 

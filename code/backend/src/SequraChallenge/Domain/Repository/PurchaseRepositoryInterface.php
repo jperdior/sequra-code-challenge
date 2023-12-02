@@ -8,7 +8,7 @@ use App\SequraChallenge\Domain\Entity\Purchase;
 
 interface PurchaseRepositoryInterface
 {
-    public function getNotProcessed(int $limit): array;
+    public function getNotProcessed(int $limit, int $offset): array;
 
     public function save(Purchase $purchase): void;
 

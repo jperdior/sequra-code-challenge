@@ -15,13 +15,13 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
         return Disbursement::class;
     }
 
-    public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $createdAt): ?Disbursement
+    public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $disbursementDate): ?Disbursement
     {
         $qb = $this->createQueryBuilder('d');
         $qb->where('d.merchant = :merchant')
             ->andWhere('d.disbursedAt = :createdAt')
             ->setParameter('merchant', $merchant)
-            ->setParameter('createdAt', $createdAt->format('Y-m-d'));
+            ->setParameter('createdAt', $disbursementDate->format('Y-m-d'));
 
         return $qb->getQuery()->getOneOrNullResult();
     }

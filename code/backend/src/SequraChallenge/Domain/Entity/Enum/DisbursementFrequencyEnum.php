@@ -17,4 +17,5 @@ enum DisbursementFrequencyEnum: int
             default => throw new \InvalidArgumentException('Invalid disbursement frequency'),
         };
     }
+
 }

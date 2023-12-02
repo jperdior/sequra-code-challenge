@@ -4,30 +4,28 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Domain\UseCase;
 
-use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
+use App\SequraChallenge\Domain\Exception\PurchaseNotFoundException;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Domain\Service\DisbursementCalculatorService;
 
-class ProcessPurchaseUseCase
+readonly class ProcessPurchaseUseCase
 {
     public function __construct(
-        private readonly DisbursementCalculatorService $disbursementCalculatorService,
-        private readonly PurchaseRepositoryInterface $purchaseRepository,
+        private DisbursementCalculatorService $disbursementCalculatorService,
+        private PurchaseRepositoryInterface   $purchaseRepository,
     ) {
     }
 
     /**
-     * @throws \Exception
+     * @throws PurchaseNotFoundException
      */
     public function execute(
         string $purchaseId
     ): void {
         $purchase = $this->purchaseRepository->findById($purchaseId);
         if (null === $purchase) {
-            throw new \Exception('Not found purchase with id: '.$purchaseId);
+            throw new PurchaseNotFoundException();
         }
         $this->disbursementCalculatorService->calculateDisbursement($purchase);
-        $purchase->setStatus(PurchaseStatusEnum::PROCESSED->value);
-        $this->purchaseRepository->save($purchase);
     }
 }

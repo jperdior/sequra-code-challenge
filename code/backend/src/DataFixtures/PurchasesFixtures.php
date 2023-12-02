@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,7 +30,6 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
             $purchase->setMerchant($merchant);
             $purchase->setAmount(floatval($purchasesCsvRow[2]));
             $purchase->setCreatedAt(new \DateTime($purchasesCsvRow[3]));
-            $purchase->setStatus(PurchaseStatusEnum::PENDING->value);
             $manager->persist($purchase);
             if (0 === $i % $batchSize) {
                 $manager->flush();

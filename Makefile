@@ -48,7 +48,7 @@ create-database:
 #FIXTURES
 
 load-fixtures:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console doctrine:fixtures:load
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console doctrine:fixtures:load --no-debug
 
 #TEST
 
@@ -68,7 +68,7 @@ fix-codestyle:
 
 #CONSUME ORDER
 
-enqueue-hardcore:
+run:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} supervisord -c ops/supervisor/supervisor.conf
 
 enqueue-orders:

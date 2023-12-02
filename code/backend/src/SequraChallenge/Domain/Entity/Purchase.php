@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Domain\Entity;
 
-use App\SequraChallenge\Domain\Entity\Enum\PurchaseStatusEnum;
-
 class Purchase
 {
     private string $id;
@@ -15,8 +13,6 @@ class Purchase
     private float $amount;
 
     private \DateTime $createdAt;
-
-    private int $status = PurchaseStatusEnum::PENDING->value;
 
     public function getId(): string
     {
@@ -66,27 +62,4 @@ class Purchase
         return $this;
     }
 
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): Purchase
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getDisbursement(): Disbursement
-    {
-        return $this->disbursement;
-    }
-
-    public function setDisbursement(Disbursement $disbursement): Purchase
-    {
-        $this->disbursement = $disbursement;
-
-        return $this;
-    }
 }
