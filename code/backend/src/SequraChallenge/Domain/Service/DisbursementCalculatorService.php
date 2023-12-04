@@ -18,9 +18,9 @@ use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 
 class DisbursementCalculatorService
 {
-    private const SMALL_ORDER_PERCENTAGE = 1.00;
-    private const MEDIUM_ORDER_PERCENTAGE = 0.95;
-    private const LARGE_ORDER_PERCENTAGE = 0.85;
+    public const SMALL_ORDER_PERCENTAGE = 1.00;
+    public const MEDIUM_ORDER_PERCENTAGE = 0.95;
+    public const LARGE_ORDER_PERCENTAGE = 0.85;
 
     public function __construct(
         private readonly DisbursementRepositoryInterface $disbursementRepository,
@@ -43,7 +43,6 @@ class DisbursementCalculatorService
         $disbursement->setAmount($disbursement->getAmount() + $disbursementLine->getAmount() - $disbursementLine->getFeeAmount());
         $this->disbursementRepository->save($disbursement);
         $this->disbursementLineRepository->save($disbursementLine);
-
         return $disbursement;
     }
 
@@ -111,7 +110,6 @@ class DisbursementCalculatorService
     private function checkPreviousMonthMinimumFeeAchieved(Disbursement $disbursement, Purchase $purchase): void
     {
         $merchant = $disbursement->getMerchant();
-
         $lastDayOfPreviousMonth = clone $purchase->getCreatedAt();
         $lastDayOfPreviousMonth->modify('first day of this month');
         $lastDayOfPreviousMonth->modify('last day of previous month');
@@ -129,6 +127,7 @@ class DisbursementCalculatorService
             $monthlyFee = $disbursement->getMerchant()->getMinimumMonthlyFee() - $lastMonthFees;
             $disbursement->setMonthlyFee($monthlyFee);
         }
+
     }
 
     /**
@@ -145,7 +144,7 @@ class DisbursementCalculatorService
                 $purchaseDayOfWeek = $purchase->getCreatedAt()->format('N');
                 if ($dayOfWeek < $purchaseDayOfWeek) {
                     $daysDifference = $purchaseDayOfWeek - $dayOfWeek;
-                    $disbursementDate = $purchase->getCreatedAt()->modify('-'.$daysDifference.' days');
+                    $disbursementDate = $purchase->getCreatedAt()->modify('-'.$daysDifference.' days')->modify('+1 week');
                 } elseif ($dayOfWeek > $purchaseDayOfWeek) {
                     $daysDifference = $dayOfWeek - $purchaseDayOfWeek;
                     $disbursementDate = $purchase->getCreatedAt()->modify('+'.$daysDifference.' days');
@@ -161,9 +160,12 @@ class DisbursementCalculatorService
 
     private function isFirstDisbursementOfTheMonth(Disbursement $disbursement): bool
     {
-        $firstDisbursementOfTheMonth = $this->disbursementRepository->getFirstOfMonth($disbursement->getMerchant(), $disbursement->getCreatedAt());
+        $disbursementsThisMonth = $this->disbursementRepository->countDisbursementsOfMonth(
+            merchant: $disbursement->getMerchant(),
+            dateTime: $disbursement->getDisbursedAt()
+        );
 
-        return null === $firstDisbursementOfTheMonth;
+        return $disbursementsThisMonth === 0;
     }
 
     private function getLastMonthDisbursementFees(Merchant $merchant, \DateTime $date): float

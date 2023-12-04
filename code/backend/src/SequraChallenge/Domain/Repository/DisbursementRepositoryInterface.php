@@ -11,7 +11,7 @@ interface DisbursementRepositoryInterface
 {
     public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $disbursementDate): ?Disbursement;
 
-    public function getFirstOfMonth(Merchant $merchant, \DateTime $dateTime): ?Disbursement;
+    public function countDisbursementsOfMonth(Merchant $merchant, \DateTime $dateTime): int;
 
     public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float;
 

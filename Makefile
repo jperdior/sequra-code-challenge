@@ -52,11 +52,9 @@ load-fixtures:
 
 #TEST
 
-tests-unit:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testsuite=unit
+tests:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testdox --log-junit junit.xml
 
-tests-functional:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testsuite=functional
 
 #CODESTYLE
 

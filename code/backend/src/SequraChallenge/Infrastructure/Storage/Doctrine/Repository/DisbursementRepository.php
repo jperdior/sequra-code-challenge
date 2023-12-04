@@ -26,15 +26,26 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function getFirstOfMonth(Merchant $merchant, \DateTime $dateTime): ?Disbursement
+    public function countDisbursementsOfMonth(Merchant $merchant, \DateTime $dateTime): int
     {
-        $qb = $this->createQueryBuilder('d');
-        $qb->where('d.merchant = :merchant')
-            ->andWhere('d.createdAt = :createdAt')
-            ->setParameter('merchant', $merchant)
-            ->setParameter('createdAt', $dateTime);
+        $firstDayOfMonth = clone $dateTime;
+        $firstDayOfMonth->modify('first day of this month');
+        $firstDayOfMonth->setTime(0, 0, 0);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $lastDayOfMonth = clone $dateTime;
+        $lastDayOfMonth->modify('last day of this month');
+        $lastDayOfMonth->setTime(23, 59, 59);
+
+        $qb = $this->createQueryBuilder('d');
+        $qb->select('COUNT(d.id) as disbursements')
+            ->where('d.merchant = :merchant')
+            ->andWhere($qb->expr()->between('d.disbursedAt', ':startDate', ':endDate'))
+            ->setParameter('merchant', $merchant)
+            ->setParameter('startDate', $firstDayOfMonth)
+            ->setParameter('endDate', $lastDayOfMonth);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+
     }
 
     public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float
@@ -50,7 +61,7 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
         $qb = $this->createQueryBuilder('d');
         $qb->select('SUM(d.fees) as fees')
             ->where('d.merchant = :merchant')
-            ->andWhere($qb->expr()->between('d.createdAt', ':startDate', ':endDate'))
+            ->andWhere($qb->expr()->between('d.disbursedAt', ':startDate', ':endDate'))
             ->setParameter('merchant', $merchant)
             ->setParameter('startDate', $firstDayOfPreviousMonth)
             ->setParameter('endDate', $lastDayOfPreviousMonth);

@@ -12,6 +12,11 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+
+        if (getenv('APP_ENV') === 'test') {
+            return;
+        }
+
         $purchasesCsvPath = __DIR__.'/orders.csv';
         $purchasesCsv = fopen($purchasesCsvPath, 'r');
 

@@ -11,6 +11,10 @@ class MerchantFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        if (getenv('APP_ENV') === 'test') {
+            return;
+        }
+
         $merchantCsvPath = __DIR__.'/merchants.csv';
         $merchantCsv = fopen($merchantCsvPath, 'r');
 
