@@ -90,7 +90,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            MerchantFixtures::class,
+            MerchantTestFixtures::class,
         ];
     }
 }
