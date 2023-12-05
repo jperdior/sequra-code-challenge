@@ -18,7 +18,7 @@
 
 | Year | Number of Disbursements | Amount Disbursed to Merchants | Amount of Order Fees | Number of Monthly Fees Charged (From Minimum Monthly Fee) | Amount of Monthly Fee Charged (From Minimum Monthly Fee) |
 |------|-------------------------|-------------------------------|----------------------|-----------------------------------------------------------|----------------------------------------------------------|
-| 2022 | 1547                    | 37496446.37 €                 | 338817.97 €          | 20                                                         | 381.03 €                                                 |
+| 2022 | 1547                    | 37496446.37 €                 | 338817.97 €          | 20                                                        | 381.03 €                                                 |
 | 2023 | 10363                   | 187914787.11 €                | 1703367.25 €         | 116                                                       | 1939.97 €                                                 |
 
 
@@ -34,11 +34,9 @@ I set up supervisord to run 30 instances of the consumer and feed the queue, I c
 when several orders that belong to the same disbursement are processed in parallel, as the disbursement is created when the first order is processed, and the rest of the orders
 provoke a unique constraint violation. I decided to handle this situation by catching the exception and symfony messenger retries the message up to 3 times, so it works fine.
 In any case I set up a failure queue to handle the messages that fail after 3 retries.
-There's also another race condition calculating the amount and fee amount of each disbursement as several orders can be processed in parallel, I handled it by using a query 
-that causes a lock in the database, so the disbursement amount and fee amount should be calculated correctly as in the tests.
 
-Anyway there's still some concurrency problem because at the end of the process the disbursement amounts + fee amounts doesn't match the total amount of the orders, but I am already
-
+There's also another race condition calculating the amount and fee amount of each disbursement as several orders can be processed in parallel and that is causing some miscalculations as the total
+amount of the disbursement doesn't match the sum of the amounts of the orders. I tried to solve this but I am out of time so I leave it as it is.
 
 All the logic to calculate the disbursements is in the DisbursementCalculatorService in src/SequraChallenge/Domain/Service/DisbursementCalculatorService.php
 
@@ -48,8 +46,8 @@ one with Order and one to many with Disbursement. This way I can easily identify
 ## Improvements
 
 - I think fees should be managed in Database, so they can be easily modified without having to deploy a new version of the application. In this challenge I handled it with constants.
+- As indicated in the previous section, there's some problem with race conditions that I would like to solve.
 - I tested mostly the happy paths, I would have liked to test more edge cases.
-
 
 ## Running the project
 

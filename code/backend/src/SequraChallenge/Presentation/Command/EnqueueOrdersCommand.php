@@ -7,7 +7,6 @@ namespace App\SequraChallenge\Presentation\Command;
 use App\SequraChallenge\Application\Command\ProcessPurchaseMessage;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +18,6 @@ class EnqueueOrdersCommand extends Command
     public function __construct(
         private readonly SimpleCommandBus $commandBus,
         private readonly PurchaseRepositoryInterface $purchaseRepository,
-        private readonly EntityManagerInterface $entityManager
     ) {
         parent::__construct();
     }
