@@ -38,10 +38,14 @@ class DisbursementCalculatorService
     public function calculateDisbursement(Purchase $purchase): Disbursement
     {
         $disbursement = $this->getDisbursement(purchase: $purchase);
-        $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase, disbursement: $disbursement);
-        $disbursement->setFees($disbursement->getFees() + $disbursementLine->getFeeAmount());
-        $disbursement->setAmount($disbursement->getAmount() + $disbursementLine->getAmount() - $disbursementLine->getFeeAmount());
         $this->disbursementRepository->save($disbursement);
+        $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase, disbursement: $disbursement);
+        $fees = $this->disbursementLineRepository->getFeeAmountSumByDisbursement($disbursement) + $disbursementLine->getFeeAmount();
+        $disbursement->setFees($fees);
+        $disbursement->setAmount(
+            $this->disbursementLineRepository->getAmountSumByDisbursement($disbursement) +
+            $disbursementLine->getAmount()
+        );
         $this->disbursementLineRepository->save($disbursementLine);
         return $disbursement;
     }
@@ -54,7 +58,7 @@ class DisbursementCalculatorService
         $disbursementLine->setDisbursement($disbursement);
         $disbursementLine->setFeePercentage($this->calculateFeePercentage($purchase));
         $disbursementLine->setFeeAmount(round($purchase->getAmount() * $disbursementLine->getFeePercentage() / 100, 2));
-        $disbursementLine->setAmount($purchase->getAmount() - $disbursementLine->getFeeAmount());
+        $disbursementLine->setAmount(round($purchase->getAmount() - $disbursementLine->getFeeAmount(),2));
 
         return $disbursementLine;
     }

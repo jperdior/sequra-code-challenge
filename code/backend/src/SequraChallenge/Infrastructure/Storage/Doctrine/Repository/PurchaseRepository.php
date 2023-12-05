@@ -15,17 +15,14 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
         return Purchase::class;
     }
 
-    public function getNotProcessed(int $limit, int $offset): array
+    public function getNotProcessed(int $limit): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('p')
             ->from(Purchase::class, 'p')
-            ->leftJoin(DisbursementLine::class, 'dl', 'WITH', 'p.id = dl.purchase')
-            ->where('dl.purchase IS NULL')
-            ->orderBy('p.createdAt', 'ASC')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
+            ->where('p.processed = false')
+            ->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
     }
@@ -40,4 +37,17 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
     {
         return $this->find($id);
     }
+
+    public function markAsProcessed($purchaseIds): void
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->update(Purchase::class, 'p')
+            ->set('p.processed', true)
+            ->where('p.id IN (:purchaseIds)')
+            ->setParameter('purchaseIds', $purchaseIds);
+
+        $qb->getQuery()->execute();
+    }
+
 }

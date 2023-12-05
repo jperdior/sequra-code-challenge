@@ -14,6 +14,8 @@ class Purchase
 
     private \DateTime $createdAt;
 
+    private bool $processed = false;
+
     public function getId(): string
     {
         return $this->id;
@@ -58,6 +60,18 @@ class Purchase
     public function setCreatedAt(\DateTime $createdAt): Purchase
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isProcessed(): bool
+    {
+        return $this->processed;
+    }
+
+    public function setProcessed(bool $processed): Purchase
+    {
+        $this->processed = $processed;
 
         return $this;
     }

@@ -11,7 +11,8 @@ class MerchantTestFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        if (getenv('APP_ENV') === 'dev') {
+
+        if (getenv('APP_ENV') !== 'test') {
             return;
         }
 

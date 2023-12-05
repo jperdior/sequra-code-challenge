@@ -66,7 +66,7 @@ class DisbursementRepository extends AbstractOrmRepository implements Disburseme
             ->setParameter('startDate', $firstDayOfPreviousMonth)
             ->setParameter('endDate', $lastDayOfPreviousMonth);
 
-        return (float) $qb->getQuery()->getSingleScalarResult();
+        return (float) $qb->getQuery()->getSingleScalarResult() ?? 0;
     }
 
     public function save(Disbursement $disbursement): void

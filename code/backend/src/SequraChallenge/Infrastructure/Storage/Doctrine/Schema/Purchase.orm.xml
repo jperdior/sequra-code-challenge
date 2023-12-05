@@ -15,6 +15,8 @@
 
         <field name="amount" column="amount" type="float" />
 
+        <field name="processed" column="processed" type="boolean" />
+
         <field name="createdAt" column="created_at" type="datetime" />
 
     </entity>

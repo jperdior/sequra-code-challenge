@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Infrastructure\Storage\Doctrine;
 
 use App\Sequrachallenge\Domain\Repository\TransactionRepositoryInterface;
+use Doctrine\DBAL\TransactionIsolationLevel;
 use Doctrine\ORM\EntityManagerInterface;
 
 class TransactionOrmRepository implements TransactionRepositoryInterface
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $em->getConnection()->getConfiguration()->setSQLLogger(null);
     }
 
     public function open()
     {
+        //$this->em->getConnection()->setTransactionIsolation(TransactionIsolationLevel::REPEATABLE_READ);
         $this->em->getConnection()->beginTransaction();
     }
 

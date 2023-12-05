@@ -14,6 +14,14 @@
 - Make
 - Available ports 8080, 15672, 5672 ,3306
 
+## Results
+
+| Year | Number of Disbursements | Amount Disbursed to Merchants | Amount of Order Fees | Number of Monthly Fees Charged (From Minimum Monthly Fee) | Amount of Monthly Fee Charged (From Minimum Monthly Fee) |
+|------|-------------------------|-------------------------------|----------------------|-----------------------------------------------------------|----------------------------------------------------------|
+| 2022 | 1547                    | 37496446.37 €                 | 338817.97 €          | 20                                                         | 381.03 €                                                 |
+| 2023 | 10363                   | 187914787.11 €                | 1703367.25 €         | 116                                                       | 1939.97 €                                                 |
+
+
 ## My approach
 
 At the beginning I thought the before 8:00 am requirement was irrelevant, but then I realized that it was the contrary.
@@ -22,10 +30,15 @@ I decided to handle the orders in "real time", for that I enqueue the orders not
 ,and it's ready to work with new orders as soon as they are created. This also achieves O(1) time complexity for the calculation of disbursements instead of being a daily
 batch operation that would have O(n) time complexity. 
 
-I set up supervisord to run 20 instances of the consumer and feed the queue, I calculated that the application processes around 20k orders per minute. Exists a race condition
+I set up supervisord to run 30 instances of the consumer and feed the queue, I calculated that the application processes around 20k orders per minute. Exists a race condition
 when several orders that belong to the same disbursement are processed in parallel, as the disbursement is created when the first order is processed, and the rest of the orders
 provoke a unique constraint violation. I decided to handle this situation by catching the exception and symfony messenger retries the message up to 3 times, so it works fine.
 In any case I set up a failure queue to handle the messages that fail after 3 retries.
+There's also another race condition calculating the amount and fee amount of each disbursement as several orders can be processed in parallel, I handled it by using a query 
+that causes a lock in the database, so the disbursement amount and fee amount should be calculated correctly as in the tests.
+
+Anyway there's still some concurrency problem because at the end of the process the disbursement amounts + fee amounts doesn't match the total amount of the orders, but I am already
+
 
 All the logic to calculate the disbursements is in the DisbursementCalculatorService in src/SequraChallenge/Domain/Service/DisbursementCalculatorService.php
 

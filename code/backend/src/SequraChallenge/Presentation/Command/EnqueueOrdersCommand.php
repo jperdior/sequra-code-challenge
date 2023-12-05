@@ -32,28 +32,19 @@ class EnqueueOrdersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $batchSize = 1000;
-        $offset = 0;
 
-        do {
-            $pendingPurchases = $this->purchaseRepository->getNotProcessed(
-                limit: $batchSize,
-                offset: $offset
-            );
+        $pendingPurchases = $this->purchaseRepository->getNotProcessed(
+            limit: $batchSize
+        );
 
-            foreach ($pendingPurchases as $purchase) {
-                $this->commandBus->dispatch(new ProcessPurchaseMessage(
-                    purchaseId: $purchase->getId()
-                ));
-            }
+        $purchaseIds = array_map(fn ($purchase) => $purchase->getId(), $pendingPurchases);
+        $this->purchaseRepository->markAsProcessed($purchaseIds);
 
-            $offset += $batchSize;
-
-            if ($offset % 5000 === 0) {
-                $this->entityManager->clear();
-            }
-
-            // Continue processing while there are more purchases
-        } while (!empty($pendingPurchases));
+        foreach ($pendingPurchases as $purchase) {
+            $this->commandBus->dispatch(new ProcessPurchaseMessage(
+                purchaseId: $purchase->getId()
+            ));
+        }
 
         return Command::SUCCESS;
     }
