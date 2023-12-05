@@ -47,6 +47,7 @@ one with Order and one to many with Disbursement. This way I can easily identify
 
 - I think fees should be managed in Database, so they can be easily modified without having to deploy a new version of the application. In this challenge I handled it with constants.
 - As indicated in the previous section, there's some problem with race conditions that I would like to solve.
+- I am using the last stable version of symfony 6 and there seems to be some deprecation warnings that I left unresolved but doesn't affect the functionality.
 - I tested mostly the happy paths, I would have liked to test more edge cases.
 
 ## Running the project
