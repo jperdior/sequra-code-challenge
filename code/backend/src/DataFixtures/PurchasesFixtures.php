@@ -36,6 +36,7 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
             $purchase->setAmount(floatval($purchasesCsvRow[2]));
             $purchase->setCreatedAt(new \DateTime($purchasesCsvRow[3]));
             $purchase->setProcessed(false);
+            $purchase->setStatus(Purchase::STATUS_PENDING);
             $manager->persist($purchase);
             if (0 === $i % $batchSize) {
                 $manager->flush();

@@ -25,7 +25,7 @@ done
 
 /app/bin/console doctrine:database:create --if-not-exists
 /app/bin/console --no-interaction doctrine:migrations:migrate
-/app/bin/console doctrine:fixtures:load --no-interaction --no-debug
+#/app/bin/console doctrine:fixtures:load --no-interaction --no-debug
 
 #drop collection if exists
 #mongoimport --host mongo --db sequra --collection purchases --type json --file /app/src/DataFixtures/sequra.purchases.json --jsonArray

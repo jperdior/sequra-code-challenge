@@ -25,6 +25,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         $purchase->setAmount(30.0);
         $purchase->setCreatedAt(new \DateTime('2021-01-01'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //medium purchase
@@ -35,6 +36,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         $purchase->setAmount(100.0);
         $purchase->setCreatedAt(new \DateTime('2021-01-01'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //large purchase
@@ -45,6 +47,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         $purchase->setAmount(1000.0);
         $purchase->setCreatedAt(new \DateTime('2021-01-01'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //purchase for weekly merchant on friday
@@ -56,6 +59,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         //should be disbursed friday 1
         $purchase->setCreatedAt(new \DateTime('2021-01-01'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //purchase for weekly merchant on monday
@@ -67,6 +71,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         //should be disbursed friday 15
         $purchase->setCreatedAt(new \DateTime('2021-01-11'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //purchase for weekly merchant on sunday
@@ -78,6 +83,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         //should be disbursed friday 8
         $purchase->setCreatedAt(new \DateTime('2021-01-03'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         //first purchase of the month
@@ -89,6 +95,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         //should be disbursed feb friday 5
         $purchase->setCreatedAt(new \DateTime('2021-02-01'));
         $purchase->setProcessed(false);
+        $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
         $manager->flush();

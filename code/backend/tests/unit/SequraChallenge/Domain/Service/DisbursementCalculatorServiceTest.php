@@ -13,6 +13,7 @@ use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
+use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Domain\Service\DisbursementCalculatorService;
 use App\SequraChallenge\Infrastructure\Identifiers\UniqueIdGenerator;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,7 @@ class DisbursementCalculatorServiceTest extends TestCase
 {
     private DisbursementRepositoryInterface $disbursementRepository;
     private DisbursementLineRepositoryInterface $disbursementLineRepository;
+    private PurchaseRepositoryInterface $purchaseRepository;
     private DisbursementFactory $disbursementFactory;
     private DisbursementLineFactory $disbursementLineFactory;
     private DisbursementCalculatorService $disbursementCalculatorService;
@@ -34,12 +36,14 @@ class DisbursementCalculatorServiceTest extends TestCase
     {
         $this->disbursementRepository = $this->createMock(DisbursementRepositoryInterface::class);
         $this->disbursementLineRepository = $this->createMock(DisbursementLineRepositoryInterface::class);
+        $this->purchaseRepository = $this->createMock(PurchaseRepositoryInterface::class);
         $this->uniqueIdGenerator = $this->createMock(UniqueIdGenerator::class);
         $this->disbursementFactory = $this->createMock(DisbursementFactory::class);
         $this->disbursementLineFactory = $this->createMock(DisbursementLineFactory::class);
         $this->disbursementCalculatorService = new DisbursementCalculatorService(
             $this->disbursementRepository,
             $this->disbursementLineRepository,
+            $this->purchaseRepository,
             $this->disbursementFactory,
             $this->disbursementLineFactory
         );
@@ -99,7 +103,7 @@ class DisbursementCalculatorServiceTest extends TestCase
             ->method('create')
             ->willReturn($disbursementLine);
 
-        $this->disbursementRepository->expects($this->once())
+        $this->disbursementRepository->expects($this->exactly(2))
             ->method('save');
 
         $this->disbursementLineRepository->expects($this->once())
@@ -124,7 +128,7 @@ class DisbursementCalculatorServiceTest extends TestCase
             ->method('create')
             ->willReturn($disbursementLine);
 
-        $this->disbursementRepository->expects($this->once())
+        $this->disbursementRepository->expects($this->exactly(2))
             ->method('save');
 
         $this->disbursementLineRepository->expects($this->once())

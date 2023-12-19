@@ -15,4 +15,6 @@ interface PurchaseRepositoryInterface
     public function findById(string $id): ?Purchase;
 
     public function markAsProcessed($purchaseIds);
+
+    public function setStatus(array $purchaseIds, int $status);
 }

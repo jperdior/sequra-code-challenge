@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Presentation\Command;
 
 use App\SequraChallenge\Application\Command\ProcessPurchaseMessage;
+use App\SequraChallenge\Domain\Entity\Purchase;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
 use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -29,14 +30,14 @@ class EnqueueOrdersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $batchSize = 1000;
+        $batchSize = 3000;
 
         $pendingPurchases = $this->purchaseRepository->getNotProcessed(
             limit: $batchSize
         );
 
         $purchaseIds = array_map(fn ($purchase) => $purchase->getId(), $pendingPurchases);
-        $this->purchaseRepository->markAsProcessed($purchaseIds);
+        $this->purchaseRepository->setStatus($purchaseIds, Purchase::STATUS_PROCESSING);
 
         foreach ($pendingPurchases as $purchase) {
             $this->commandBus->dispatch(new ProcessPurchaseMessage(

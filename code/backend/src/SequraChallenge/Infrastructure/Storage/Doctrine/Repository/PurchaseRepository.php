@@ -17,11 +17,12 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
 
     public function getNotProcessed(int $limit): array
     {
+        // p.status === Purchase::STATUS_PENDING
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->select('p')
             ->from(Purchase::class, 'p')
-            ->where('p.processed = false')
+            ->where('p.status = 0')
             ->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
@@ -44,6 +45,18 @@ class PurchaseRepository extends AbstractOrmRepository implements PurchaseReposi
 
         $qb->update(Purchase::class, 'p')
             ->set('p.processed', true)
+            ->where('p.id IN (:purchaseIds)')
+            ->setParameter('purchaseIds', $purchaseIds);
+
+        $qb->getQuery()->execute();
+    }
+
+    public function setStatus(array $purchaseIds, int $status)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->update(Purchase::class, 'p')
+            ->set('p.status', $status)
             ->where('p.id IN (:purchaseIds)')
             ->setParameter('purchaseIds', $purchaseIds);
 

@@ -6,6 +6,11 @@ namespace App\SequraChallenge\Domain\Entity;
 
 class Purchase
 {
+
+    public const STATUS_PENDING = 0;
+    public const STATUS_PROCESSING = 1;
+    public const STATUS_PROCESSED = 2;
+
     private string $id;
 
     private Merchant $merchant;
@@ -13,6 +18,8 @@ class Purchase
     private float $amount;
 
     private \DateTime $createdAt;
+
+    private int $status;
 
     private bool $processed = false;
 
@@ -72,6 +79,18 @@ class Purchase
     public function setProcessed(bool $processed): Purchase
     {
         $this->processed = $processed;
+
+        return $this;
+    }
+
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): Purchase
+    {
+        $this->status = $status;
 
         return $this;
     }

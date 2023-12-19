@@ -15,6 +15,9 @@ use App\SequraChallenge\Domain\Exception\ConcurrentException;
 use App\SequraChallenge\Domain\Exception\InvalidDisbursementFrequencyException;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
+use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\Store\FlockStore;
 
 class DisbursementCalculatorService
 {
@@ -22,12 +25,17 @@ class DisbursementCalculatorService
     public const MEDIUM_ORDER_PERCENTAGE = 0.95;
     public const LARGE_ORDER_PERCENTAGE = 0.85;
 
+    private $lockFactory;
+
     public function __construct(
         private readonly DisbursementRepositoryInterface $disbursementRepository,
         private readonly DisbursementLineRepositoryInterface $disbursementLineRepository,
+        private readonly PurchaseRepositoryInterface $purchaseRepository,
         private readonly DisbursementFactory $disbursementFactory,
         private readonly DisbursementLineFactory $disbursementLineFactory,
     ) {
+        $store = new FlockStore();
+        $this->lockFactory = new LockFactory($store);
     }
 
 
@@ -40,14 +48,24 @@ class DisbursementCalculatorService
         $disbursement = $this->getDisbursement(purchase: $purchase);
         $this->disbursementRepository->save($disbursement);
         $disbursementLine = $this->calculateDisbursementLine(purchase: $purchase, disbursement: $disbursement);
-        $fees = $this->disbursementLineRepository->getFeeAmountSumByDisbursement($disbursement) + $disbursementLine->getFeeAmount();
-        $disbursement->setFees($fees);
-        $disbursement->setAmount(
-            $this->disbursementLineRepository->getAmountSumByDisbursement($disbursement) +
-            $disbursementLine->getAmount()
-        );
-        $this->disbursementLineRepository->save($disbursementLine);
-        return $disbursement;
+        $lock = $this->lockFactory->createLock($disbursement->getId());
+        $lock->acquire(true);
+        try{
+            $fees = $this->disbursementLineRepository->getFeeAmountSumByDisbursement($disbursement) + $disbursementLine->getFeeAmount();
+            $disbursement->setFees($fees);
+            $disbursement->setAmount(
+                $this->disbursementLineRepository->getAmountSumByDisbursement($disbursement) +
+                $disbursementLine->getAmount()
+            );
+            $this->disbursementLineRepository->save($disbursementLine);
+            $this->disbursementRepository->save($disbursement);
+            $purchase->setStatus(Purchase::STATUS_PROCESSED);
+            $this->purchaseRepository->save($purchase);
+            return $disbursement;
+        }
+        finally {
+            $lock->release();
+        }
     }
 
     private function calculateDisbursementLine(Purchase $purchase, Disbursement $disbursement): DisbursementLine
