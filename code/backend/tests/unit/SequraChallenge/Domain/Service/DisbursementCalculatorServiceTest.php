@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\SequraChallenge\Domain\UseCase;
 
+use App\SequraChallenge\Domain\Entity\CancellationLine;
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Domain\Entity\Enum\DisbursementFrequencyEnum;
+use App\SequraChallenge\Domain\Entity\Factory\CancellationLineFactory;
 use App\SequraChallenge\Domain\Entity\Factory\DisbursementFactory;
 use App\SequraChallenge\Domain\Entity\Factory\DisbursementLineFactory;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
+use App\SequraChallenge\Domain\Repository\CancellationLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
@@ -37,15 +40,19 @@ class DisbursementCalculatorServiceTest extends TestCase
         $this->disbursementRepository = $this->createMock(DisbursementRepositoryInterface::class);
         $this->disbursementLineRepository = $this->createMock(DisbursementLineRepositoryInterface::class);
         $this->purchaseRepository = $this->createMock(PurchaseRepositoryInterface::class);
+        $this->cancellationLineRepository = $this->createMock(CancellationLineRepositoryInterface::class);
         $this->uniqueIdGenerator = $this->createMock(UniqueIdGenerator::class);
         $this->disbursementFactory = $this->createMock(DisbursementFactory::class);
         $this->disbursementLineFactory = $this->createMock(DisbursementLineFactory::class);
+        $this->cancellationLineFactory = $this->createMock(CancellationLineFactory::class);
         $this->disbursementCalculatorService = new DisbursementCalculatorService(
             $this->disbursementRepository,
             $this->disbursementLineRepository,
             $this->purchaseRepository,
+            $this->cancellationLineRepository,
             $this->disbursementFactory,
-            $this->disbursementLineFactory
+            $this->disbursementLineFactory,
+            $this->cancellationLineFactory,
         );
 
         $merchant = new Merchant();
@@ -56,6 +63,15 @@ class DisbursementCalculatorServiceTest extends TestCase
         $merchant->setDisbursementFrequency(DisbursementFrequencyEnum::DAILY->value);
         $merchant->setMinimumMonthlyFee(0.0);
         $this->dailyMerchant = $merchant;
+
+        $merchant = new Merchant();
+        $merchant->setId('aa');
+        $merchant->setReference('aa');
+        $merchant->setEmail('aaa@aaa.es');
+        $merchant->setLiveOn(new \DateTime('2021-01-01'));
+        $merchant->setDisbursementFrequency(DisbursementFrequencyEnum::WEEKLY->value);
+        $merchant->setMinimumMonthlyFee(0.0);
+        $this->weeklyMerchant = $merchant;
 
         $purchase = new Purchase();
         $purchase->setId('aa');
@@ -215,5 +231,80 @@ class DisbursementCalculatorServiceTest extends TestCase
         $this->assertEquals(8.5, $disbursementLine->getFeeAmount());
         $this->assertEquals(991.5, $disbursementLine->getAmount());
 
+    }
+
+    public function testGetCurrentDisbursementDate(){
+        $reflectionClass = new \ReflectionClass(DisbursementCalculatorService::class);
+        $method = $reflectionClass->getMethod('getCurrentDisbursementDate');
+        $method->setAccessible(true);
+
+        $disbursementDate = $method->invoke($this->disbursementCalculatorService, $this->dailyMerchant);
+        $today = new \DateTime();
+        $this->assertEquals($today->format('Y-m-d'), $disbursementDate->format('Y-m-d'));
+
+        $disbursementDate = $method->invoke($this->disbursementCalculatorService, $this->weeklyMerchant);
+        $today = new \DateTime();
+        $today->modify('next friday');
+        $this->assertEquals($today->format('Y-m-d'), $disbursementDate->format('Y-m-d'));
+
+    }
+
+    public function testGetExistingCurrentDisbursement(){
+
+        $disbursement = $this->createMock(Disbursement::class);
+
+        $this->disbursementRepository->expects($this->once())
+            ->method('getByMerchantAndDisbursedDate')
+            ->willReturn($disbursement);
+
+        $reflectionClass = new \ReflectionClass(DisbursementCalculatorService::class);
+        $method = $reflectionClass->getMethod('getCurrentDisbursement');
+        $method->setAccessible(true);
+
+        $disbursement = $method->invoke($this->disbursementCalculatorService, $this->dailyMerchant);
+        $this->assertInstanceOf(Disbursement::class, $disbursement);
+    }
+
+    public function testGetNewCurrentDisbursement(){
+
+        $this->disbursementRepository->expects($this->once())
+            ->method('getByMerchantAndDisbursedDate')
+            ->willReturn(null);
+
+        $reflectionClass = new \ReflectionClass(DisbursementCalculatorService::class);
+        $method = $reflectionClass->getMethod('getCurrentDisbursement');
+        $method->setAccessible(true);
+
+        $this->disbursementFactory->expects($this->once())
+            ->method('create')
+            ->willReturn(new Disbursement());
+
+        $disbursement = $method->invoke($this->disbursementCalculatorService, $this->dailyMerchant);
+        $this->assertInstanceOf(Disbursement::class, $disbursement);
+    }
+
+    public function testCalculateCancellationLineNoPreviousCancellations(){
+
+        $cancellationLine = new CancellationLine();
+
+        $disbursementLine = new DisbursementLine();
+        $disbursementLine->setId('aa');
+        $disbursementLine->setPurchaseAmount(100.0);
+
+        $this->cancellationLineFactory->expects($this->once())
+            ->method('create')
+            ->willReturn($cancellationLine);
+
+        $this->cancellationLineRepository->expects($this->once())
+            ->method('sumAmountByDisbursementLineId')
+            ->willReturn(0.0);
+
+        $reflectionClass = new \ReflectionClass(DisbursementCalculatorService::class);
+        $method = $reflectionClass->getMethod('calculateCancellationLine');
+        $method->setAccessible(true);
+
+        $cancellationLine = $method->invoke($this->disbursementCalculatorService, $disbursementLine, 50);
+        $this->assertInstanceOf(CancellationLine::class, $cancellationLine);
+        $this->assertEquals(50.0, $cancellationLine->getAmount());
     }
 }

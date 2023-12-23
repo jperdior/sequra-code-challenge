@@ -6,6 +6,7 @@ namespace App\SequraChallenge\Domain\Repository;
 
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\DisbursementLine;
+use App\SequraChallenge\Domain\Entity\Purchase;
 
 interface DisbursementLineRepositoryInterface
 {
@@ -16,4 +17,6 @@ interface DisbursementLineRepositoryInterface
     public function getAmountSumByDisbursement(Disbursement $disbursement): float;
 
     public function getFeeAmountSumByDisbursement(Disbursement $disbursement): float;
+
+    public function findByPurchase(Purchase $purchase);
 }

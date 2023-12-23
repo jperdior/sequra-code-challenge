@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/app/phpunit.xml.dist" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
+    <testsuite name="Project Test Suite" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
+      <testsuite name="App\Tests\Unit\SequraChallenge\Domain\UseCase\DisbursementCalculatorServiceTest" file="/app/tests/unit/SequraChallenge/Domain/Service/DisbursementCalculatorServiceTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
+        <testcase name="testCalculateCancellationLineNoPreviousCancellations" file="/app/tests/unit/SequraChallenge/Domain/Service/DisbursementCalculatorServiceTest.php" line="286" class="App\Tests\Unit\SequraChallenge\Domain\UseCase\DisbursementCalculatorServiceTest" classname="App.Tests.Unit.SequraChallenge.Domain.UseCase.DisbursementCalculatorServiceTest" assertions="4" time="0.019313"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

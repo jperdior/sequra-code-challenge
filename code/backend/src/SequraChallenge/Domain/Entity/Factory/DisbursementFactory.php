@@ -25,7 +25,6 @@ class DisbursementFactory
         $disbursement->setMerchant($merchant);
         $disbursement->setCreatedAt(new \DateTime());
         $disbursement->setDisbursedAt($disbursementDate);
-
         return $disbursement;
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\SequraChallenge\Domain\Entity\Disbursement" table="disbursement" read-only="false"
+            repository-class="App\SequraChallenge\Infrastructure\Storage\Doctrine\Repository\DisbursementRepository">
+
+        <unique-constraints>
+            <unique-constraint columns="merchant_id,disbursed_at" name="merchant_disburse_date" />
+        </unique-constraints>
+
+        <id name="id" column="id" type="string" length="26" >
+        </id>
+
+        <field name="reference" column="reference" type="string" length="26" nullable="false"/>
+
+        <many-to-one field="merchant" target-entity="App\SequraChallenge\Domain\Entity\Merchant">
+            <join-column name="merchant_id" referenced-column-name="id" />
+        </many-to-one>
+
+        <field name="fees" column="fees" type="float" />
+        <field name="amount" column="amount" type="float" />
+        <field name="monthlyFee" column="monthly_fee" type="float" />
+        <field name="createdAt" column="created_at" type="datetime" />
+        <field name="disbursedAt" column="disbursed_at" type="date" />
+
+    </entity>
+</doctrine-mapping>

@@ -55,6 +55,9 @@ load-fixtures:
 tests:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testdox --log-junit junit.xml
 
+test:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testdox --log-junit junit.xml --filter ${TEST}
+
 #CODESTYLE
 
 fix-codestyle-dry:

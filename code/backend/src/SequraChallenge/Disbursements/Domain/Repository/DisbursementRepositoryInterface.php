@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Domain\Repository;
+namespace App\SequraChallenge\Disbursements\Domain\Repository;
 
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\Merchant;

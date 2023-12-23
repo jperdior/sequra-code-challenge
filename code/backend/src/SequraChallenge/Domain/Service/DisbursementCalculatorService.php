@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Domain\Service;
 
+use App\SequraChallenge\Domain\Entity\CancellationLine;
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Domain\Entity\Enum\DisbursementFrequencyEnum;
+use App\SequraChallenge\Domain\Entity\Factory\CancellationLineFactory;
 use App\SequraChallenge\Domain\Entity\Factory\DisbursementFactory;
 use App\SequraChallenge\Domain\Entity\Factory\DisbursementLineFactory;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
 use App\SequraChallenge\Domain\Exception\ConcurrentException;
+use App\SequraChallenge\Domain\Exception\InvalidCancellationAmountException;
 use App\SequraChallenge\Domain\Exception\InvalidDisbursementFrequencyException;
+use App\SequraChallenge\Domain\Repository\CancellationLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
@@ -31,8 +35,10 @@ class DisbursementCalculatorService
         private readonly DisbursementRepositoryInterface $disbursementRepository,
         private readonly DisbursementLineRepositoryInterface $disbursementLineRepository,
         private readonly PurchaseRepositoryInterface $purchaseRepository,
+        private readonly CancellationLineRepositoryInterface $cancellationLineRepository,
         private readonly DisbursementFactory $disbursementFactory,
         private readonly DisbursementLineFactory $disbursementLineFactory,
+        private readonly CancellationLineFactory $cancellationLineFactory
     ) {
         $store = new FlockStore();
         $this->lockFactory = new LockFactory($store);
@@ -194,4 +200,97 @@ class DisbursementCalculatorService
     {
         return $this->disbursementRepository->getSumOfLastMonthFees($merchant, $date);
     }
+
+    /**
+     * @throws InvalidDisbursementFrequencyException
+     */
+    public function calculateCancellation(DisbursementLine $disbursementLine, float $cancelledAmount): void
+    {
+        $disbursement = $this->getCurrentDisbursement(
+            $disbursementLine->getDisbursement()->getMerchant()
+        );
+        $this->disbursementRepository->save($disbursement);
+        $cancellationLine = $this->calculateCancellationLine(
+            disbursementLine: $disbursementLine,
+            cancelledAmount: $cancelledAmount
+        );
+        $cancellationLine->setDisbursement($disbursement);
+        $this->cancellationLineRepository->save($cancellationLine);
+        $disbursement->setAmount(
+            $this->disbursementLineRepository->getAmountSumByDisbursement($disbursement) -
+            $this->cancellationLineRepository->sumAmountByDisbursementLineId($disbursementLine->getId())
+        );
+        $this->disbursementRepository->save($disbursement);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function calculateCancellationLine(
+        DisbursementLine $disbursementLine,
+        float $cancelledAmount
+    ): CancellationLine {
+        $cancellationLine = $this->cancellationLineFactory->create();
+
+        $currentCancelledAmount = $this->cancellationLineRepository->sumAmountByDisbursementLineId(
+            $disbursementLine->getId()
+        );
+        if ($currentCancelledAmount + $cancelledAmount > $disbursementLine->getPurchaseAmount()) {
+            throw new InvalidCancellationAmountException();
+        }
+        $cancellationLine->setAmount($cancelledAmount);
+        $cancellationLine->setDisbursementLine($disbursementLine);
+
+        return $cancellationLine;
+    }
+
+    /**
+     * @throws InvalidDisbursementFrequencyException
+     */
+    private function getCurrentDisbursement(Merchant $merchant): Disbursement
+    {
+        $disbursementDate = $this->getCurrentDisbursementDate($merchant);
+        $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate(
+            merchant: $merchant,
+            disbursementDate: $disbursementDate
+        );
+        if(null === $disbursement){
+            $disbursement = $this->disbursementFactory->create(
+                merchant: $merchant,
+                disbursementDate: $disbursementDate
+            );
+        }
+        return $disbursement;
+    }
+
+    /**
+     * @throws InvalidDisbursementFrequencyException
+     */
+    private function getCurrentDisbursementDate(Merchant $merchant): \DateTime
+    {
+        $disbursementDate = new \DateTime();
+        switch ($merchant->getDisbursementFrequency()) {
+            case DisbursementFrequencyEnum::DAILY->value:
+                return new \DateTime();
+            case DisbursementFrequencyEnum::WEEKLY->value:
+                $liveOn = $merchant->getLiveOn();
+                $dayOfWeek = $liveOn->format('N');
+                $todayDayOfWeek = $disbursementDate->format('N');
+                if ($dayOfWeek < $todayDayOfWeek) {
+                    $daysDifference = $todayDayOfWeek - $dayOfWeek;
+                    $disbursementDate->modify('-'.$daysDifference.' days')->modify('+1 week');
+                } elseif ($dayOfWeek > $todayDayOfWeek) {
+                    $daysDifference = $dayOfWeek - $todayDayOfWeek;
+                    $disbursementDate->modify('+'.$daysDifference.' days');
+                } else {
+                    $disbursementDate = new \DateTime();
+                }
+
+                return $disbursementDate;
+            default:
+                throw new InvalidDisbursementFrequencyException();
+        }
+    }
+
+
 }

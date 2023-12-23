@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Infrastructure\Storage\Doctrine\Repository;
+namespace App\SequraChallenge\Disbursements\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Repository\DisbursementRepositoryInterface;
+use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
 
-class DisbursementRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
+class DisbursementOrmRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {
     protected function getClass(): string
     {

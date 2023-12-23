@@ -6,6 +6,7 @@ namespace App\SequraChallenge\Infrastructure\Storage\Doctrine\Repository;
 
 use App\SequraChallenge\Domain\Entity\Disbursement;
 use App\SequraChallenge\Domain\Entity\DisbursementLine;
+use App\SequraChallenge\Domain\Entity\Purchase;
 use App\SequraChallenge\Domain\Repository\DisbursementLineRepositoryInterface;
 
 class DisbursementLineRepository extends AbstractOrmRepository implements DisbursementLineRepositoryInterface
@@ -52,5 +53,16 @@ class DisbursementLineRepository extends AbstractOrmRepository implements Disbur
             ->setParameter('disbursement', $disbursement);
 
         return $qb->getQuery()->getSingleScalarResult() ?? 0;
+    }
+
+    public function findByPurchase(Purchase $purchase): ?DisbursementLine
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('dl')
+            ->from(DisbursementLine::class, 'dl')
+            ->where('dl.purchase = :purchase')
+            ->setParameter('purchase', $purchase);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }
