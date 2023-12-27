@@ -12,7 +12,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-
+        /*
         if (getenv('APP_ENV') !== 'test') {
             return;
         }
@@ -98,7 +98,7 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         $purchase->setStatus(Purchase::STATUS_PENDING);
         $manager->persist($purchase);
 
-        $manager->flush();
+        $manager->flush();*/
     }
 
     public function getDependencies(): array

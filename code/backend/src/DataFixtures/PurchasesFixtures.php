@@ -13,7 +13,7 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
 
-        if (getenv('APP_ENV') === 'test') {
+       /* if (getenv('APP_ENV') === 'test') {
             return;
         }
 
@@ -46,7 +46,7 @@ class PurchasesFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-        $manager->clear();
+        $manager->clear();*/
     }
 
     public function getDependencies(): array

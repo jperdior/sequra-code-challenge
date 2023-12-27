@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-abstract class IntValueObject
+abstract readonly class IntValueObject
 {
-	public function __construct(protected int $value) {}
-
-	final public function value(): int
-	{
-		return $this->value;
-	}
+	public function __construct(public int $value) {}
 
 	final public function isBiggerThan(self $other): bool
 	{
-		return $this->value() > $other->value();
+		return $this->value > $other->value;
 	}
 }

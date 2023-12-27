@@ -8,9 +8,9 @@ use InvalidArgumentException;
 use Symfony\Component\Uid\Ulid as SymfonyUlid;
 use Stringable;
 
-abstract class Ulid implements Stringable
+abstract readonly class Ulid implements Stringable
 {
-	final public function __construct(protected string $value)
+	final public function __construct(public string $value)
 	{
 		$this->ensureIsValidUuid($value);
 	}
@@ -20,19 +20,14 @@ abstract class Ulid implements Stringable
 		return new static(SymfonyUlid::generate());
 	}
 
-	final public function value(): string
-	{
-		return $this->value;
-	}
-
 	final public function equals(self $other): bool
 	{
-		return $this->value() === $other->value();
+		return $this->value === $other->value;
 	}
 
 	public function __toString(): string
 	{
-		return $this->value();
+		return $this->value;
 	}
 
 	private function ensureIsValidUuid(string $id): void

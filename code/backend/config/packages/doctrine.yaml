@@ -21,12 +21,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
-            App\SequraChallenge:
+            App\SequraChallenge\Merchants:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/SequraChallenge/Infrastructure/Storage/Doctrine/Schema'
-                prefix: 'App\SequraChallenge\Domain\Entity'
-                alias: App\SequraChallenge
+                dir: '%kernel.project_dir%/src/SequraChallenge/Merchants/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\SequraChallenge\Merchants\Domain\Entity'
+                alias: App\SequraChallenge\Merchants
 
 when@test:
     doctrine:

@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-abstract class StringValueObject
+abstract readonly class StringValueObject
 {
-	public function __construct(protected string $value) {}
+	public function __construct(public string $value) {}
 
-	final public function value(): string
-	{
-		return $this->value;
-	}
 }

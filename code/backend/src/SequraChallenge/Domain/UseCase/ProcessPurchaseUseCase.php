@@ -11,8 +11,8 @@ use App\SequraChallenge\Domain\Service\DisbursementCalculatorService;
 readonly class ProcessPurchaseUseCase
 {
     public function __construct(
-        private DisbursementCalculatorService $disbursementCalculatorService,
-        private PurchaseRepositoryInterface   $purchaseRepository,
+//        private DisbursementCalculatorService $disbursementCalculatorService,
+//        private PurchaseRepositoryInterface   $purchaseRepository,
     ) {
     }
 
@@ -22,10 +22,10 @@ readonly class ProcessPurchaseUseCase
     public function execute(
         string $purchaseId
     ): void {
-        $purchase = $this->purchaseRepository->findById($purchaseId);
-        if (null === $purchase) {
-            throw new PurchaseNotFoundException();
-        }
-        $this->disbursementCalculatorService->calculateDisbursement($purchase);
+//        $purchase = $this->purchaseRepository->findById($purchaseId);
+//        if (null === $purchase) {
+//            throw new PurchaseNotFoundException();
+//        }
+//        $this->disbursementCalculatorService->calculateDisbursement($purchase);
     }
 }

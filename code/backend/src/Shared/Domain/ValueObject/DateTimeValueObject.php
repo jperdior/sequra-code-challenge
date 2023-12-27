@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-class DateTimeValueObject
+abstract readonly class DateTimeValueObject
 {
-    public function __construct(private \DateTime $value) {}
-
-    public function value(): \DateTime
-    {
-        return $this->value;
-    }
+    public function __construct(public \DateTime $value) {}
 
     public function __toString(): string
     {
@@ -20,7 +15,7 @@ class DateTimeValueObject
 
     public function equals(self $other): bool
     {
-        return $this->value() === $other->value();
+        return $this->value === $other->value;
     }
 
     public function format(string $format): string

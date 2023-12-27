@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\SequraChallenge\Merchants\Domain\Entity\Merchant" table="merchant" read-only="false"
+            repository-class="App\SequraChallenge\Merchants\Infrastructure\Persistence\MerchantDoctrineRepository">
+
+        <id name="id" column="id" type="string" length="36" >
+        </id>
+
+        <embedded name="reference" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantReference" use-column-prefix="false" />
+        <embedded name="email" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantEmail" use-column-prefix="false" />
+        <embedded name="liveOn" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantLiveOn" use-column-prefix="false" />
+        <embedded name="disbursementFrequency" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency" use-column-prefix="false" />
+        <embedded name="minimumMonthlyFee" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantMinimumMonthlyFee" use-column-prefix="false" />
+
+    </entity>
+</doctrine-mapping>

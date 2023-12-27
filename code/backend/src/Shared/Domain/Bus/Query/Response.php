@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace CodelyTv\Shared\Domain\Bus\Query;
+namespace App\Shared\Domain\Bus\Query;
 
 interface Response {}

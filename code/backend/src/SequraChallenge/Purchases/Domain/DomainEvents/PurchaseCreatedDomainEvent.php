@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Orders\Domain\DomainEvents;
+namespace App\SequraChallenge\Purchases\Domain\DomainEvents;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
@@ -10,9 +10,9 @@ final class PurchaseCreatedDomainEvent extends DomainEvent
 {
     public function __construct(
         string $id,
-        public readonly string $merchantId,
+        public readonly string $merchantReference,
         public readonly float $amount,
-        public readonly int $status,
+        public readonly \DateTime $createdAt,
         string $eventId = null,
         string $occurredOn = null
     ) {
@@ -32,9 +32,9 @@ final class PurchaseCreatedDomainEvent extends DomainEvent
     ): self {
         return new self(
             $aggregateId,
-            $body['merchantId'],
+            $body['merchantReference'],
             $body['amount'],
-            $body['status'],
+            new \DateTime($body['createdAt']),
             $eventId,
             $occurredOn
         );
@@ -43,9 +43,10 @@ final class PurchaseCreatedDomainEvent extends DomainEvent
     public function toPrimitives(): array
     {
         return [
-            'merchant_id' => $this->merchantId,
+            'merchant_reference' => $this->merchantReference,
             'amount' => $this->amount,
-            'status' => $this->status
+            'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
         ];
+
     }
 }

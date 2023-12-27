@@ -14,7 +14,7 @@ framework:
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
-            'App\SequraChallenge\Application\Command\ProcessPurchaseMessage': async
+            'App\Shared\Domain\Bus\Event\DomainEvent': async
 
 when@test:
     framework:
