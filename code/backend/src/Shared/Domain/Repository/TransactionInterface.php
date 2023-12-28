@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Domain\Repository;
+namespace App\Shared\Domain\Repository;
 
-interface TransactionRepositoryInterface
+interface TransactionInterface
 {
     public function open();
 

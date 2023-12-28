@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Infrastructure\Logging;
+namespace App\Shared\Infrastructure\Logging;
 
 use App\SequraChallenge\Domain\Logging\LoggingInterface;
 use Psr\Log\LoggerInterface;
