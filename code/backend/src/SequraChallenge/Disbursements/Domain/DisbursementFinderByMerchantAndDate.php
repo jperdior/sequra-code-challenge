@@ -8,7 +8,6 @@ use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
 
 class DisbursementFinderByMerchantAndDate
 {

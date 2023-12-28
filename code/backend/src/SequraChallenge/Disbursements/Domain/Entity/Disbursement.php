@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
-use App\SequraChallenge\Domain\Entity\Merchant;
+use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 
 class Disbursement extends AggregateRoot
@@ -12,13 +13,12 @@ class Disbursement extends AggregateRoot
 
     public function __construct(
         public readonly DisbursementReference $reference,
-        public readonly DisbursementMerchantReference $merchantReference,
+        public readonly MerchantReference $merchantReference,
         public readonly DisbursementDisbursedAt $disbursedAt,
         private DisbursementFee $fee = new DisbursementFee(0),
         private DisbursementAmount $amount = new DisbursementAmount(0),
         private DisbursementMonthlyFee $monthlyFee = new DisbursementMonthlyFee(0),
-        private readonly  \DateTime $createdAt = new \DateTime(),
-        private DisbursementLines $disbursementLines = new DisbursementLines([])
+        private readonly  \DateTime $createdAt = new \DateTime()
     ) {}
 
     public static function create(
@@ -29,7 +29,7 @@ class Disbursement extends AggregateRoot
     {
         return new self(
             new DisbursementReference($reference),
-            new DisbursementMerchantReference($merchantReference),
+            new MerchantReference($merchantReference),
             new DisbursementDisbursedAt($disbursedAt)
         );
     }
@@ -67,36 +67,6 @@ class Disbursement extends AggregateRoot
     public function createdAt(): \DateTime
     {
         return $this->createdAt;
-    }
-
-    public function disbursementLines(): DisbursementLines
-    {
-        return $this->disbursementLines;
-    }
-
-    public function addDisbursementLine(
-        string $id,
-        string $purchaseId,
-        float $purchaseAmount,
-        float $amount,
-        float $feePercentage,
-        float $feeAmount
-    ): void
-    {
-        $disbursementLine = DisbursementLine::create(
-            id: $id,
-            disbursement: $this,
-            purchaseId: $purchaseId,
-            purchaseAmount: $purchaseAmount,
-            amount: $amount,
-            feePercentage: $feePercentage,
-            feeAmount: $feeAmount
-        );
-
-        $this->addFee($feeAmount);
-        $this->addAmount($amount);
-
-        $this->disbursementLines->add($disbursementLine);
     }
 
 }

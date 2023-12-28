@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Repository;
 
-use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementLine;
+use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 
 interface DisbursementLineRepositoryInterface
 {

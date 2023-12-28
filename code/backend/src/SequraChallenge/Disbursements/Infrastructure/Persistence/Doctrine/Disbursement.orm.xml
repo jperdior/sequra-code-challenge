@@ -13,15 +13,12 @@
         <id name="reference" column="reference" type="string" length="26" >
         </id>
 
-        <embedded name="merchantReference" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference" use-column-prefix="false" />
+        <embedded name="merchantReference" class="App\SequraChallenge\Shared\Domain\Merchants\MerchantReference" use-column-prefix="false" />
         <embedded name="fee" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementFee" use-column-prefix="false" />
         <embedded name="amount" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementAmount" use-column-prefix="false" />
         <embedded name="monthlyFee" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMonthlyFee" use-column-prefix="false" />
         <embedded name="disbursedAt" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt" use-column-prefix="false" />
 
         <field name="createdAt" column="created_at" type="datetime" />
-
-        <embedded name="disbursementLines" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementLines" use-column-prefix="false" />
-
     </entity>
 </doctrine-mapping>

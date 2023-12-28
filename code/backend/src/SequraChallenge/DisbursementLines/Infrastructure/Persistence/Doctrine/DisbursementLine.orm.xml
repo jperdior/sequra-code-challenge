@@ -9,12 +9,7 @@
         <id name="id" column="id" type="string" length="26" >
         </id>
 
-        <many-to-one field="disbursement" target-entity="App\SequraChallenge\Disbursements\Domain\Entity\Disbursement" fetch="EAGER">
-            <join-columns>
-                <join-column name="disbursement_reference" referenced-column-name="reference" />
-            </join-columns>
-        </many-to-one>
-
+        <embedded name="disbursementReference" class="App\SequraChallenge\Shared\Domain\Disbursement\DisbursementReference" use-column-prefix="false" />
         <embedded name="purchaseId" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseId" use-column-prefix="false" />
         <embedded name="purchaseAmount" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseAmount" use-column-prefix="false" />
         <embedded name="amount" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseId" use-column-prefix="false" />

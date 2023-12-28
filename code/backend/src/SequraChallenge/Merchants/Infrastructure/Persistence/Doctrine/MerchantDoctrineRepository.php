@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantId;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
 use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
 
 class MerchantDoctrineRepository extends AbstractOrmRepository implements MerchantRepositoryInterface

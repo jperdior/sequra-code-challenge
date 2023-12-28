@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <embeddable name="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementMerchantReference">
+    <embeddable name="App\SequraChallenge\Shared\Domain\Merchants\MerchantReference">
         <field name="value" type="string" column="merchant_reference" />
     </embeddable>
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Merchants\Domain\Repository;
 
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 interface MerchantRepositoryInterface
 {

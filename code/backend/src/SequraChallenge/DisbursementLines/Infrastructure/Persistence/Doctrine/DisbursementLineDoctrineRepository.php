@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Infrastructure\Persistence\Doctrine;
+namespace App\SequraChallenge\DisbursementLines\Infrastructure\Persistence\Doctrine;
 
-use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementLine;
+use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
 

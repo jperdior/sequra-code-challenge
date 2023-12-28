@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Merchants\Domain\Exception;
 
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 class MerchantNotFound extends \DomainException
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SequraChallenge\Disbursements\Domain\Entity;
+namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
 
 use App\Shared\Domain\ValueObject\Ulid;
 

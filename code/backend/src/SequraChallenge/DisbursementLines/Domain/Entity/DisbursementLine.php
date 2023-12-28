@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Domain\Entity;
+namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
 
+use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 
 readonly class DisbursementLine
 {
 
     public function __construct(
         public DisbursementLineId $id,
-        public Disbursement $disbursement,
+        public DisbursementReference $disbursementReference,
         public DisbursementLinePurchaseId $purchaseId,
         public DisbursementLinePurchaseAmount $purchaseAmount,
         public DisbursementLineAmount $amount,
@@ -23,7 +24,7 @@ readonly class DisbursementLine
 
     public static function create(
         string $id,
-        Disbursement $disbursement,
+        string $disbursementReference,
         string $purchaseId,
         float $purchaseAmount,
         float $amount,
@@ -34,7 +35,7 @@ readonly class DisbursementLine
     {
         return new self(
             new DisbursementLineId($id),
-            $disbursement,
+            new DisbursementReference($disbursementReference),
             new DisbursementLinePurchaseId($purchaseId),
             new DisbursementLinePurchaseAmount($purchaseAmount),
             new DisbursementLineAmount($amount),

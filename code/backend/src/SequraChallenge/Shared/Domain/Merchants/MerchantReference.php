@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Merchants\Domain\Entity;
+namespace App\SequraChallenge\Shared\Domain\Merchants;
 
 use App\Shared\Domain\ValueObject\StringValueObject;
 

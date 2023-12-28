@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Merchants\Domain;
 
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantId;
-use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
 use App\SequraChallenge\Merchants\Domain\Exception\MerchantNotFound;
 use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 class MerchantFinder
 {
