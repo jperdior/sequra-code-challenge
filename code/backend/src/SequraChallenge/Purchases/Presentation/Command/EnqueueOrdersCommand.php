@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Presentation\Command;
+namespace App\SequraChallenge\Purchases\Presentation\Command;
 
-use App\SequraChallenge\Domain\Repository\PurchaseRepositoryInterface;
-use App\SequraChallenge\Infrastructure\Messenger\SimpleCommandBus;
+use App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent;
 use App\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent;
 
 #[AsCommand(name: 'app:enqueue-orders', description: 'Enqueue orders')]
 class EnqueueOrdersCommand extends Command
@@ -40,9 +38,11 @@ class EnqueueOrdersCommand extends Command
             return Command::FAILURE;
         }
 
+        fgetcsv($purchasesCsv);
+
         try {
-            // Read CSV file with using yield
             foreach ($this->readCsvRows($purchasesCsv) as $row) {
+
                 $event = new PurchaseCreatedDomainEvent(
                     id: $row[0],
                     merchantReference: $row[1],
@@ -50,9 +50,9 @@ class EnqueueOrdersCommand extends Command
                     createdAt: new \DateTime($row[3])
                 );
                 $this->eventBus->publish($event);
+                unset($event);
             }
         } finally {
-            // Always close the file handle when done
             fclose($purchasesCsv);
         }
 
@@ -61,7 +61,7 @@ class EnqueueOrdersCommand extends Command
 
     private function readCsvRows($csvFile): iterable
     {
-        while (($data = fgetcsv($csvFile)) !== false) {
+        while (($data = fgetcsv($csvFile, null, ';')) !== false) {
             yield $data;
         }
     }

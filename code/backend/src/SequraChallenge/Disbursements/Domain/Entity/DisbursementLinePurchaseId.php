@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
+namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
 use App\Shared\Domain\ValueObject\StringValueObject;
 

@@ -13,9 +13,9 @@ class Merchant extends AggregateRoot
         private readonly MerchantId $id,
         private readonly MerchantReference $reference,
         private readonly MerchantEmail $email,
-        private readonly MerchantLiveOn $liveOn,
-        private readonly MerchantDisbursementFrequency $disbursementFrequency,
-        private readonly MerchantMinimumMonthlyFee $minimumMonthlyFee
+        public readonly MerchantLiveOn $liveOn,
+        public readonly MerchantDisbursementFrequency $disbursementFrequency,
+        public readonly MerchantMinimumMonthlyFee $minimumMonthlyFee
     )
     {
     }
@@ -53,20 +53,6 @@ class Merchant extends AggregateRoot
         return $this->email;
     }
 
-    public function liveOn(): MerchantLiveOn
-    {
-        return $this->liveOn;
-    }
-
-    public function disbursementFrequency(): MerchantDisbursementFrequency
-    {
-        return $this->disbursementFrequency;
-    }
-
-    public function minimumMonthlyFee(): MerchantMinimumMonthlyFee
-    {
-        return $this->minimumMonthlyFee;
-    }
 
 
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
-use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 
@@ -13,7 +12,7 @@ class Disbursement extends AggregateRoot
 
     public function __construct(
         public readonly DisbursementReference $reference,
-        public readonly Merchant $merchant,
+        public readonly DisbursementMerchantReference $merchantReference,
         public readonly DisbursementDisbursedAt $disbursedAt,
         private DisbursementFee $fee = new DisbursementFee(0),
         private DisbursementAmount $amount = new DisbursementAmount(0),
@@ -24,13 +23,13 @@ class Disbursement extends AggregateRoot
 
     public static function create(
         string $reference,
-        Merchant $merchant,
+        string $merchantReference,
         \DateTime $disbursedAt
     ): Disbursement
     {
         return new self(
             new DisbursementReference($reference),
-            $merchant,
+            new DisbursementMerchantReference($merchantReference),
             new DisbursementDisbursedAt($disbursedAt)
         );
     }

@@ -21,6 +21,6 @@ class SimpleEventBus implements EventBus
 
     public function publish(DomainEvent ...$events): void
     {
-        each($this->messageBus->dispatch(), $events);
+        each(fn (DomainEvent $event) => $this->messageBus->dispatch($event), $events);
     }
 }

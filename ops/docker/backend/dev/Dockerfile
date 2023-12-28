@@ -45,6 +45,7 @@ RUN mv /xdebug.so /pdo_mysql.so /pdo_sqlite.so /amqp.so $(php -r 'echo ini_get("
 RUN docker-php-ext-enable xdebug pdo_mysql pdo_sqlite amqp
 
 RUN echo "max_execution_time = 200s" >> /usr/local/etc/php/php.ini
+RUN echo "memory_limit = 4096M" >> /usr/local/etc/php/php.ini
 
 RUN install --directory /app --owner=www-data --mode=750
 WORKDIR /app

@@ -2,7 +2,6 @@
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
-use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\Shared\Domain\Collection;
 
 final readonly class DisbursementLines extends Collection

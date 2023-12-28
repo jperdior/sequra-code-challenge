@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
+namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
 
-use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
-
-readonly class DisbursementLine{
+readonly class DisbursementLine
+{
 
     public function __construct(
         public DisbursementLineId $id,

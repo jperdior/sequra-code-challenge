@@ -27,6 +27,18 @@ doctrine:
                 dir: '%kernel.project_dir%/src/SequraChallenge/Merchants/Infrastructure/Persistence/Doctrine'
                 prefix: 'App\SequraChallenge\Merchants\Domain\Entity'
                 alias: App\SequraChallenge\Merchants
+            App\SequraChallenge\Dibursements:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/SequraChallenge/Disbursements/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\SequraChallenge\Disbursements\Domain\Entity'
+                alias: App\SequraChallenge\Disbursements
+            App\SequraChallenge\DibursementLines:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/SequraChallenge/DisbursementLines/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\SequraChallenge\DisbursementLines\Domain\Entity'
+                alias: App\SequraChallenge\DisbursementLines
 
 when@test:
     doctrine:

@@ -10,11 +10,35 @@ framework:
             # sync: 'sync://'
             async:
                 dsn: '%env(RABBITMQ_URL)%'
+            disbursement_purchase_created:
+                dsn: '%env(RABBITMQ_URL)%'
+                options:
+                    exchange:
+                        name: purchase_created
+                        type: direct
+                        arguments: { }
+                    queues:
+                        disbursement.disbursement_line.create_on_purchase_created:
+#                            binding_arguments:
+#                                purchase_created.queue1: purchase_created.queue1
+#                                purchase_created.queue2: purchase_created.queue2
+#                            binding_keys:
+#                                - purchase_created.queue1
+#                                - purchase_created.queue2
+                            arguments: { }
+                        #purchase_created_queue2:
+                        #    name: purchase_created_queue2
+                        #    durable: true
+                        #    auto_delete: false
+                        #    arguments: { }
+                        #    binding:
+                        #        routing_key: purchase_created.queue2
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
-            'App\Shared\Domain\Bus\Event\DomainEvent': async
+            #'App\Shared\Domain\Bus\Event\DomainEvent': async
+            'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': disbursement_purchase_created
 
 when@test:
     framework:

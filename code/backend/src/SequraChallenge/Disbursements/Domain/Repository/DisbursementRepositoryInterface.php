@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Repository;
 
-use App\SequraChallenge\Domain\Entity\Disbursement;
-use App\SequraChallenge\Domain\Entity\Merchant;
+use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
+use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
+use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference;
 
 interface DisbursementRepositoryInterface
 {
-    public function getByMerchantAndDisbursedDate(Merchant $merchant, \DateTime $disbursementDate): ?Disbursement;
+    public function getByMerchantAndDisbursedDate(
+        DisbursementMerchantReference $merchantReference,
+        DisbursementDisbursedAt $disbursedAt
+    ): ?Disbursement;
 
-    public function countDisbursementsOfMonth(Merchant $merchant, \DateTime $dateTime): int;
+    //public function countDisbursementsOfMonth(Merchant $merchant, \DateTime $dateTime): int;
 
-    public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float;
+    //public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float;
 
     public function save(Disbursement $disbursement): void;
 
-    public function getMerchantCurrentDisbursement(Merchant $merchant);
+    //public function getMerchantCurrentDisbursement(Merchant $merchant);
 }

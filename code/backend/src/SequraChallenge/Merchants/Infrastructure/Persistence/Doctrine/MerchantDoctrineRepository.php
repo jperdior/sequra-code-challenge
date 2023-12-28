@@ -6,6 +6,7 @@ namespace App\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantId;
+use App\SequraChallenge\Merchants\Domain\Entity\MerchantReference;
 use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
 
@@ -21,8 +22,8 @@ class MerchantDoctrineRepository extends AbstractOrmRepository implements Mercha
         $this->persist($merchant);
     }
 
-    public function search(MerchantId $id): ?Merchant
+    public function search(MerchantReference $reference): ?Merchant
     {
-        return $this->find($id);
+        return $this->findOneBy(['reference' => $reference->value]);
     }
 }
