@@ -39,9 +39,9 @@ class Disbursement extends AggregateRoot
         return $this->fee;
     }
 
-    private function addFee(float $fee): void
+    public function addFee(float $fee): void
     {
-        $this->fee = new DisbursementFee($this->fee->value + $fee);
+        $this->fee->add($fee);
     }
 
     public function amount(): DisbursementAmount
@@ -49,9 +49,9 @@ class Disbursement extends AggregateRoot
         return $this->amount;
     }
 
-    private function addAmount(float $amount): void
+    public function addAmount(float $amount): void
     {
-        $this->amount = new DisbursementAmount($this->amount->value + $amount);
+        $this->amount->add($amount);
     }
 
     public function monthlyFee(): DisbursementMonthlyFee

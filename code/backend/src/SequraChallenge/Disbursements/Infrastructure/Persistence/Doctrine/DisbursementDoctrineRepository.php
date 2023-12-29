@@ -6,8 +6,8 @@ namespace App\SequraChallenge\Disbursements\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
 
 class DisbursementDoctrineRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
@@ -18,7 +18,7 @@ class DisbursementDoctrineRepository extends AbstractOrmRepository implements Di
     }
 
     public function getByMerchantAndDisbursedDate(
-        DisbursementMerchantReference $merchantReference,
+        MerchantReference $merchantReference,
         DisbursementDisbursedAt $disbursedAt
     ): ?Disbursement {
         return $this->findOneBy([

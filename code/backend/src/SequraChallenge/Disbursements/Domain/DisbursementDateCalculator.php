@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain;
 
+use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency;
 
 class DisbursementDateCalculator
@@ -13,7 +14,7 @@ class DisbursementDateCalculator
         string $merchantDisbursementFrequency,
         \DateTime $merchantLiveOnDate,
         \DateTime $purchaseCreatedAt,
-    ): \DateTime{
+    ): DisbursementDisbursedAt{
         $disbursementDate = null;
         switch ($merchantDisbursementFrequency) {
             case MerchantDisbursementFrequency::DAILY->value:
@@ -33,7 +34,7 @@ class DisbursementDateCalculator
                 }
                 break;
         }
-        return $disbursementDate;
+        return new DisbursementDisbursedAt($disbursementDate);
     }
 
 

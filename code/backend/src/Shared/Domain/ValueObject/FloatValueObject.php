@@ -17,4 +17,9 @@ abstract readonly class FloatValueObject
     {
         return new static(round($this->value, $precision, $mode));
     }
+
+    final public function add(float $value): self
+    {
+        return new static($this->value + $value);
+    }
 }

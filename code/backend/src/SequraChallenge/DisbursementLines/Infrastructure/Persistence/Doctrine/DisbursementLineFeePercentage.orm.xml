@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineFeePercentage">
-        <field name="value" type="float" column="fee_percentage" />
+        <field name="value" type="integer" column="fee_percentage" />
     </embeddable>
 
 </doctrine-mapping>

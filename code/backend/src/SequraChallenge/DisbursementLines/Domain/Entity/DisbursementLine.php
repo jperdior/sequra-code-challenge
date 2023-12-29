@@ -6,6 +6,7 @@ namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
 
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent;
 
 class DisbursementLine extends AggregateRoot
 {
@@ -27,23 +28,31 @@ class DisbursementLine extends AggregateRoot
         string $id,
         string $disbursementReference,
         string $purchaseId,
-        float $purchaseAmount,
-        float $amount,
-        float $feePercentage,
-        float $feeAmount,
-        \DateTime $createdAt = new \DateTime(),
+        float $purchaseAmount
     ): DisbursementLine
     {
-        return new self(
+        $feePercentage = DisbursementLineFeePercentage::fromAmount($purchaseAmount);
+        $amount = new DisbursementLineAmount($purchaseAmount * ($feePercentage->value/100));
+        $feeAmount = new DisbursementLineFeeAmount($purchaseAmount - $amount->value);
+
+        $disbursementLine = new self(
             new DisbursementLineId($id),
             new DisbursementReference($disbursementReference),
             new DisbursementLinePurchaseId($purchaseId),
             new DisbursementLinePurchaseAmount($purchaseAmount),
-            new DisbursementLineAmount($amount),
-            new DisbursementLineFeePercentage($feePercentage),
-            new DisbursementLineFeeAmount($feeAmount),
-            $createdAt
+            $amount->rounded(2),
+            $feePercentage,
+            $feeAmount->rounded(2)
         );
+
+        $disbursementLine->record(new DisbursementLineCreatedDomainEvent(
+            id: $disbursementLine->id->value,
+            disbursementReference: $disbursementLine->disbursementReference->value,
+            amount: $disbursementLine->amount->value,
+            feeAmount: $disbursementLine->feeAmount->value
+        ));
+
+        return $disbursementLine;
     }
 
 }

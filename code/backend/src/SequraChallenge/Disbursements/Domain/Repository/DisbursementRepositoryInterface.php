@@ -6,12 +6,12 @@ namespace App\SequraChallenge\Disbursements\Domain\Repository;
 
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 interface DisbursementRepositoryInterface
 {
     public function getByMerchantAndDisbursedDate(
-        DisbursementMerchantReference $merchantReference,
+        MerchantReference $merchantReference,
         DisbursementDisbursedAt $disbursedAt
     ): ?Disbursement;
 

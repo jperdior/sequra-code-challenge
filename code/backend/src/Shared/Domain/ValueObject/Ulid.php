@@ -12,7 +12,7 @@ abstract readonly class Ulid implements Stringable
 {
 	final public function __construct(public string $value)
 	{
-		$this->ensureIsValidUuid($value);
+		$this->ensureIsValidUlid($value);
 	}
 
 	final public static function random(): self
@@ -30,7 +30,7 @@ abstract readonly class Ulid implements Stringable
 		return $this->value;
 	}
 
-	private function ensureIsValidUuid(string $id): void
+	private function ensureIsValidUlid(string $id): void
 	{
 		if (!SymfonyUlid::isValid($id)) {
 			throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', self::class, $id));
