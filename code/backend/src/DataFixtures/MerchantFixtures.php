@@ -21,9 +21,7 @@ class MerchantFixtures extends Fixture
         fgetcsv($merchantCsv);
         while (($merchantCsvRow = fgetcsv($merchantCsv, null, ';')) !== false) {
             $merchant = Merchant::create(
-                id: $merchantCsvRow[0],
                 reference: $merchantCsvRow[1],
-                email: $merchantCsvRow[2],
                 liveOn: new \DateTime($merchantCsvRow[3]),
                 disbursementFrequency: $merchantCsvRow[4],
                 minimumMonthlyFee: floatval($merchantCsvRow[5])

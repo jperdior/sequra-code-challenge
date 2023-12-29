@@ -10,14 +10,14 @@ readonly class DisbursementLine
 {
 
     public function __construct(
-        public DisbursementLineId $id,
-        public DisbursementReference $disbursementReference,
-        public DisbursementLinePurchaseId $purchaseId,
+        public DisbursementLineId             $id,
+        public DisbursementReference          $disbursementReference,
+        public DisbursementLinePurchaseId     $purchaseId,
         public DisbursementLinePurchaseAmount $purchaseAmount,
-        public DisbursementLineAmount $amount,
-        public DisbursementLinePercentage $feePercentage,
-        public DisbursementLineFeeAmount $feeAmount,
-        public \DateTime $createdAt = new \DateTime(),
+        public DisbursementLineAmount         $amount,
+        public DisbursementLineFeePercentage  $feePercentage,
+        public DisbursementLineFeeAmount      $feeAmount,
+        public \DateTime                      $createdAt = new \DateTime(),
     )
     {
     }
@@ -39,7 +39,7 @@ readonly class DisbursementLine
             new DisbursementLinePurchaseId($purchaseId),
             new DisbursementLinePurchaseAmount($purchaseAmount),
             new DisbursementLineAmount($amount),
-            new DisbursementLinePercentage($feePercentage),
+            new DisbursementLineFeePercentage($feePercentage),
             new DisbursementLineFeeAmount($feeAmount),
             $createdAt
         );

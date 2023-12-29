@@ -9,10 +9,10 @@
         <id name="id" column="id" type="string" length="26" >
         </id>
 
-        <embedded name="disbursementReference" class="App\SequraChallenge\Shared\Domain\Disbursement\DisbursementReference" use-column-prefix="false" />
+        <field name="disbursementReference" column="disbursement_reference" type="disbursement_reference" length="26" />
+
         <embedded name="purchaseId" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseId" use-column-prefix="false" />
         <embedded name="purchaseAmount" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseAmount" use-column-prefix="false" />
-        <embedded name="amount" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseId" use-column-prefix="false" />
         <embedded name="feePercentage" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineFeePercentage" use-column-prefix="false" />
         <embedded name="feeAmount" class="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineFeeAmount" use-column-prefix="false" />
 

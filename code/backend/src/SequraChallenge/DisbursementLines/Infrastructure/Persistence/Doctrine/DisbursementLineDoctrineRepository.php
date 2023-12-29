@@ -6,7 +6,7 @@ namespace App\SequraChallenge\DisbursementLines\Infrastructure\Persistence\Doctr
 
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
-use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
+use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
 
 class DisbursementLineDoctrineRepository extends AbstractOrmRepository implements DisbursementLineRepositoryInterface
 {

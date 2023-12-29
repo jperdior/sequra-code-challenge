@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Disbursements\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
+use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMerchantReference;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
-use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\Shared\Infrastructure\Persistence\Doctrine\AbstractOrmRepository;
+use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
 
 class DisbursementDoctrineRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {

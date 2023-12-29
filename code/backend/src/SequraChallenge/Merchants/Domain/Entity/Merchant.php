@@ -12,7 +12,6 @@ class Merchant extends AggregateRoot
 
     public function __construct(
         private readonly MerchantReference $reference,
-        private readonly MerchantEmail $email,
         public readonly MerchantLiveOn $liveOn,
         public readonly MerchantDisbursementFrequency $disbursementFrequency,
         public readonly MerchantMinimumMonthlyFee $minimumMonthlyFee
@@ -22,14 +21,12 @@ class Merchant extends AggregateRoot
 
     public static function create(
         string $reference,
-        string $email,
         \DateTime $liveOn,
         string $disbursementFrequency,
         float $minimumMonthlyFee
     ): self {
         return new self(
             new MerchantReference($reference),
-            new MerchantEmail($email),
             new MerchantLiveOn($liveOn),
             MerchantDisbursementFrequency::from($disbursementFrequency),
             new MerchantMinimumMonthlyFee($minimumMonthlyFee)
@@ -40,12 +37,6 @@ class Merchant extends AggregateRoot
     {
         return $this->reference;
     }
-
-    public function email(): MerchantEmail
-    {
-        return $this->email;
-    }
-
 
 
 }

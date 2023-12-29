@@ -7,13 +7,14 @@
             repository-class="App\SequraChallenge\Disbursements\Infrastructure\Persistence\Doctrine\DisbursementDoctrineRepository">
 
         <unique-constraints>
-            <unique-constraint columns="merchant_id,disbursed_at" name="merchant_disburse_date" />
+            <unique-constraint columns="merchant_reference,disbursed_at" name="merchant_disburse_date" />
         </unique-constraints>
 
         <id name="reference" column="reference" type="string" length="26" >
         </id>
 
-        <embedded name="merchantReference" class="App\SequraChallenge\Shared\Domain\Merchants\MerchantReference" use-column-prefix="false" />
+        <field name="merchantReference" column="merchant_reference" type="merchant_reference" length="26" />
+
         <embedded name="fee" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementFee" use-column-prefix="false" />
         <embedded name="amount" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementAmount" use-column-prefix="false" />
         <embedded name="monthlyFee" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMonthlyFee" use-column-prefix="false" />

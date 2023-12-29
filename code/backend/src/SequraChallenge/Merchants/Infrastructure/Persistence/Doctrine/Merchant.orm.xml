@@ -9,7 +9,6 @@
         <id name="reference" column="reference" type="string" length="36" >
         </id>
 
-        <embedded name="email" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantEmail" use-column-prefix="false" />
         <embedded name="liveOn" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantLiveOn" use-column-prefix="false" />
         <embedded name="disbursementFrequency" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency" use-column-prefix="false" />
         <embedded name="minimumMonthlyFee" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantMinimumMonthlyFee" use-column-prefix="false" />

@@ -4,7 +4,7 @@ namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
 
 use App\Shared\Domain\ValueObject\FloatValueObject;
 
-final readonly class DisbursementLinePercentage extends FloatValueObject
+final readonly class DisbursementLineFeePercentage extends FloatValueObject
 {
 
 }
