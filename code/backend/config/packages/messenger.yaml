@@ -10,7 +10,7 @@ framework:
             # sync: 'sync://'
             async:
                 dsn: '%env(RABBITMQ_URL)%'
-            disbursement_purchase_created:
+            purchase_created:
                 dsn: '%env(RABBITMQ_URL)%'
                 options:
                     exchange:
@@ -18,7 +18,7 @@ framework:
                         type: direct
                         arguments: { }
                     queues:
-                        disbursement.disbursement_line.create_on_purchase_created:
+                        disbursement.find_or_create_on_purchase_created:
 #                            binding_arguments:
 #                                purchase_created.queue1: purchase_created.queue1
 #                                purchase_created.queue2: purchase_created.queue2
@@ -33,12 +33,24 @@ framework:
                         #    arguments: { }
                         #    binding:
                         #        routing_key: purchase_created.queue2
+            disbursement_line_created:
+                dsn: '%env(RABBITMQ_URL)%'
+                options:
+                    exchange:
+                        name: disbursement_line_created
+                        type: direct
+                        arguments: { }
+                    queues:
+                        disbursement.update_amount_and_fee_on_disbursement_line_created:
+                            arguments: { }
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             #'App\Shared\Domain\Bus\Event\DomainEvent': async
-            'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': disbursement_purchase_created
+            'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': purchase_created
+            'App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent': disbursement_line_created
+            'App\Shared\Domain\Bus\Command\Command': async
 
 when@test:
     framework:
@@ -52,4 +64,6 @@ when@test:
             routing:
                 # Route your messages to the transports
                 # 'App\Message\YourMessage': async
-                'App\SequraChallenge\Application\Command\ProcessPurchaseMessage': sync
+                'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': sync
+                'App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent': sync
+                'App\Shared\Domain\Bus\Command\Command': sync

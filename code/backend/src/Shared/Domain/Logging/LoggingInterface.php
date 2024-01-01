@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Domain\Logging;
+namespace App\Shared\Domain\Logging;
 
 interface LoggingInterface
 {

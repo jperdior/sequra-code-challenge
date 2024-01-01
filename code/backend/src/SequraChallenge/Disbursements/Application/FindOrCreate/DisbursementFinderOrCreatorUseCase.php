@@ -9,15 +9,17 @@ use App\SequraChallenge\Disbursements\Domain\DisbursementDateCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementFinderOrCreator;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Merchants\Application\Find\FindMerchantQuery;
+use App\SequraChallenge\Merchants\Application\Find\MerchantFinderUseCase;
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
+use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 
 final readonly class DisbursementFinderOrCreatorUseCase
 {
     public function __construct(
-        private QueryBus                           $queryBus,
         private CommandBus                         $commandBus,
+        private MerchantFinderUseCase              $merchantFinderUseCase,
         private DisbursementDateCalculator         $disbursementDateCalculator,
         private DisbursementFinderOrCreator $disbursementFinderOrCreator,
         private DisbursementRepositoryInterface    $repository
@@ -31,10 +33,9 @@ final readonly class DisbursementFinderOrCreatorUseCase
         float $purchaseAmount
     ): void
     {
-        /**
-         * @var Merchant $merchant
-         */
-        $merchant = $this->queryBus->ask(new FindMerchantQuery($merchantReference));
+        $merchant = $this->merchantFinderUseCase->__invoke(
+            new MerchantReference($merchantReference)
+        );
 
         $disbursedAt = $this->disbursementDateCalculator->__invoke(
             merchantDisbursementFrequency: $merchant->disbursementFrequency->value,
@@ -46,8 +47,6 @@ final readonly class DisbursementFinderOrCreatorUseCase
             merchantReference: $merchant->reference(),
             disbursedAt: $disbursedAt
         );
-
-        // @todo: add monthly fee
 
         $this->repository->save($disbursement);
 

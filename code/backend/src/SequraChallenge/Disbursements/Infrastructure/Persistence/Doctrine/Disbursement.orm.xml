@@ -10,7 +10,7 @@
             <unique-constraint columns="merchant_reference,disbursed_at" name="merchant_disburse_date" />
         </unique-constraints>
 
-        <id name="reference" column="reference" type="string" length="26" >
+        <id name="reference" column="reference" type="disbursement_reference" length="26" >
         </id>
 
         <field name="merchantReference" column="merchant_reference" type="merchant_reference" length="26" />

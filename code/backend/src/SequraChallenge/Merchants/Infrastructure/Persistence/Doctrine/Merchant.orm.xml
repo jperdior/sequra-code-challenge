@@ -6,7 +6,7 @@
     <entity name="App\SequraChallenge\Merchants\Domain\Entity\Merchant" table="merchant" read-only="false"
             repository-class="App\SequraChallenge\Merchants\Infrastructure\Persistence\MerchantDoctrineRepository">
 
-        <id name="reference" column="reference" type="string" length="36" >
+        <id name="reference" column="reference" type="merchant_reference" length="36" >
         </id>
 
         <embedded name="liveOn" class="App\SequraChallenge\Merchants\Domain\Entity\MerchantLiveOn" use-column-prefix="false" />

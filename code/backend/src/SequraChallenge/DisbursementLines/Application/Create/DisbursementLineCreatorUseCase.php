@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\SequraChallenge\DisbursementLines\Application\Create;
 
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
+use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineId;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\Shared\Domain\Bus\Event\EventBus;
 
@@ -24,7 +25,7 @@ final readonly class DisbursementLineCreatorUseCase
     ): void
     {
         $disbursementLine = DisbursementLine::create(
-            id: '',
+            id: DisbursementLineId::random()->value,
             disbursementReference: $disbursementReference,
             purchaseId: $purchaseId,
             purchaseAmount: $purchaseAmount

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="/app/phpunit.xml.dist" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
-    <testsuite name="Project Test Suite" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
-      <testsuite name="App\Tests\Unit\SequraChallenge\Domain\UseCase\DisbursementCalculatorServiceTest" file="/app/tests/unit/SequraChallenge/Domain/Service/DisbursementCalculatorServiceTest.php" tests="1" assertions="4" errors="0" failures="0" skipped="0" time="0.019313">
-        <testcase name="testCalculateCancellationLineNoPreviousCancellations" file="/app/tests/unit/SequraChallenge/Domain/Service/DisbursementCalculatorServiceTest.php" line="286" class="App\Tests\Unit\SequraChallenge\Domain\UseCase\DisbursementCalculatorServiceTest" classname="App.Tests.Unit.SequraChallenge.Domain.UseCase.DisbursementCalculatorServiceTest" assertions="4" time="0.019313"/>
+  <testsuite name="/app/phpunit.xml.dist" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.000000">
+    <testsuite name="Project Test Suite" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.000000">
+      <testsuite name="App\Tests\Functional\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine\MerchantDoctrineRepositoryTest" file="/app/tests/Functional/SequraChallenge/Merchants/Infrastructure/Persistence/Doctrine/MerchantDoctrineRepositoryTest.php" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.000000">
+        <testcase name="it_should_save_a_merchant" file="/app/tests/Functional/SequraChallenge/Merchants/Infrastructure/Persistence/Doctrine/MerchantDoctrineRepositoryTest.php" line="29" class="App\Tests\Functional\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine\MerchantDoctrineRepositoryTest" classname="App.Tests.Functional.SequraChallenge.Merchants.Infrastructure.Persistence.Doctrine.MerchantDoctrineRepositoryTest" assertions="0" time="0.000000">
+          <error type="Error">App\Tests\Functional\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine\MerchantDoctrineRepositoryTest::it_should_save_a_merchant
+Error: Call to undefined method App\Tests\Functional\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine\MerchantDoctrineRepositoryTest::getKernel()
+
+/app/tests/Functional/SequraChallenge/Merchants/Infrastructure/Persistence/Doctrine/MerchantDoctrineRepositoryTest.php:21</error>
+        </testcase>
       </testsuite>
     </testsuite>
   </testsuite>

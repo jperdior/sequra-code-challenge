@@ -17,11 +17,13 @@ final readonly class UpdateAmountAndFeeUseCase
     ) {
     }
 
-    public function __invoke(DisbursementReference $reference, float $amount, float $fee): void
+    public function __invoke(string $reference, float $amount, float $fee): void
     {
-        $disbursement = $this->disbursementFinder->__invoke($reference);
+        $disbursementReference = new DisbursementReference($reference);
+        $disbursement = $this->disbursementFinder->__invoke($disbursementReference);
         $disbursement->addAmount($amount);
         $disbursement->addFee($fee);
+        // @todo: calculate monthly fee
         $this->repository->save($disbursement);
     }
 }

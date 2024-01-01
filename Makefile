@@ -72,9 +72,15 @@ run:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} supervisord -c ops/supervisor/supervisor.conf
 
 enqueue-orders:
-	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:enqueue-orders ${ORDERS}
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console app:enqueue-orders /app/src/DataFixtures/orders.csv
 
 consume-orders:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume purchase_created
+
+consume-disbursement-lines:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume disbursement_line_created
+
+consume-commands:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php bin/console messenger:consume async
 
 #OPEN

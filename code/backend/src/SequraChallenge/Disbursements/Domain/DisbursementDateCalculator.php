@@ -17,10 +17,10 @@ class DisbursementDateCalculator
     ): DisbursementDisbursedAt{
         $disbursementDate = null;
         switch ($merchantDisbursementFrequency) {
-            case MerchantDisbursementFrequency::DAILY->value:
+            case MerchantDisbursementFrequency::DAILY:
                 $disbursementDate = $purchaseCreatedAt;
                 break;
-            case MerchantDisbursementFrequency::WEEKLY->value:
+            case MerchantDisbursementFrequency::WEEKLY:
                 $liveOnDayOfWeek = $merchantLiveOnDate->format('N');
                 $purchaseDayOfWeek = $purchaseCreatedAt->format('N');
                 if ($liveOnDayOfWeek < $purchaseDayOfWeek) {

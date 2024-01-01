@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Doctrine;
 
-use App\Shared\Domain\Aggregate\AggregateRoot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractOrmRepository extends ServiceEntityRepository
@@ -16,21 +14,16 @@ abstract class AbstractOrmRepository extends ServiceEntityRepository
         parent::__construct(registry: $registry, entityClass: $this->getClass());
     }
 
-    protected function entityManager(): EntityManager
+    public function persist(object $entity): void
     {
-        return $this->entityManager;
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush($entity);
     }
 
-    protected function persist(AggregateRoot $entity): void
+    public function remove(object $entity): void
     {
-        $this->entityManager()->persist($entity);
-        $this->entityManager()->flush($entity);
-    }
-
-    protected function remove(AggregateRoot $entity): void
-    {
-        $this->entityManager()->remove($entity);
-        $this->entityManager()->flush($entity);
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush($entity);
     }
 
     abstract protected function getClass(): string;

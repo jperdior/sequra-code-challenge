@@ -9,13 +9,10 @@ use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
+use App\Shared\Infrastructure\Doctrine\DoctrineRepository;
 
 class DisbursementDoctrineRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {
-    protected function getClass(): string
-    {
-        return Disbursement::class;
-    }
 
     public function getByMerchantAndDisbursedDate(
         MerchantReference $merchantReference,
@@ -23,12 +20,18 @@ class DisbursementDoctrineRepository extends AbstractOrmRepository implements Di
     ): ?Disbursement {
         return $this->findOneBy([
             'merchantReference' => $merchantReference,
-            'disbursedAt' => $disbursedAt
+            'disbursedAt.value' => $disbursedAt->value
         ]);
     }
 
     public function save(Disbursement $disbursement): void
     {
         $this->persist($disbursement);
+
+    }
+
+    protected function getClass(): string
+    {
+        return Disbursement::class;
     }
 }

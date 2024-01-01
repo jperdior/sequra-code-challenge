@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Doctrine;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\NotSupported;
 
 abstract class DoctrineRepository
 {
-	public function __construct(private readonly EntityManager $entityManager) {}
+	public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
-	protected function entityManager(): EntityManager
+	protected function entityManager(): EntityManagerInterface
 	{
 		return $this->entityManager;
 	}

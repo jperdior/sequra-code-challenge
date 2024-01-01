@@ -28,7 +28,7 @@ class Merchant extends AggregateRoot
         return new self(
             new MerchantReference($reference),
             new MerchantLiveOn($liveOn),
-            MerchantDisbursementFrequency::from($disbursementFrequency),
+            new MerchantDisbursementFrequency($disbursementFrequency),
             new MerchantMinimumMonthlyFee($minimumMonthlyFee)
         );
     }

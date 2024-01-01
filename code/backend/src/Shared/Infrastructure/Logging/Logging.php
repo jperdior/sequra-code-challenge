@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Logging;
 
-use App\SequraChallenge\Domain\Logging\LoggingInterface;
+use App\Shared\Domain\Logging\LoggingInterface;
 use Psr\Log\LoggerInterface;
 
 class Logging implements LoggingInterface

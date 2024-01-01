@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Merchants\Domain\Entity;
 
-enum MerchantDisbursementFrequency: string
+use App\Shared\Domain\ValueObject\EnumValueObject;
+
+final readonly class MerchantDisbursementFrequency extends EnumValueObject
 {
-    case DAILY = 'DAILY';
-    case WEEKLY = 'WEEKLY';
+    public const DAILY = 'DAILY';
+    public const WEEKLY = 'WEEKLY';
 
 }
