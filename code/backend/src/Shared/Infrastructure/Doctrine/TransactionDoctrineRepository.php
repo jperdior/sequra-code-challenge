@@ -13,7 +13,7 @@ readonly class TransactionDoctrineRepository implements TransactionInterface
     {
     }
 
-    public function open(): void
+    public function begin(): void
     {
         $this->em->getConnection()->beginTransaction();
     }

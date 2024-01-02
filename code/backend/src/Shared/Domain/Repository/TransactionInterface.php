@@ -6,7 +6,7 @@ namespace App\Shared\Domain\Repository;
 
 interface TransactionInterface
 {
-    public function open();
+    public function begin();
 
     public function commit();
 
