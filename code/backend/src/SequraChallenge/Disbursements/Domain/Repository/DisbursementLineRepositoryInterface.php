@@ -9,4 +9,6 @@ use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 interface DisbursementLineRepositoryInterface
 {
     public function save(DisbursementLine $disbursementLine): void;
+
+    public function findByPurchaseId(string $purchaseId);
 }

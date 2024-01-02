@@ -9,7 +9,6 @@ use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
-use App\Shared\Infrastructure\Doctrine\DoctrineRepository;
 
 class DisbursementDoctrineRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {

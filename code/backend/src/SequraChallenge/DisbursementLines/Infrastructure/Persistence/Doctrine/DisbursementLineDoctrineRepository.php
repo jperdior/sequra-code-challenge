@@ -20,4 +20,9 @@ class DisbursementLineDoctrineRepository extends AbstractOrmRepository implement
     {
         $this->persist($disbursementLine);
     }
+
+    public function findByPurchaseId(string $purchaseId): ?DisbursementLine
+    {
+        return $this->findOneBy(['purchaseId.value' => $purchaseId]);
+    }
 }

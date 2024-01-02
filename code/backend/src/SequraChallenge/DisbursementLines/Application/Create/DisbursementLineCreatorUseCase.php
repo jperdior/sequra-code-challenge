@@ -9,6 +9,7 @@ use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineId;
 use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\Shared\Domain\Bus\Event\EventBus;
 
+
 final readonly class DisbursementLineCreatorUseCase
 {
 
@@ -24,6 +25,13 @@ final readonly class DisbursementLineCreatorUseCase
         float $purchaseAmount,
     ): void
     {
+
+        $disbursementLineExists = $this->repository->findByPurchaseId($purchaseId);
+
+        if ($disbursementLineExists) {
+            return;
+        }
+
         $disbursementLine = DisbursementLine::create(
             id: DisbursementLineId::random()->value,
             disbursementReference: $disbursementReference,
