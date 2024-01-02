@@ -17,7 +17,29 @@ The pair programming was not very successful, but as I kept learning and deepeni
 
 ## My approach
 
-TODO new approach
+As this is a code challenge for an specific functionality the "bounded context" corresponds with the folder SequraChallenge, but in a real world scenario depending on the business ubiquitous language, the bounding context would be "disbursements" or maybe it would be part of a wider context named "orderProcessing".
+
+I organized the code in modules, where each module contains an Aggregate Root, and the corresponding logic, repositories, events, etc related to that Aggregate Root.
+
+I also created a shared bounded context and a shared module, where I put the common logic, like the base classes for the entities, value objects, repositories etc.
+
+### Modules
+
+#### Merchants
+
+For our disbursement bounded context we only need the disbursement frequency, the minimum monthly fee and the liveOn date, so in this module I modeled the aggregate root Merchant with those properties ignoring the rest of the provided in the challenge. It only contains a MerchantFinder domain service to find a merchant by id.
+
+#### Purchases
+
+As I had experiences in the past with the "order" keyword in sql, I decided to use the word "purchase" instead, as it is more generic and it is not a reserved word in sql. As I was provided with a csv file with purchases to process, in this module I only created a PurchaseCreated domain event and in the presentation layer a symfony command that reads the csv file and dispatches the event for each purchase. In a real world scenario the purchase created events would be dispatched by an ecommerce system or something similar.
+
+#### Disbursements
+
+TODO
+
+#### DisbursementLines
+
+TODO
 
 ## Running the project
 

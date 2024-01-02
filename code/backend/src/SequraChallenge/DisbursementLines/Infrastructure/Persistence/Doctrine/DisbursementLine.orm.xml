@@ -6,6 +6,10 @@
     <entity name="App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine" table="disbursement_line" read-only="false"
             repository-class="App\SequraChallenge\DisbursementLines\Infrastructure\Persistence\Doctrine\DisbursementLineDoctrineRepository">
 
+        <unique-constraints>
+            <unique-constraint columns="purchase_id" name="unique_purchase" />
+        </unique-constraints>
+
         <id name="id" column="id" type="string" length="26" >
         </id>
 
