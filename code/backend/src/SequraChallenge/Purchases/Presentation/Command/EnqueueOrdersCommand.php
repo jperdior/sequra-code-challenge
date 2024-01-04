@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Purchases\Presentation\Command;
 
-use App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent;
+use App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent;
 use App\Shared\Domain\Bus\Event\EventBus;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -43,7 +43,7 @@ class EnqueueOrdersCommand extends Command
         try {
             foreach ($this->readCsvRows($purchasesCsv) as $row) {
 
-                $event = new PurchaseCreatedDomainEvent(
+                $event = new PurchaseCreatedEvent(
                     id: $row[0],
                     merchantReference: $row[1],
                     amount: (float) $row[2],

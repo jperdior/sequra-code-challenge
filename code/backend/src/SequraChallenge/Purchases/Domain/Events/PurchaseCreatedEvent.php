@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Purchases\Domain\DomainEvents;
+namespace App\SequraChallenge\Purchases\Domain\Events;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
-final class PurchaseCreatedDomainEvent extends DomainEvent
+final class PurchaseCreatedEvent extends DomainEvent
 {
     public function __construct(
         string $id,

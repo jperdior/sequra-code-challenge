@@ -14,4 +14,9 @@ final readonly class MerchantReference extends StringValueObject
         return $this->value;
     }
 
+    final public static function random(): self
+    {
+        return new self('merchant_' . rand(1, 1000));
+    }
+
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
+use App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;

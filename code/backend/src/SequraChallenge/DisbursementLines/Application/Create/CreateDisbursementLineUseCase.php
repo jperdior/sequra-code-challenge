@@ -10,7 +10,7 @@ use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineReposito
 use App\Shared\Domain\Bus\Event\EventBus;
 
 
-final readonly class DisbursementLineCreatorUseCase
+final readonly class CreateDisbursementLineUseCase
 {
 
     public function __construct(

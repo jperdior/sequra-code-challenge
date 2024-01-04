@@ -10,7 +10,7 @@ class DisbursementLineCreatedDomainEvent extends DomainEvent
 {
 
     public function __construct(
-        string $id,
+        string $aggregateId,
         public readonly string $disbursementReference,
         public readonly float $amount,
         public readonly float $feeAmount,
@@ -18,7 +18,7 @@ class DisbursementLineCreatedDomainEvent extends DomainEvent
         string $occurredOn = null
     )
     {
-        parent::__construct($id, $eventId, $occurredOn);
+        parent::__construct($aggregateId, $eventId, $occurredOn);
     }
 
 

@@ -20,9 +20,11 @@ class MerchantFinder
     public function __invoke(MerchantReference $reference): Merchant
     {
         $merchant = $this->repository->search($reference);
+
         if (null === $merchant) {
             throw new MerchantNotFound($reference);
         }
+
         return $merchant;
     }
 

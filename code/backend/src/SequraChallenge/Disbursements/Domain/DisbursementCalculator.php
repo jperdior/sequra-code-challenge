@@ -10,7 +10,7 @@ use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryIn
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
-final readonly class DisbursementFinderOrCreator
+final readonly class DisbursementCalculator
 {
 
     public function __construct(
@@ -29,12 +29,14 @@ final readonly class DisbursementFinderOrCreator
         );
 
         if (null === $disbursement) {
-            $disbursement = new Disbursement(
-                reference: DisbursementReference::random(),
-                merchantReference: $merchantReference,
-                disbursedAt: $disbursedAt,
+            $disbursement = Disbursement::create(
+                reference: DisbursementReference::random()->value,
+                merchantReference: $merchantReference->value,
+                disbursedAt: $disbursedAt->value,
             );
+            $this->repository->save($disbursement);
         }
+
         return $disbursement;
     }
 

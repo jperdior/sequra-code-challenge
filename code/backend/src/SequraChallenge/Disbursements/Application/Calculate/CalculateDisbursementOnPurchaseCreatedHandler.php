@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Application\FindOrCreate;
+namespace App\SequraChallenge\Disbursements\Application\Calculate;
 
-use App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent;
+use App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 use function Lambdish\Phunctional\apply;
 
 #[AsMessageHandler]
-readonly class FindOrCreateDisbursementOnPurchaseCreatedHandler implements DomainEventSubscriber
+readonly class CalculateDisbursementOnPurchaseCreatedHandler implements DomainEventSubscriber
 {
     public function __construct(
-        private DisbursementFinderOrCreatorUseCase $disbursementCalculator,
+        private CalculateDisbursementUseCase $disbursementCalculator,
     )
     {
     }
 
     public static function subscribedTo(): array
     {
-        return [PurchaseCreatedDomainEvent::class];
+        return [PurchaseCreatedEvent::class];
     }
 
-    public function __invoke(PurchaseCreatedDomainEvent $event): void
+    public function __invoke(PurchaseCreatedEvent $event): void
     {
 
         apply(
@@ -32,7 +32,7 @@ readonly class FindOrCreateDisbursementOnPurchaseCreatedHandler implements Domai
             [
                 $event->merchantReference,
                 $event->createdAt,
-                $event->aggregateId(),
+                $event->aggregateId,
                 $event->amount
             ]
         );

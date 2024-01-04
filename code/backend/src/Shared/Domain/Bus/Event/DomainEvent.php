@@ -13,7 +13,7 @@ abstract class DomainEvent
 	private readonly string $eventId;
 	private readonly string $occurredOn;
 
-	public function __construct(private readonly string $aggregateId, string $eventId = null, string $occurredOn = null)
+	public function __construct(public readonly string $aggregateId, string $eventId = null, string $occurredOn = null)
 	{
 		$this->eventId = $eventId ?: SimpleUlid::random()->value;
 		$this->occurredOn = $occurredOn ?: Utils::dateToString(new DateTimeImmutable());
@@ -29,11 +29,6 @@ abstract class DomainEvent
 	abstract public static function eventName(): string;
 
 	abstract public function toPrimitives(): array;
-
-	final public function aggregateId(): string
-	{
-		return $this->aggregateId;
-	}
 
 	final public function eventId(): string
 	{
