@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Domain\Repository;
+namespace App\SequraChallenge\DisbursementLines\Domain;
 
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 

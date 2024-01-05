@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Disbursements\Application\UpdateAmountAndFee;
 
 use App\SequraChallenge\Disbursements\Domain\DisbursementFinder;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
+use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
-use App\Shared\Domain\Repository\TransactionInterface;
 use App\Shared\Domain\Lock\LockingInterface;
+use App\Shared\Domain\Repository\TransactionInterface;
 
 final readonly class UpdateAmountAndFeeUseCase
 {

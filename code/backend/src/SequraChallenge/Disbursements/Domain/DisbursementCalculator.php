@@ -6,7 +6,6 @@ namespace App\SequraChallenge\Disbursements\Domain;
 
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
@@ -29,10 +28,15 @@ final readonly class DisbursementCalculator
         );
 
         if (null === $disbursement) {
+            $firstOfMonth = $this->repository->getFirstOfMonth(
+                merchantReference: $merchantReference,
+                disbursedAt: $disbursedAt
+            );
             $disbursement = Disbursement::create(
                 reference: DisbursementReference::random()->value,
                 merchantReference: $merchantReference->value,
                 disbursedAt: $disbursedAt->value,
+                firstOfMonth: null === $firstOfMonth
             );
             $this->repository->save($disbursement);
         }

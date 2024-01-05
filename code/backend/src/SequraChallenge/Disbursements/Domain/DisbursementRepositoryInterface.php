@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Domain\Repository;
+namespace App\SequraChallenge\Disbursements\Domain;
 
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
@@ -15,11 +15,11 @@ interface DisbursementRepositoryInterface
         DisbursementDisbursedAt $disbursedAt
     ): ?Disbursement;
 
-    //public function countDisbursementsOfMonth(Merchant $merchant, \DateTime $dateTime): int;
-
-    //public function getSumOfLastMonthFees(Merchant $merchant, \DateTime $date): float;
+    public function getFirstOfMonth(
+        MerchantReference $merchantReference,
+        DisbursementDisbursedAt $disbursedAt
+    ): ?Disbursement;
 
     public function save(Disbursement $disbursement): void;
 
-    //public function getMerchantCurrentDisbursement(Merchant $merchant);
 }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\SequraChallenge\DisbursementLines\Application\Create;
 
 use App\SequraChallenge\DisbursementLines\Application\Create\CreateDisbursementLineUseCase;
+use App\SequraChallenge\DisbursementLines\Domain\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseAmount;
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLinePurchaseId;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\Shared\Domain\Bus\Event\EventBus;
 use PHPUnit\Framework\TestCase;

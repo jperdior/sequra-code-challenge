@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Unit\SequraChallenge\Disbursements\Domain;
 
 use App\SequraChallenge\Disbursements\Domain\DisbursementCalculator;
+use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use PHPUnit\Framework\TestCase;
 

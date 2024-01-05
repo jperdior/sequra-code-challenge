@@ -20,6 +20,6 @@
         <embedded name="monthlyFee" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementMonthlyFee" use-column-prefix="false" />
         <embedded name="disbursedAt" class="App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt" use-column-prefix="false" />
 
-        <field name="createdAt" column="created_at" type="datetime" />
+        <field name="firstOfMonth" column="first_of_month" type="boolean" />
     </entity>
 </doctrine-mapping>

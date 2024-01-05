@@ -16,22 +16,27 @@ class Disbursement extends AggregateRoot
         public readonly DisbursementReference $reference,
         public readonly MerchantReference $merchantReference,
         public readonly DisbursementDisbursedAt $disbursedAt,
-        private DisbursementFee $fee = new DisbursementFee(0),
-        private DisbursementAmount $amount = new DisbursementAmount(0),
-        private DisbursementMonthlyFee $monthlyFee = new DisbursementMonthlyFee(0),
-        private readonly  \DateTime $createdAt = new \DateTime()
+        private DisbursementFee $fee,
+        private DisbursementAmount $amount,
+        private DisbursementMonthlyFee $monthlyFee,
+        public readonly bool $firstOfMonth,
     ) {}
 
     public static function create(
         string $reference,
         string $merchantReference,
-        \DateTime $disbursedAt
+        \DateTime $disbursedAt,
+        bool $firstOfMonth = false
     ): Disbursement
     {
         return new self(
             new DisbursementReference($reference),
             new MerchantReference($merchantReference),
-            new DisbursementDisbursedAt($disbursedAt)
+            new DisbursementDisbursedAt($disbursedAt),
+            new DisbursementFee(0),
+            new DisbursementAmount(0),
+            new DisbursementMonthlyFee(0),
+            $firstOfMonth
         );
     }
 

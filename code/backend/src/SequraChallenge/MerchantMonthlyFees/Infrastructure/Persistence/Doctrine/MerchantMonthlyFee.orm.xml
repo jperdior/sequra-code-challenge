@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          http://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFee" table="merchant_monthly_fee" read-only="false"
+            repository-class="App\SequraChallenge\MerchantMonthlyFees\Infrastructure\Persistence\Doctrine\MerchantMonthlyFeeDoctrineRepository">
+
+        <unique-constraints>
+            <unique-constraint columns="merchant_reference,month" name="unique_monthly_fee" />
+        </unique-constraints>
+
+        <id name="id" column="id" type="merchant_monthly_fee_id" length="26" >
+        </id>
+
+        <field name="merchantReference" column="merchant_reference" type="merchant_reference" length="26" />
+
+        <embedded name="amount" class="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeAmount" use-column-prefix="false" />
+        <embedded name="month" class="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeMonth" use-column-prefix="false" />
+
+    </entity>
+</doctrine-mapping>

@@ -2,15 +2,14 @@
 
 namespace App\Tests\Functional\Contexts;
 
+use App\SequraChallenge\DisbursementLines\Domain\DisbursementLineRepositoryInterface;
+use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementLineRepositoryInterface;
-use App\SequraChallenge\Disbursements\Domain\Repository\DisbursementRepositoryInterface;
 use App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Bus\Event\EventBus;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 
 /**
  * Defines application features from the specific context.
