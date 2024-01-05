@@ -52,9 +52,13 @@ To have the containers up and running:
 
 The fixtures takes a while to run, wait for `[OK] Cache for the "dev" environment (debug=true) was successfully cleared.` to appear in the console.
 
-To run the tests:
+To run unit tests:
 
 - Run `make tests`
+
+To run acceptance tests:
+
+- Run `make behat`
 
 To run the consumer and feed the queue:
 
