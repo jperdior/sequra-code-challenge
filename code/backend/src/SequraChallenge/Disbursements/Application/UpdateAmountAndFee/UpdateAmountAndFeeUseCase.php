@@ -23,6 +23,7 @@ final readonly class UpdateAmountAndFeeUseCase
 
     public function __invoke(string $reference, float $amount, float $fee): void
     {
+
         $this->transaction->begin();
         try{
             $this->locking->create('disbursement-' . $reference);

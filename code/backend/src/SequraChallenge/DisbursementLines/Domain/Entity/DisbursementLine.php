@@ -6,7 +6,7 @@ namespace App\SequraChallenge\DisbursementLines\Domain\Entity;
 
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent;
+use App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent;
 
 class DisbursementLine extends AggregateRoot
 {
@@ -32,8 +32,8 @@ class DisbursementLine extends AggregateRoot
     ): DisbursementLine
     {
         $feePercentage = DisbursementLineFeePercentage::fromAmount($purchaseAmount);
-        $amount = new DisbursementLineAmount($purchaseAmount * ($feePercentage->value/100));
-        $feeAmount = new DisbursementLineFeeAmount($purchaseAmount - $amount->value);
+        $feeAmount = new DisbursementLineFeeAmount($purchaseAmount * ($feePercentage->toFloat()/100));
+        $amount = new DisbursementLineAmount($purchaseAmount - $feeAmount->value);
 
         $disbursementLine = new self(
             new DisbursementLineId($id),
@@ -45,8 +45,8 @@ class DisbursementLine extends AggregateRoot
             $feeAmount->rounded(2)
         );
 
-        $disbursementLine->record(new DisbursementLineCreatedDomainEvent(
-            id: $disbursementLine->id->value,
+        $disbursementLine->record(new DisbursementLineCreatedEvent(
+            aggregateId: $disbursementLine->id->value,
             disbursementReference: $disbursementLine->disbursementReference->value,
             amount: $disbursementLine->amount->value,
             feeAmount: $disbursementLine->feeAmount->value

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Application\UpdateAmountAndFee;
 
-use App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent;
+use App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -18,7 +18,7 @@ readonly class UpdateAmountAndFeeOnDisbursementLineCreatedHandler implements Dom
     ) {
     }
 
-    public function __invoke(DisbursementLineCreatedDomainEvent $event): void
+    public function __invoke(DisbursementLineCreatedEvent $event): void
     {
         apply($this->useCase, [
             $event->disbursementReference,
@@ -29,6 +29,6 @@ readonly class UpdateAmountAndFeeOnDisbursementLineCreatedHandler implements Dom
 
     public static function subscribedTo(): array
     {
-        return [DisbursementLineCreatedDomainEvent::class];
+        return [DisbursementLineCreatedEvent::class];
     }
 }

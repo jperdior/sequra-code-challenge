@@ -22,7 +22,23 @@ class MerchantTestFixtures extends Fixture
 
         //DAILY MERCHANT
         $merchant = new Merchant(
-            reference: new MerchantReference('aa'),
+            reference: new MerchantReference('aa1'),
+            liveOn: new MerchantLiveOn(new \DateTime('2021-01-01')),
+            disbursementFrequency: new MerchantDisbursementFrequency(MerchantDisbursementFrequency::DAILY),
+            minimumMonthlyFee: new MerchantMinimumMonthlyFee(0.0)
+        );
+        $manager->persist($merchant);
+
+        $merchant = new Merchant(
+            reference: new MerchantReference('aa2'),
+            liveOn: new MerchantLiveOn(new \DateTime('2021-01-01')),
+            disbursementFrequency: new MerchantDisbursementFrequency(MerchantDisbursementFrequency::DAILY),
+            minimumMonthlyFee: new MerchantMinimumMonthlyFee(0.0)
+        );
+        $manager->persist($merchant);
+
+        $merchant = new Merchant(
+            reference: new MerchantReference('aa3'),
             liveOn: new MerchantLiveOn(new \DateTime('2021-01-01')),
             disbursementFrequency: new MerchantDisbursementFrequency(MerchantDisbursementFrequency::DAILY),
             minimumMonthlyFee: new MerchantMinimumMonthlyFee(0.0)

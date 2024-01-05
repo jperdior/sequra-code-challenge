@@ -10,5 +10,5 @@ interface DisbursementLineRepositoryInterface
 {
     public function save(DisbursementLine $disbursementLine): void;
 
-    public function findByPurchaseId(string $purchaseId);
+    public function findByPurchaseId(string $purchaseId): ?DisbursementLine;
 }

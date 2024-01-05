@@ -58,6 +58,9 @@ tests:
 test:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpunit --testdox --log-junit junit.xml --filter ${TEST}
 
+behat:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/behat --format=progress
+
 #CODESTYLE
 
 fix-codestyle-dry:

@@ -48,8 +48,8 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             #'App\Shared\Domain\Bus\Event\DomainEvent': async
-            'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': purchase_created
-            'App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent': disbursement_line_created
+            'App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent': purchase_created
+            'App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent': disbursement_line_created
             'App\Shared\Domain\Bus\Command\Command': async
 
 when@test:
@@ -64,6 +64,6 @@ when@test:
             routing:
                 # Route your messages to the transports
                 # 'App\Message\YourMessage': async
-                'App\SequraChallenge\Purchases\Domain\DomainEvents\PurchaseCreatedDomainEvent': sync
-                'App\SequraChallenge\DisbursementLines\Domain\DomainEvents\DisbursementLineCreatedDomainEvent': sync
+                'App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent': sync
+                'App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent': sync
                 'App\Shared\Domain\Bus\Command\Command': sync

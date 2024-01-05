@@ -6,6 +6,7 @@ namespace App\Tests\Unit\SequraChallenge\Merchants\Application\Find;
 
 use App\SequraChallenge\Merchants\Application\Find\MerchantFinderUseCase;
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
+use App\SequraChallenge\Merchants\Domain\Exception\MerchantNotFound;
 use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
 use App\SequraChallenge\Merchants\Domain\MerchantFinder;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
@@ -18,32 +19,42 @@ final class MerchantFinderUseCaseTest extends TestCase
 
     private MerchantRepositoryInterface $repository;
 
-    private MerchantFinder $merchantFinder;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->repository = $this->createMock(MerchantRepositoryInterface::class);
-        $this->merchantFinder = new MerchantFinder($this->repository);
+        $merchantFinder = new MerchantFinder($this->repository);
         $this->useCase = new MerchantFinderUseCase(
-            $this->merchantFinder
+            $merchantFinder
         );
     }
 
     /** @test */
     public function it_should_find_a_merchant(): void
     {
-        $this->useCase->__invoke(MerchantReference::random());
+
         $merchant = $this->createMock(Merchant::class);
+
+        $merchant->method('reference')->willReturn(
+            new MerchantReference('merchant_reference')
+        );
 
         $this->repository->expects($this->once())->method('search')->willReturn(
             $merchant
         );
 
-        $this->merchantFinder->expects($this->once())->method('__invoke')->willReturn(
-            $merchant
+        $result = $this->useCase->__invoke($merchant->reference());
+
+        $this->assertEquals($merchant, $result);
+    }
+
+    /** @test */
+    public function it_should_not_find_a_merchant(): void
+    {
+        $this->expectException(MerchantNotFound::class);
+        $this->repository->expects($this->once())->method('search')->willReturn(
+            null
         );
-
-
+        $this->useCase->__invoke(new MerchantReference('merchant_reference'));
     }
 }

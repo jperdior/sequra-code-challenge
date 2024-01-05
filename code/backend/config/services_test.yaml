@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Tests\Functional\Contexts\:
+        resource: '../tests/Functional/Contexts/*'

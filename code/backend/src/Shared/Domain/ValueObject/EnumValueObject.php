@@ -9,20 +9,12 @@ use InvalidArgumentException;
 abstract readonly class EnumValueObject
 {
 
-    public function __construct(public string $value)
+    public function __construct(public string|int $value)
     {
         $this->ensureIsValidValue($value);
 
     }
 
-    private function ensureIsValidValue($value): void
-    {
-        $reflection = new \ReflectionClass(static::class);
-        $constants = array_values($reflection->getConstants());
-
-        if (!in_array($value, $constants)) {
-            throw new InvalidArgumentException("Invalid value for enum ".static::class.": ".$value);
-        }
-    }
+    public abstract function ensureIsValidValue($value): void;
 
 }

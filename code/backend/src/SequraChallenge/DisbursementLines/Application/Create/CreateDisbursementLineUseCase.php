@@ -25,10 +25,8 @@ final readonly class CreateDisbursementLineUseCase
         float $purchaseAmount,
     ): void
     {
-
         $disbursementLineExists = $this->repository->findByPurchaseId($purchaseId);
-
-        if ($disbursementLineExists) {
+        if (null !== $disbursementLineExists) {
             return;
         }
 

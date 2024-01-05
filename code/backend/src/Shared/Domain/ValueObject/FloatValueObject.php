@@ -22,4 +22,9 @@ abstract readonly class FloatValueObject
     {
         return new static($this->value + $value);
     }
+
+    final static public function random(): self
+    {
+        return new static(rand(0, 100));
+    }
 }

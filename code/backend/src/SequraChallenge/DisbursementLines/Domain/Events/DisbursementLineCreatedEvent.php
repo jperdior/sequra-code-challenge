@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\DisbursementLines\Domain\DomainEvents;
+namespace App\SequraChallenge\DisbursementLines\Domain\Events;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
-class DisbursementLineCreatedDomainEvent extends DomainEvent
+class DisbursementLineCreatedEvent extends DomainEvent
 {
 
     public function __construct(

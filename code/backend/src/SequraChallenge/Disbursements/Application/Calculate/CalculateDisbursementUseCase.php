@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Application\Calculate;
 
-use App\SequraChallenge\DisbursementLines\Application\Create\CreateDisbursementLineCommand;
 use App\SequraChallenge\Disbursements\Domain\DisbursementDateCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementCalculator;
 use App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent;
 use App\SequraChallenge\Merchants\Application\Find\MerchantResponse;
 use App\SequraChallenge\Shared\Application\Merchants\Find\FindMerchantQuery;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
-use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 
