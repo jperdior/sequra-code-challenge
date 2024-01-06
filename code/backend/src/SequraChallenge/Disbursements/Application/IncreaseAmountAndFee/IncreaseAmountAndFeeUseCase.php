@@ -31,7 +31,9 @@ final readonly class IncreaseAmountAndFeeUseCase
             $this->locking->acquire(true);
             $disbursementReference = new DisbursementReference($reference);
             $disbursement = $this->disbursementFinder->__invoke($disbursementReference);
-            //@todo query all disbursement lines for this disbursement
+            /**
+             * @todo query all disbursement lines for this disbursement
+             */
             $disbursement->increaseAmountAndFee($amount, $fee);
             $this->repository->save($disbursement);
             $this->eventBus->publish(...$disbursement->pullDomainEvents());

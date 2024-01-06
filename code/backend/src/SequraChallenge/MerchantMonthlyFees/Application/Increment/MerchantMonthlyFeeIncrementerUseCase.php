@@ -39,7 +39,9 @@ final readonly class MerchantMonthlyFeeIncrementerUseCase
                 $month->value
             );
         }
-        //@todo query all disbursements of this month and sum the feeAmount
+        /**
+         * @todo query for all the disbursements of the month and sum the amount
+         */
         $merchantMonthlyFee->increaseAmount($feeAmount->value);
 
         $this->merchantMonthlyFeeRepository->save($merchantMonthlyFee);
