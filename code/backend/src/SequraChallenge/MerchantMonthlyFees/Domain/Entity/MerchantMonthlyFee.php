@@ -7,14 +7,14 @@ namespace App\SequraChallenge\MerchantMonthlyFees\Domain\Entity;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 
-class MerchantMonthlyFee extends AggregateRoot
+final class MerchantMonthlyFee extends AggregateRoot
 {
 
     public function __construct(
         public readonly MerchantMonthlyFeeId    $id,
         public readonly MerchantReference       $merchantReference,
-        private MerchantMonthlyFeeAmount        $amount,
         public readonly MerchantMonthlyFeeMonth $month,
+        private MerchantMonthlyFeeAmount        $feeAmount,
     )
     {
     }
@@ -22,28 +22,27 @@ class MerchantMonthlyFee extends AggregateRoot
     final public static function create(
         string $id,
         string $merchantReference,
-        float $amount,
-        string $month
+        \DateTime $month
     ): MerchantMonthlyFee
     {
         $disbursementMonthlyFee = new self(
             new MerchantMonthlyFeeId($id),
             new MerchantReference($merchantReference),
-            new MerchantMonthlyFeeAmount($amount),
-            new MerchantMonthlyFeeMonth(new \DateTime($month))
+            new MerchantMonthlyFeeMonth($month),
+            new MerchantMonthlyFeeAmount(0)
         );
 
         return $disbursementMonthlyFee;
     }
 
-    public function amount(): MerchantMonthlyFeeAmount
+    public function feeAmount(): MerchantMonthlyFeeAmount
     {
-        return $this->amount;
+        return $this->feeAmount;
     }
 
-    public function addAmount(float $newAmount): void
+    public function increaseAmount(float $newAmount): void
     {
-        $this->amount = $this->amount->add($newAmount);
+        $this->feeAmount = $this->feeAmount->add($newAmount);
     }
 
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
+use App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncrasedEvent;
+use App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncreasedEvent;
 use App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
@@ -45,7 +47,7 @@ class Disbursement extends AggregateRoot
         return $this->fee;
     }
 
-    public function addFee(float $fee): void
+    public function increaseFee(float $fee): void
     {
         $this->fee = $this->fee->add($fee);
     }
@@ -55,7 +57,7 @@ class Disbursement extends AggregateRoot
         return $this->amount;
     }
 
-    public function addAmount(float $amount): void
+    public function increaseAmount(float $amount): void
     {
         $this->amount = $this->amount->add($amount);
     }
@@ -73,6 +75,20 @@ class Disbursement extends AggregateRoot
     public function createdAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    public function increaseAmountAndFee(float $amount, float $fee): void
+    {
+        $this->increaseAmount($amount);
+        $this->increaseFee($fee);
+
+        $this->record(new DisbursementAmountAndFeeIncreasedEvent(
+            $this->reference->value,
+            $this->merchantReference->value,
+            $this->amount->value,
+            $this->fee->value,
+            $this->disbursedAt->value
+        ));
     }
 
 }

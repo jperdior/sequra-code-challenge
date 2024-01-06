@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Disbursements\Application\UpdateAmountAndFee;
+namespace App\SequraChallenge\Disbursements\Application\IncreaseAmountAndFee;
 
 use App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
@@ -11,10 +11,10 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use function Lambdish\Phunctional\apply;
 
 #[AsMessageHandler]
-readonly class UpdateAmountAndFeeOnDisbursementLineCreatedHandler implements DomainEventSubscriber
+readonly class IncreaseAmountAndFeeOnDisbursementLineCreatedHandler implements DomainEventSubscriber
 {
     public function __construct(
-        private UpdateAmountAndFeeUseCase $useCase,
+        private IncreaseAmountAndFeeUseCase $useCase,
     ) {
     }
 

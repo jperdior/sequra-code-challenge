@@ -19,20 +19,17 @@ framework:
                         arguments: { }
                     queues:
                         disbursement.find_or_create_on_purchase_created:
-#                            binding_arguments:
-#                                purchase_created.queue1: purchase_created.queue1
-#                                purchase_created.queue2: purchase_created.queue2
-#                            binding_keys:
-#                                - purchase_created.queue1
-#                                - purchase_created.queue2
                             arguments: { }
-                        #purchase_created_queue2:
-                        #    name: purchase_created_queue2
-                        #    durable: true
-                        #    auto_delete: false
-                        #    arguments: { }
-                        #    binding:
-                        #        routing_key: purchase_created.queue2
+            disbursement_calculated:
+                dsn: '%env(RABBITMQ_URL)%'
+                options:
+                    exchange:
+                        name: disbursement_calculated
+                        type: direct
+                        arguments: { }
+                    queues:
+                        disbursement_line.create_on_disbursement_calculated:
+                            arguments: { }
             disbursement_line_created:
                 dsn: '%env(RABBITMQ_URL)%'
                 options:
@@ -43,13 +40,25 @@ framework:
                     queues:
                         disbursement.update_amount_and_fee_on_disbursement_line_created:
                             arguments: { }
+            disbursement_amount_and_fee_increased:
+                dsn: '%env(RABBITMQ_URL)%'
+                options:
+                    exchange:
+                        name: disbursement_amount_and_fee_increased
+                        type: direct
+                        arguments: { }
+                    queues:
+                        merchant_monthly_fee.update_amount_and_fee_on_disbursement_amount_and_fee_increased:
+                            arguments: { }
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             #'App\Shared\Domain\Bus\Event\DomainEvent': async
             'App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent': purchase_created
+            'App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent': disbursement_calculated
             'App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent': disbursement_line_created
+            'App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncreasedEvent': disbursement_amount_and_fee_increased
             'App\Shared\Domain\Bus\Command\Command': async
 
 when@test:
@@ -65,5 +74,7 @@ when@test:
                 # Route your messages to the transports
                 # 'App\Message\YourMessage': async
                 'App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent': sync
+                'App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent': sync
                 'App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent': sync
+                'App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncreasedEvent': sync
                 'App\Shared\Domain\Bus\Command\Command': sync

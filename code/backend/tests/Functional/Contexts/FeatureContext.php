@@ -5,6 +5,11 @@ namespace App\Tests\Functional\Contexts;
 use App\SequraChallenge\DisbursementLines\Domain\DisbursementLineRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFee;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeAmount;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeId;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeMonth;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\MerchantMonthlyFeeRepositoryInterface;
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantLiveOn;
@@ -16,6 +21,7 @@ use App\Shared\Domain\Bus\Event\EventBus;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +45,7 @@ readonly class FeatureContext implements Context
         private MerchantRepositoryInterface $merchantRepository,
         private DisbursementRepositoryInterface $disbursementRepository,
         private DisbursementLineRepositoryInterface $disbursementLineRepository,
+        private MerchantMonthlyFeeRepositoryInterface $merchantMonthlyFeeRepository,
         private EntityManagerInterface $entityManager
     )
     {
@@ -50,6 +57,7 @@ readonly class FeatureContext implements Context
         $this->entityManager->getConnection()->executeQuery('TRUNCATE TABLE disbursement_line');
         $this->entityManager->getConnection()->executeQuery('TRUNCATE TABLE disbursement');
         $this->entityManager->getConnection()->executeQuery('TRUNCATE TABLE merchant');
+        $this->entityManager->getConnection()->executeQuery('TRUNCATE TABLE merchant_monthly_fee');
     }
 
     /**
@@ -152,6 +160,37 @@ readonly class FeatureContext implements Context
             $this->eventBus->publish($event);
         }
     }
+
+    /**
+     * @Given there's a merchant monthly fee in the database with reference :merchantReference, date :month and fee amount :feeAmount
+     */
+    public function theresAMerchantMonthlyFeeInTheDatabaseWithReferenceDateAndFeeAmount(string $merchantReference, string $month, float $feeAmount)
+    {
+        $merchantMonthlyFee = new MerchantMonthlyFee(
+            new MerchantMonthlyFeeId(MerchantMonthlyFeeId::random()->value),
+            new MerchantReference($merchantReference),
+            new MerchantMonthlyFeeMonth(new \DateTime($month)),
+            new MerchantMonthlyFeeAmount($feeAmount)
+        );
+        $this->merchantMonthlyFeeRepository->save($merchantMonthlyFee);
+    }
+
+    /**
+     * @When I receive a purchase event with body:
+     */
+    public function iReceiveAPurchaseEventWithBody2(PyStringNode $string)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then A disbursement with merchantReference :arg1 to disburse on :arg2 with fee 0.4, amount 39.6, monthly fee :arg3 and flagged as first of month true should be created
+     */
+    public function aDisbursementWithMerchantreferenceToDisburseOnWithFeeAmountMonthlyFeeAndFlaggedAsFirstOfMonthTrueShouldBeCreated($arg1, $arg2, $arg3)
+    {
+        throw new PendingException();
+    }
+
 
 
 
