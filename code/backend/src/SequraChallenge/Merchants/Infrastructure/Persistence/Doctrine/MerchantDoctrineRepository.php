@@ -25,4 +25,5 @@ class MerchantDoctrineRepository extends AbstractOrmRepository implements Mercha
     {
         return $this->findOneBy(['reference' => $reference->value]);
     }
+
 }

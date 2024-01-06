@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
+class PurchasesTestFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -101,10 +101,4 @@ class PurchasesTestFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();*/
     }
 
-    public function getDependencies(): array
-    {
-        return [
-            MerchantTestFixtures::class,
-        ];
-    }
 }
