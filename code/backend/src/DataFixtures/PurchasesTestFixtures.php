@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\SequraChallenge\Domain\Entity\Merchant;
 use App\SequraChallenge\Domain\Entity\Purchase;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class PurchasesTestFixtures extends Fixture
@@ -100,5 +99,4 @@ class PurchasesTestFixtures extends Fixture
 
         $manager->flush();*/
     }
-
 }

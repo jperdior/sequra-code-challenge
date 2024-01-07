@@ -6,5 +6,4 @@ use App\Shared\Domain\ValueObject\StringValueObject;
 
 final readonly class DisbursementLinePurchaseId extends StringValueObject
 {
-
 }

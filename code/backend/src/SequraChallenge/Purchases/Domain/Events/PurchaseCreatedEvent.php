@@ -47,6 +47,5 @@ final class PurchaseCreatedEvent extends DomainEvent
             'amount' => $this->amount,
             'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
         ];
-
     }
 }

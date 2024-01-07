@@ -24,7 +24,7 @@ readonly class CreateDisbursementLineOnDisbursementCalculated implements DomainE
         apply($this->useCase, [
             $event->aggregateId,
             $event->purchaseId,
-            $event->purchaseAmount
+            $event->purchaseAmount,
         ]);
     }
 

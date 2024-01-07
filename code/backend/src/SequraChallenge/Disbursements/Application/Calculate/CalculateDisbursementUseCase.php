@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Application\Calculate;
 
-use App\SequraChallenge\Disbursements\Domain\DisbursementCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementDateCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
@@ -21,10 +20,10 @@ use App\Shared\Domain\Bus\Query\QueryBus;
 final readonly class CalculateDisbursementUseCase
 {
     public function __construct(
-        private EventBus                         $eventBus,
-        private QueryBus                           $queryBus,
-        private DisbursementDateCalculator         $disbursementDateCalculator,
-        private DisbursementRepositoryInterface    $repository
+        private EventBus $eventBus,
+        private QueryBus $queryBus,
+        private DisbursementDateCalculator $disbursementDateCalculator,
+        private DisbursementRepositoryInterface $repository
     ) {
     }
 
@@ -33,8 +32,7 @@ final readonly class CalculateDisbursementUseCase
         \DateTime $createdAt,
         string $purchaseId,
         float $purchaseAmount
-    ): void
-    {
+    ): void {
         /**
          * @var MerchantResponse $merchant
          */
@@ -64,7 +62,7 @@ final readonly class CalculateDisbursementUseCase
             );
         }
 
-        if(true === $disbursement->firstOfMonth){
+        if (true === $disbursement->firstOfMonth) {
             $previousMonth = clone $disbursement->disbursedAt->value;
             /**
              * @var MerchantMonthlyFeesResponse $previousMonthMerchantMonthlyFees
@@ -89,7 +87,5 @@ final readonly class CalculateDisbursementUseCase
         );
 
         $this->eventBus->publish($disbursementCalculatedEvent);
-
-
     }
 }

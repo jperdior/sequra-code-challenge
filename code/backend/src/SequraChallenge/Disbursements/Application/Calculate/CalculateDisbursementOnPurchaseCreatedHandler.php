@@ -16,8 +16,7 @@ readonly class CalculateDisbursementOnPurchaseCreatedHandler implements DomainEv
 {
     public function __construct(
         private CalculateDisbursementUseCase $disbursementCalculator,
-    )
-    {
+    ) {
     }
 
     public static function subscribedTo(): array
@@ -27,16 +26,14 @@ readonly class CalculateDisbursementOnPurchaseCreatedHandler implements DomainEv
 
     public function __invoke(PurchaseCreatedEvent $event): void
     {
-
         apply(
             $this->disbursementCalculator,
             [
                 new MerchantReference($event->merchantReference),
                 $event->createdAt,
                 $event->aggregateId,
-                $event->amount
+                $event->amount,
             ]
         );
-
     }
 }

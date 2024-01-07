@@ -6,5 +6,4 @@ use App\Shared\Domain\ValueObject\Ulid;
 
 final readonly class MerchantMonthlyFeeId extends Ulid
 {
-
 }

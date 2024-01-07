@@ -6,7 +6,9 @@ namespace App\Shared\Domain\ValueObject;
 
 abstract readonly class FloatValueObject
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     final public function isBiggerThan(self $other): bool
     {
@@ -23,7 +25,7 @@ abstract readonly class FloatValueObject
         return new static($this->value + $value);
     }
 
-    final static public function random(): self
+    final public static function random(): self
     {
         return new static(rand(0, 100));
     }

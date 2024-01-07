@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\SequraChallenge\Merchants\Infrastructure\Persistence\Doctrine;
 
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
-use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\StringType;
 
 final class MerchantReferenceType extends StringType
 {
@@ -26,11 +26,10 @@ final class MerchantReferenceType extends StringType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if ($value === null || $value instanceof MerchantReference) {
+        if (null === $value || $value instanceof MerchantReference) {
             return $value;
         }
 
         return new MerchantReference($value);
     }
 }
-

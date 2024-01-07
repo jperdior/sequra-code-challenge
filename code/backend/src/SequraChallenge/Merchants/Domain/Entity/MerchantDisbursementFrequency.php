@@ -17,5 +17,4 @@ final readonly class MerchantDisbursementFrequency extends EnumValueObject
             throw new \InvalidArgumentException(sprintf('The disbursement frequency <%s> is invalid', $value));
         }
     }
-
 }

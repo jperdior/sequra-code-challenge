@@ -6,7 +6,6 @@ use App\Shared\Domain\ValueObject\EnumValueObject;
 
 final readonly class DisbursementLineFeePercentage extends EnumValueObject
 {
-
     private const SMALL_ORDER_AMOUNT_THRESHOLD = 50;
     private const MEDIUM_ORDER_AMOUNT_THRESHOLD = 300;
 
@@ -22,13 +21,14 @@ final readonly class DisbursementLineFeePercentage extends EnumValueObject
         if ($amount < self::MEDIUM_ORDER_AMOUNT_THRESHOLD) {
             return new self(self::MEDIUM_ORDER_PERCENTAGE);
         }
+
         return new self(self::LARGE_ORDER_PERCENTAGE);
     }
 
     public function ensureIsValidValue($value): void
     {
         if (!in_array($value, [self::SMALL_ORDER_PERCENTAGE, self::MEDIUM_ORDER_PERCENTAGE, self::LARGE_ORDER_PERCENTAGE])) {
-            throw new \InvalidArgumentException("Invalid fee percentage");
+            throw new \InvalidArgumentException('Invalid fee percentage');
         }
     }
 
@@ -36,5 +36,4 @@ final readonly class DisbursementLineFeePercentage extends EnumValueObject
     {
         return $this->value / 100;
     }
-
 }

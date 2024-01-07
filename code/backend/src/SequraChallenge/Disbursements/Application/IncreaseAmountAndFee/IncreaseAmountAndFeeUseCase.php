@@ -13,36 +13,34 @@ use App\Shared\Domain\Repository\TransactionInterface;
 
 final readonly class IncreaseAmountAndFeeUseCase
 {
-
     public function __construct(
-        private EventBus                        $eventBus,
-        private DisbursementFinder              $disbursementFinder,
+        private EventBus $eventBus,
+        private DisbursementFinder $disbursementFinder,
         private DisbursementRepositoryInterface $repository,
-        private TransactionInterface                   $transaction,
-        private LockingInterface                       $locking
+        private TransactionInterface $transaction,
+        private LockingInterface $locking
     ) {
     }
 
     public function __invoke(string $reference, float $amount, float $fee): void
     {
         $this->transaction->begin();
-        try{
-            $this->locking->create('disbursement-' . $reference);
+        try {
+            $this->locking->create('disbursement-'.$reference);
             $this->locking->acquire(true);
             $disbursementReference = new DisbursementReference($reference);
             $disbursement = $this->disbursementFinder->__invoke($disbursementReference);
-            /**
+            /*
              * @todo query all disbursement lines for this disbursement as queues don't guarantee order and duplicate messages are possible
              */
             $disbursement->increaseAmountAndFee($amount, $fee);
             $this->repository->save($disbursement);
             $this->eventBus->publish(...$disbursement->pullDomainEvents());
             $this->transaction->commit();
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             $this->transaction->rollback();
             throw $e;
-        }
-        finally{
+        } finally {
             $this->locking->release();
         }
     }

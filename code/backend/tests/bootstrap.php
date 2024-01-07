@@ -11,27 +11,27 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 }
 // executes the "php bin/console cache:clear" command
 passthru(sprintf(
-   'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
+    'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
     $_ENV['APP_ENV'],
-   __DIR__
- ));
+    __DIR__
+));
 
 // executes the "php bin/console doctrine:database:create" command
 passthru(sprintf(
-   'APP_ENV=%s php "%s/../bin/console" doctrine:database:create --if-not-exists',
+    'APP_ENV=%s php "%s/../bin/console" doctrine:database:create --if-not-exists',
     $_ENV['APP_ENV'],
-   __DIR__
- ));
+    __DIR__
+));
 
-//migrations
+// migrations
 passthru(sprintf(
-   'APP_ENV=%s php "%s/../bin/console" doctrine:migrations:migrate --no-interaction',
+    'APP_ENV=%s php "%s/../bin/console" doctrine:migrations:migrate --no-interaction',
     $_ENV['APP_ENV'],
-   __DIR__
- ));
+    __DIR__
+));
 
 // executes the "php bin/console doctrine:fxture:load" command
-//passthru(sprintf(
+// passthru(sprintf(
 //   'APP_ENV=%s php "%s/../bin/console" doctrine:fixtures:load --no-interaction',
 //    $_ENV['APP_ENV'],
 //   __DIR__

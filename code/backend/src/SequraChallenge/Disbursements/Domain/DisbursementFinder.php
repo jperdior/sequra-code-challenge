@@ -10,7 +10,6 @@ use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 
 final readonly class DisbursementFinder
 {
-
     public function __construct(
         private DisbursementRepositoryInterface $repository
     ) {
@@ -22,7 +21,7 @@ final readonly class DisbursementFinder
         if (null === $disbursement) {
             throw new DisbursementNotFound($reference);
         }
+
         return $disbursement;
     }
-
 }

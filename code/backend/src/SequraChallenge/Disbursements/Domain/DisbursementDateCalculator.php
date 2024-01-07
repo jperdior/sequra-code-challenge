@@ -9,12 +9,11 @@ use App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency;
 
 class DisbursementDateCalculator
 {
-
     public function __invoke(
         string $merchantDisbursementFrequency,
         \DateTime $merchantLiveOnDate,
         \DateTime $purchaseCreatedAt,
-    ): DisbursementDisbursedAt{
+    ): DisbursementDisbursedAt {
         $disbursementDate = null;
         switch ($merchantDisbursementFrequency) {
             case MerchantDisbursementFrequency::DAILY:
@@ -34,8 +33,7 @@ class DisbursementDateCalculator
                 }
                 break;
         }
+
         return new DisbursementDisbursedAt($disbursementDate);
     }
-
-
 }

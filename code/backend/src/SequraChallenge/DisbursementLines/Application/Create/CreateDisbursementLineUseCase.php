@@ -9,22 +9,19 @@ use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLine;
 use App\SequraChallenge\DisbursementLines\Domain\Entity\DisbursementLineId;
 use App\Shared\Domain\Bus\Event\EventBus;
 
-
 final readonly class CreateDisbursementLineUseCase
 {
-
     public function __construct(
         private DisbursementLineRepositoryInterface $repository,
-        private EventBus                            $eventBus
-    )
-    {}
+        private EventBus $eventBus
+    ) {
+    }
 
     public function __invoke(
         string $disbursementReference,
         string $purchaseId,
         float $purchaseAmount,
-    ): void
-    {
+    ): void {
         $disbursementLineExists = $this->repository->findByPurchaseId($purchaseId);
         if (null !== $disbursementLineExists) {
             return;
@@ -40,6 +37,4 @@ final readonly class CreateDisbursementLineUseCase
         $this->repository->save($disbursementLine);
         $this->eventBus->publish(...$disbursementLine->pullDomainEvents());
     }
-
-
 }

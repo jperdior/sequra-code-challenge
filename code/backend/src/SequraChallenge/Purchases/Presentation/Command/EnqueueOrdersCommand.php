@@ -29,12 +29,12 @@ class EnqueueOrdersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         $csvPath = $input->getArgument('orders');
         $purchasesCsv = fopen($csvPath, 'r');
 
         if (!$purchasesCsv) {
             $output->writeln('Error opening CSV file.');
+
             return Command::FAILURE;
         }
 
@@ -42,7 +42,6 @@ class EnqueueOrdersCommand extends Command
 
         try {
             foreach ($this->readCsvRows($purchasesCsv) as $row) {
-
                 $event = new PurchaseCreatedEvent(
                     id: $row[0],
                     merchantReference: $row[1],

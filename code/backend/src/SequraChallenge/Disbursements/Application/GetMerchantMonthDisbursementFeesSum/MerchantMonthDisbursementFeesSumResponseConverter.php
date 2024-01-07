@@ -6,12 +6,10 @@ namespace App\SequraChallenge\Disbursements\Application\GetMerchantMonthDisburse
 
 final class MerchantMonthDisbursementFeesSumResponseConverter
 {
-
     public function __invoke(float $feesSum): MerchantMonthDisbursementFeesSumResponse
     {
         return new MerchantMonthDisbursementFeesSumResponse(
             $feesSum
         );
     }
-
 }

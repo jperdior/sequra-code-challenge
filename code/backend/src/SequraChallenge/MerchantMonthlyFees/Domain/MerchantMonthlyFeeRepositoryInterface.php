@@ -10,9 +10,7 @@ use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 interface MerchantMonthlyFeeRepositoryInterface
 {
-
     public function save(MerchantMonthlyFee $disbursementMonthlyFee): void;
 
     public function search(MerchantReference $merchantReference, MerchantMonthlyFeeFirstDayOfMonth $firstDayOfMonth): ?MerchantMonthlyFee;
-
 }

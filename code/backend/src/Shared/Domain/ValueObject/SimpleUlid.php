@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-final readonly class SimpleUlid extends Ulid {}
+final readonly class SimpleUlid extends Ulid
+{
+}

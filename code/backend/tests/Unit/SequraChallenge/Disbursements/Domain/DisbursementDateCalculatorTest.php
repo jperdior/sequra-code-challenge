@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class DisbursementDateCalculatorTest extends TestCase
 {
-
     private DisbursementDateCalculator $disbursementDateCalculator;
 
     public function setUp(): void
@@ -19,7 +18,7 @@ class DisbursementDateCalculatorTest extends TestCase
         $this->disbursementDateCalculator = new DisbursementDateCalculator();
     }
 
-    public function test_it_should_calculate_a_disbursement_date_for_a_daily_merchant(): void
+    public function testItShouldCalculateADisbursementDateForADailyMerchant(): void
     {
         $disbursementDate = $this->disbursementDateCalculator->__invoke(
             merchantDisbursementFrequency: MerchantDisbursementFrequency::DAILY,
@@ -30,7 +29,7 @@ class DisbursementDateCalculatorTest extends TestCase
         $this->assertEquals(new \DateTime('2021-01-01'), $disbursementDate->value);
     }
 
-    public function test_it_should_calculate_a_disbursement_date_for_a_weekly_merchant_same_day_of_week(): void
+    public function testItShouldCalculateADisbursementDateForAWeeklyMerchantSameDayOfWeek(): void
     {
         $disbursementDate = $this->disbursementDateCalculator->__invoke(
             merchantDisbursementFrequency: MerchantDisbursementFrequency::WEEKLY,
@@ -41,7 +40,7 @@ class DisbursementDateCalculatorTest extends TestCase
         $this->assertEquals(new \DateTime('2021-01-01'), $disbursementDate->value);
     }
 
-    public function test_it_should_calculate_a_disbursement_date_for_a_weekly_merchant_for_next_week(): void
+    public function testItShouldCalculateADisbursementDateForAWeeklyMerchantForNextWeek(): void
     {
         $disbursementDate = $this->disbursementDateCalculator->__invoke(
             merchantDisbursementFrequency: MerchantDisbursementFrequency::WEEKLY,
@@ -52,7 +51,7 @@ class DisbursementDateCalculatorTest extends TestCase
         $this->assertEquals(new \DateTime('2021-01-15'), $disbursementDate->value);
     }
 
-    public function test_it_should_calculate_a_disbursement_date_for_a_weekly_merchant_for_same_week(): void
+    public function testItShouldCalculateADisbursementDateForAWeeklyMerchantForSameWeek(): void
     {
         $disbursementDate = $this->disbursementDateCalculator->__invoke(
             merchantDisbursementFrequency: MerchantDisbursementFrequency::WEEKLY,
@@ -62,5 +61,4 @@ class DisbursementDateCalculatorTest extends TestCase
 
         $this->assertEquals(new \DateTime('2021-01-08'), $disbursementDate->value);
     }
-
 }

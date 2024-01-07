@@ -11,7 +11,6 @@ use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 class MerchantFinder
 {
-
     public function __construct(
         private MerchantRepositoryInterface $repository
     ) {
@@ -27,7 +26,4 @@ class MerchantFinder
 
         return $merchant;
     }
-
-
-
 }

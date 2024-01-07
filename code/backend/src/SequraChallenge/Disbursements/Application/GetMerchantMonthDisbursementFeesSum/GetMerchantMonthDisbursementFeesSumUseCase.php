@@ -9,7 +9,6 @@ use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 
 final readonly class GetMerchantMonthDisbursementFeesSumUseCase
 {
-
     public function __construct(
         private DisbursementRepositoryInterface $repository
     ) {
@@ -19,5 +18,4 @@ final readonly class GetMerchantMonthDisbursementFeesSumUseCase
     {
         return $this->repository->getMerchantMonthDisbursementFeesSum($merchantReference, $firstDayOfMonth);
     }
-
 }

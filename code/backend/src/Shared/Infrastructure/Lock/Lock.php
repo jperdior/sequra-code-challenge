@@ -6,8 +6,8 @@ namespace App\Shared\Infrastructure\Lock;
 
 use App\Shared\Domain\Lock\LockingInterface;
 use Symfony\Component\Lock\LockFactory;
-use Symfony\Component\Lock\Store\FlockStore;
 use Symfony\Component\Lock\LockInterface;
+use Symfony\Component\Lock\Store\FlockStore;
 
 final class Lock implements LockingInterface
 {
@@ -34,6 +34,4 @@ final class Lock implements LockingInterface
     {
         $this->lock->release();
     }
-
-
 }

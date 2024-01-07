@@ -8,7 +8,6 @@ use App\Shared\Domain\Bus\Event\DomainEvent;
 
 class DisbursementAmountAndFeeIncreasedEvent extends DomainEvent
 {
-
     public function __construct(
         string $aggregateId,
         public readonly string $merchantReference,
@@ -17,8 +16,7 @@ class DisbursementAmountAndFeeIncreasedEvent extends DomainEvent
         public readonly \DateTime $disbursedAt,
         string $eventId = null,
         string $occurredOn = null
-    )
-    {
+    ) {
         parent::__construct($aggregateId, $eventId, $occurredOn);
     }
 
@@ -27,8 +25,7 @@ class DisbursementAmountAndFeeIncreasedEvent extends DomainEvent
         array $body,
         string $eventId,
         string $occurredOn,
-    ): DomainEvent
-    {
+    ): DomainEvent {
         return new self(
             $aggregateId,
             $body['merchantReference'],

@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Disbursements\Domain\Entity;
 
-use App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncrasedEvent;
 use App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncreasedEvent;
-use App\SequraChallenge\Disbursements\Domain\Events\DisbursementCalculatedEvent;
 use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 
 class Disbursement extends AggregateRoot
 {
-
     public function __construct(
         public readonly DisbursementReference $reference,
         public readonly MerchantReference $merchantReference,
@@ -22,15 +19,15 @@ class Disbursement extends AggregateRoot
         private DisbursementAmount $amount,
         private DisbursementMonthlyFee $monthlyFee,
         public readonly bool $firstOfMonth,
-    ) {}
+    ) {
+    }
 
     public static function create(
         string $reference,
         string $merchantReference,
         \DateTime $disbursedAt,
         bool $firstOfMonth = false
-    ): Disbursement
-    {
+    ): Disbursement {
         return new self(
             new DisbursementReference($reference),
             new MerchantReference($merchantReference),
@@ -85,5 +82,4 @@ class Disbursement extends AggregateRoot
             $this->disbursedAt->value
         ));
     }
-
 }

@@ -10,7 +10,7 @@ class MerchantFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        if (getenv('APP_ENV') === 'test') {
+        if ('test' === getenv('APP_ENV')) {
             return;
         }
 

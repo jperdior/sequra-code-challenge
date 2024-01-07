@@ -25,11 +25,10 @@ final readonly class GetMerchantMonthDisbursementFeesSumQueryHandler implements 
             $this->searchMerchantMonthDisbursementsUseCase,
             [
                 new MerchantReference($query->merchantReference),
-                $query->firstDayOfMonth
+                $query->firstDayOfMonth,
             ]
         );
 
         return apply($this->merchantMonthDisbursementFeesSumResponseConverter, [$feesSum]);
-
     }
 }

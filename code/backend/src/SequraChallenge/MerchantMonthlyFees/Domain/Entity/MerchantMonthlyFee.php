@@ -9,22 +9,19 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 
 final class MerchantMonthlyFee extends AggregateRoot
 {
-
     public function __construct(
-        public readonly MerchantMonthlyFeeId              $id,
-        public readonly MerchantReference                 $merchantReference,
+        public readonly MerchantMonthlyFeeId $id,
+        public readonly MerchantReference $merchantReference,
         public readonly MerchantMonthlyFeeFirstDayOfMonth $firstDayOfMonth,
-        private MerchantMonthlyFeeAmount                  $feeAmount,
-    )
-    {
+        private MerchantMonthlyFeeAmount $feeAmount,
+    ) {
     }
 
     final public static function create(
         string $id,
         string $merchantReference,
         \DateTime $date
-    ): MerchantMonthlyFee
-    {
+    ): MerchantMonthlyFee {
         $disbursementMonthlyFee = new self(
             new MerchantMonthlyFeeId($id),
             new MerchantReference($merchantReference),
@@ -44,6 +41,4 @@ final class MerchantMonthlyFee extends AggregateRoot
     {
         $this->feeAmount = new MerchantMonthlyFeeAmount($newAmount);
     }
-
-
 }

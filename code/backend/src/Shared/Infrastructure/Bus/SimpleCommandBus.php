@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
+use App\Shared\Domain\Bus\Command\Command;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use Symfony\Component\Messenger\MessageBusInterface;
-use App\Shared\Domain\Bus\Command\Command;
 
 class SimpleCommandBus implements CommandBus
 {

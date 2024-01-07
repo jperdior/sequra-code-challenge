@@ -16,23 +16,21 @@ use App\Shared\Domain\Bus\Query\QueryBus;
 
 final readonly class MerchantMonthlyFeeIncrementerUseCase
 {
-
     public function __construct(
         private MerchantMonthlyFeeRepositoryInterface $merchantMonthlyFeeRepository,
         private QueryBus $queryBus
-    ){
+    ) {
     }
 
     public function __invoke(
         MerchantReference $merchantReference,
         MerchantMonthlyFeeFirstDayOfMonth $firstDayOfMonth
-    ): void
-    {
+    ): void {
         $this->queryBus->ask(new FindMerchantQuery($merchantReference->value));
 
         $merchantMonthlyFee = $this->merchantMonthlyFeeRepository->search($merchantReference, $firstDayOfMonth);
 
-        if (null == $merchantMonthlyFee){
+        if (null == $merchantMonthlyFee) {
             $merchantMonthlyFee = MerchantMonthlyFee::create(
                 MerchantMonthlyFeeId::random()->value,
                 $merchantReference->value,

@@ -23,5 +23,4 @@ interface DisbursementRepositoryInterface
     public function save(Disbursement $disbursement): void;
 
     public function getMerchantMonthDisbursementFeesSum(MerchantReference $merchantReference, \DateTime $firstDayOfMonth): float;
-
 }

@@ -9,14 +9,12 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 
 class Merchant extends AggregateRoot
 {
-
     public function __construct(
         private readonly MerchantReference $reference,
         public readonly MerchantLiveOn $liveOn,
         public readonly MerchantDisbursementFrequency $disbursementFrequency,
         public readonly MerchantMinimumMonthlyFee $minimumMonthlyFee
-    )
-    {
+    ) {
     }
 
     public static function create(
@@ -37,6 +35,4 @@ class Merchant extends AggregateRoot
     {
         return $this->reference;
     }
-
-
 }

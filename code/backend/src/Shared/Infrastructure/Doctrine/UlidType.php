@@ -35,7 +35,7 @@ abstract class UlidType extends StringType implements DoctrineCustomType
 
     final public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        /** @var Ulid $value */
+        /* @var Ulid $value */
         return $value->value;
     }
 }

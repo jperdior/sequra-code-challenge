@@ -12,22 +12,20 @@ use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
 
 class DisbursementDoctrineRepository extends AbstractOrmRepository implements DisbursementRepositoryInterface
 {
-
     public function getByMerchantAndDisbursedDate(
         MerchantReference $merchantReference,
         DisbursementDisbursedAt $disbursedAt
     ): ?Disbursement {
         return $this->findOneBy([
             'merchantReference' => $merchantReference,
-            'disbursedAt.value' => $disbursedAt->value
+            'disbursedAt.value' => $disbursedAt->value,
         ]);
     }
 
     public function getFirstOfMonth(
         MerchantReference $merchantReference,
         DisbursementDisbursedAt $disbursedAt
-    ): ?Disbursement
-    {
+    ): ?Disbursement {
         $monthStart = $disbursedAt->value->format('Y-m-01');
         $monthEnd = $disbursedAt->value->format('Y-m-t');
         $qb = $this->createQueryBuilder('d');
@@ -38,6 +36,7 @@ class DisbursementDoctrineRepository extends AbstractOrmRepository implements Di
             ->setParameter('merchantReference', $merchantReference)
             ->setParameter('monthStart', $monthStart)
             ->setParameter('monthEnd', $monthEnd);
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -52,13 +51,13 @@ class DisbursementDoctrineRepository extends AbstractOrmRepository implements Di
             ->setParameter('merchantReference', $merchantReference)
             ->setParameter('monthStart', $monthStart)
             ->setParameter('monthEnd', $monthEnd);
-        return (float)$qb->getQuery()->getSingleScalarResult();
+
+        return (float) $qb->getQuery()->getSingleScalarResult();
     }
 
     public function save(Disbursement $disbursement): void
     {
         $this->persist($disbursement);
-
     }
 
     protected function getClass(): string

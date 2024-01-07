@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Unit\SequraChallenge\Disbursements\Application\Create;
 
 use App\SequraChallenge\Disbursements\Application\Calculate\CalculateDisbursementUseCase;
-use App\SequraChallenge\Disbursements\Domain\DisbursementCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementDateCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
@@ -20,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 final class CalculateDisbursementUseCaseTest extends TestCase
 {
-
     private EventBus $eventBus;
 
     private QueryBus $queryBus;
@@ -49,7 +47,7 @@ final class CalculateDisbursementUseCaseTest extends TestCase
     /**
      * @test
      */
-    public function it_should_calculate_a_disbursement_for_a_daily_merchant(): void
+    public function itShouldCalculateADisbursementForADailyMerchant(): void
     {
         $merchant = new MerchantResponse(
             reference: MerchantReference::random()->value,
@@ -80,13 +78,12 @@ final class CalculateDisbursementUseCaseTest extends TestCase
             purchaseId: 'purchase-id',
             purchaseAmount: 100
         );
-
     }
 
     /**
      * @test
      */
-    public function it_should_create_a_non_first_of_month_disbursement(): void
+    public function itShouldCreateANonFirstOfMonthDisbursement(): void
     {
         $merchant = new MerchantResponse(
             reference: MerchantReference::random()->value,
@@ -121,5 +118,4 @@ final class CalculateDisbursementUseCaseTest extends TestCase
             purchaseAmount: 100
         );
     }
-
 }

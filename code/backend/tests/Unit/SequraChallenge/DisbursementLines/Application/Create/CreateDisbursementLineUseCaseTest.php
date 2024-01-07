@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 final class CreateDisbursementLineUseCaseTest extends TestCase
 {
-
     private DisbursementLineRepositoryInterface $repository;
 
     private EventBus $eventBus;
@@ -34,8 +33,8 @@ final class CreateDisbursementLineUseCaseTest extends TestCase
     }
 
     /** @test */
-    public function it_should_create_a_disbursement_line(){
-
+    public function itShouldCreateADisbursementLine()
+    {
         $this->repository->expects($this->once())->method('findByPurchaseId')->willReturn(null);
 
         $this->repository->expects($this->once())->method('save');
@@ -50,7 +49,8 @@ final class CreateDisbursementLineUseCaseTest extends TestCase
     }
 
     /** @test */
-    public function if_purchase_processed_it_should_skip(){
+    public function ifPurchaseProcessedItShouldSkip()
+    {
         $existingDisbursementLine = $this->createMock(DisbursementLine::class);
         $this->repository->expects($this->once())->method('findByPurchaseId')->willReturn(
             $existingDisbursementLine
@@ -61,6 +61,4 @@ final class CreateDisbursementLineUseCaseTest extends TestCase
             purchaseAmount: DisbursementLinePurchaseAmount::random()->value
         );
     }
-
-
 }

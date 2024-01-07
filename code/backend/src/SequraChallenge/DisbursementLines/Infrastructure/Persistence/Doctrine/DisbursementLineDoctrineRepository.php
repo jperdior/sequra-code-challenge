@@ -10,7 +10,6 @@ use App\Shared\Infrastructure\Doctrine\AbstractOrmRepository;
 
 class DisbursementLineDoctrineRepository extends AbstractOrmRepository implements DisbursementLineRepositoryInterface
 {
-
     public function getClass(): string
     {
         return DisbursementLine::class;

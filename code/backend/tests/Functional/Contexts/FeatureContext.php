@@ -7,8 +7,8 @@ use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
 use App\SequraChallenge\Disbursements\Domain\Entity\DisbursementDisbursedAt;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFee;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeAmount;
-use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeId;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeFirstDayOfMonth;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeId;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\MerchantMonthlyFeeRepositoryInterface;
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency;
@@ -19,20 +19,16 @@ use App\SequraChallenge\Purchases\Domain\Events\PurchaseCreatedEvent;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Bus\Event\EventBus;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Process\Process;
 
 /**
  * Defines application features from the specific context.
  */
 readonly class FeatureContext implements Context
 {
-
     /**
      * Initializes context.
      *
@@ -47,8 +43,7 @@ readonly class FeatureContext implements Context
         private DisbursementLineRepositoryInterface $disbursementLineRepository,
         private MerchantMonthlyFeeRepositoryInterface $merchantMonthlyFeeRepository,
         private EntityManagerInterface $entityManager
-    )
-    {
+    ) {
     }
 
     /** @BeforeScenario */
@@ -65,19 +60,17 @@ readonly class FeatureContext implements Context
      */
     public function theresTheseMerchantsInTheDatabase(TableNode $table)
     {
-
         foreach ($table->getHash() as $row) {
             $this->merchantRepository->save(
                 new Merchant(
                     new MerchantReference($row['reference']),
                     new MerchantLiveOn(new \DateTime($row['liveOn'])),
                     new MerchantDisbursementFrequency($row['disbursementFrequency']),
-                    new MerchantMinimumMonthlyFee((float)$row['minimumMonthlyFee'])
-            )
+                    new MerchantMinimumMonthlyFee((float) $row['minimumMonthlyFee'])
+                )
             );
         }
     }
-
 
     /**
      * @When I receive a :size purchase event with body:
@@ -85,7 +78,7 @@ readonly class FeatureContext implements Context
     public function iReceiveAPurchaseEventWithBody(string $size, PyStringNode $body)
     {
         $event = PurchaseCreatedEvent::fromPrimitives(
-            $size . '-purchase',
+            $size.'-purchase',
             json_decode($body, true),
             'eventId',
             'occurredOn'
@@ -107,11 +100,11 @@ readonly class FeatureContext implements Context
         }
 
         if ($disbursement->fee()->value !== $fee) {
-            throw new \Exception('Fee does not match: Expected ' . $fee . ' but got ' . $disbursement->fee()->value);
+            throw new \Exception('Fee does not match: Expected '.$fee.' but got '.$disbursement->fee()->value);
         }
 
         if ($disbursement->amount()->value !== $amount) {
-            throw new \Exception('Amount does not match: Expected ' . $amount . ' but got ' . $disbursement->amount()->value);
+            throw new \Exception('Amount does not match: Expected '.$amount.' but got '.$disbursement->amount()->value);
         }
     }
 
@@ -127,18 +120,16 @@ readonly class FeatureContext implements Context
         }
 
         if ($disbursementLine->feeAmount->value !== $lineFee) {
-            throw new \Exception('Fee does not match: Expected ' . $lineFee . ' but got ' . $disbursementLine->feeAmount->value);
+            throw new \Exception('Fee does not match: Expected '.$lineFee.' but got '.$disbursementLine->feeAmount->value);
         }
 
         if ($disbursementLine->amount->value !== $lineAmount) {
-            throw new \Exception('Amount does not match: Expected ' . $lineAmount . ' but got ' . $disbursementLine->amount->value);
+            throw new \Exception('Amount does not match: Expected '.$lineAmount.' but got '.$disbursementLine->amount->value);
         }
 
         if ($disbursementLine->feePercentage->value !== $feePercentage) {
-            throw new \Exception('Fee percentage does not match: Expected ' . $feePercentage . ' but got ' . $disbursementLine->feePercentage->value);
+            throw new \Exception('Fee percentage does not match: Expected '.$feePercentage.' but got '.$disbursementLine->feePercentage->value);
         }
-
-
     }
 
     /**
@@ -147,9 +138,9 @@ readonly class FeatureContext implements Context
     public function iReceiveThesePurchaseCreatedEvents(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
-            $body["merchantReference"] = $row['merchantReference'];
-            $body["amount"] = floatval($row['amount']);
-            $body["createdAt"] = $row['createdAt'];
+            $body['merchantReference'] = $row['merchantReference'];
+            $body['amount'] = floatval($row['amount']);
+            $body['createdAt'] = $row['createdAt'];
             $event = PurchaseCreatedEvent::fromPrimitives(
                 $row['purchaseId'],
                 $body,
@@ -200,8 +191,7 @@ readonly class FeatureContext implements Context
         float $amount,
         float $monthlyFee,
         bool $firstOfMonth
-    )
-    {
+    ) {
         $disbursement = $this->disbursementRepository->getByMerchantAndDisbursedDate(
             new MerchantReference($merchantReference), new DisbursementDisbursedAt(new \DateTime($disbursedAt)));
 
@@ -210,23 +200,19 @@ readonly class FeatureContext implements Context
         }
 
         if ($disbursement->fee()->value !== $fee) {
-            throw new \Exception('Fee does not match: Expected ' . $fee . ' but got ' . $disbursement->fee()->value);
+            throw new \Exception('Fee does not match: Expected '.$fee.' but got '.$disbursement->fee()->value);
         }
 
         if ($disbursement->amount()->value !== $amount) {
-            throw new \Exception('Amount does not match: Expected ' . $amount . ' but got ' . $disbursement->amount()->value);
+            throw new \Exception('Amount does not match: Expected '.$amount.' but got '.$disbursement->amount()->value);
         }
 
         if ($disbursement->monthlyFee()->value !== $monthlyFee) {
-            throw new \Exception('Monthly fee does not match: Expected ' . $monthlyFee . ' but got ' . $disbursement->monthlyFee()->value);
+            throw new \Exception('Monthly fee does not match: Expected '.$monthlyFee.' but got '.$disbursement->monthlyFee()->value);
         }
 
         if ($disbursement->firstOfMonth !== $firstOfMonth) {
-            throw new \Exception('First of month does not match: Expected ' . $firstOfMonth . ' but got ' . $disbursement->firstOfMonth);
+            throw new \Exception('First of month does not match: Expected '.$firstOfMonth.' but got '.$disbursement->firstOfMonth);
         }
     }
-
-
-
-
 }

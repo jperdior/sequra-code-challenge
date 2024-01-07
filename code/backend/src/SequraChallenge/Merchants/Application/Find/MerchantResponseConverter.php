@@ -8,7 +8,6 @@ use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
 
 final class MerchantResponseConverter
 {
-
     public function __invoke(Merchant $merchant): MerchantResponse
     {
         return new MerchantResponse(
@@ -18,5 +17,4 @@ final class MerchantResponseConverter
             $merchant->minimumMonthlyFee->value
         );
     }
-
 }

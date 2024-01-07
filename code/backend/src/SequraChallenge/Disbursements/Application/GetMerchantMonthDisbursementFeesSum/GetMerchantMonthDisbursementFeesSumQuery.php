@@ -10,7 +10,7 @@ final readonly class GetMerchantMonthDisbursementFeesSumQuery implements Query
 {
     public function __construct(
         public string $merchantReference,
-        public \DateTime  $firstDayOfMonth
+        public \DateTime $firstDayOfMonth
     ) {
     }
 }

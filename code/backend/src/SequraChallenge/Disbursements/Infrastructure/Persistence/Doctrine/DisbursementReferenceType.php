@@ -14,4 +14,3 @@ final class DisbursementReferenceType extends UlidType
         return DisbursementReference::class;
     }
 }
-

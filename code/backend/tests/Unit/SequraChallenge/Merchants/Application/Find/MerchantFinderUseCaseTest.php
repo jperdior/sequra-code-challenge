@@ -7,14 +7,13 @@ namespace App\Tests\Unit\SequraChallenge\Merchants\Application\Find;
 use App\SequraChallenge\Merchants\Application\Find\MerchantFinderUseCase;
 use App\SequraChallenge\Merchants\Domain\Entity\Merchant;
 use App\SequraChallenge\Merchants\Domain\Exception\MerchantNotFound;
-use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
 use App\SequraChallenge\Merchants\Domain\MerchantFinder;
+use App\SequraChallenge\Merchants\Domain\Repository\MerchantRepositoryInterface;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use PHPUnit\Framework\TestCase;
 
 final class MerchantFinderUseCaseTest extends TestCase
 {
-
     private MerchantFinderUseCase $useCase;
 
     private MerchantRepositoryInterface $repository;
@@ -30,9 +29,8 @@ final class MerchantFinderUseCaseTest extends TestCase
     }
 
     /** @test */
-    public function it_should_find_a_merchant(): void
+    public function itShouldFindAMerchant(): void
     {
-
         $merchant = $this->createMock(Merchant::class);
 
         $merchant->method('reference')->willReturn(
@@ -49,7 +47,7 @@ final class MerchantFinderUseCaseTest extends TestCase
     }
 
     /** @test */
-    public function it_should_not_find_a_merchant(): void
+    public function itShouldNotFindAMerchant(): void
     {
         $this->expectException(MerchantNotFound::class);
         $this->repository->expects($this->once())->method('search')->willReturn(

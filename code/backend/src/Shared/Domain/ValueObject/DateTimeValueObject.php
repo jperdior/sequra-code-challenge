@@ -6,7 +6,9 @@ namespace App\Shared\Domain\ValueObject;
 
 abstract readonly class DateTimeValueObject
 {
-    public function __construct(public \DateTime $value) {}
+    public function __construct(public \DateTime $value)
+    {
+    }
 
     public function __toString(): string
     {

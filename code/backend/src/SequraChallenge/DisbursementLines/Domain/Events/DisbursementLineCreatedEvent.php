@@ -8,7 +8,6 @@ use App\Shared\Domain\Bus\Event\DomainEvent;
 
 class DisbursementLineCreatedEvent extends DomainEvent
 {
-
     public function __construct(
         string $aggregateId,
         public readonly string $disbursementReference,
@@ -16,11 +15,9 @@ class DisbursementLineCreatedEvent extends DomainEvent
         public readonly float $feeAmount,
         string $eventId = null,
         string $occurredOn = null
-    )
-    {
+    ) {
         parent::__construct($aggregateId, $eventId, $occurredOn);
     }
-
 
     public static function fromPrimitives(string $aggregateId, array $body, string $eventId, string $occurredOn): DomainEvent
     {
