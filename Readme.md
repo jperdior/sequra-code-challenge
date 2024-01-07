@@ -31,17 +31,21 @@ For our disbursement bounded context we only need the disbursement frequency, th
 
 #### Purchases
 
-As I had experiences in the past with the "order" keyword in sql, I decided to use the word "purchase" instead, as it is more generic and it is not a reserved word in sql. As I was provided with a csv file with purchases to process, in this module there's no aggregate root and I only created a PurchaseCreated domain event and in the presentation layer a symfony command that reads the csv file and dispatches the event for each purchase. In a real world scenario the purchase created events would be dispatched by an ecommerce system or something similar.
+As I had experiences in the past with the "order" keyword in sql, I decided to use the word "purchase" instead, as it is more generic, and it is not a reserved word in sql. As I was provided with a csv file with purchases to process, in this module there's no aggregate root and I only created a PurchaseCreated domain event and in the presentation layer a symfony command that reads the csv file and dispatches the event for each purchase. In a real world scenario the purchase created events would be dispatched by an ecommerce system or something similar.
 
 #### Disbursements
 
 This module tracks the data related with the disbursements such as the total amount to disburse and the total fees. It handles 2 events: 
 - PurchaseCreated: creates or searches for the corresponding disbursement, then, knowing the disbursement and the merchant relevant data, dispatches the command CreateDisbursementLine.
-- DisbursementLineCreated: updates the disbursement with the new line and recalculates the total amount and fees. As there a high concurrency I implemented a pessimistic lock in this use case so the disbursement is locked until the amount and fees are updated.
+- DisbursementLineCreated: updates the disbursement with the new line and recalculates the total amount and fees. As there a high concurrency I implemented a pessimistic lock in this use case so the disbursement is locked until the amount and fees are updated. Also as TODO, fees and amounts from lines should be queried to make sure the calculation, as rabbitmq doesn't guarantee the non duplication of messages, or maybe in the future there's a feature request to edit the lines manually.
 
 #### DisbursementLines
 
 This module contains the use case that creates a disbursement line based on the purchase and the disbursement. To handle duplicity of purchases in the queue system, there's a disbursement line finder by purchase id domain service, if a line exists for a purchase the use case finishes without doing anything, otherwise the disbursement line is created and the event DisbursementLineCreated is dispatched.
+
+#### MerchantMonthlyFees
+
+This module tracks the monthly fees for each merchant, it handles the event DisbursementAmountAndFeeIncreased and updates the monthly fee for the corresponding merchant.
 
 ## Running the project
 

@@ -32,7 +32,7 @@ final readonly class IncreaseAmountAndFeeUseCase
             $disbursementReference = new DisbursementReference($reference);
             $disbursement = $this->disbursementFinder->__invoke($disbursementReference);
             /**
-             * @todo query all disbursement lines for this disbursement
+             * @todo query all disbursement lines for this disbursement as queues don't guarantee order and duplicate messages are possible
              */
             $disbursement->increaseAmountAndFee($amount, $fee);
             $this->repository->save($disbursement);
