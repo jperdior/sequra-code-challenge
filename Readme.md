@@ -1,6 +1,6 @@
 # Sequra challenge
 
-![unittests workflow](https://github.com/jperdior/sequra-challenge/actions/workflows/unittests.yml/badge.svg)
+![unit-tests workflow](https://github.com/jperdior/sequra-code-challenge/actions/workflows/unit-tests.yml/badge.svg)
 
 Originally this was a coding challenge for a job interview that I did with my "old" DDD template, and of course the time limit related to the nature of a code challenge.
 
