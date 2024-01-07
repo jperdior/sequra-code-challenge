@@ -1,5 +1,7 @@
 # Sequra challenge
 
+![test workflow](https://github.com/jperdior/sequra-challenge/actions/workflows/unit-tests.yml/badge.svg)
+
 Originally this was a coding challenge for a job interview that I did with my "old" DDD template, and of course the time limit related to the nature of a code challenge.
 
 The pair programming was not very successful, but as I kept learning and deepening my knowledge in DDD, CQRS and Domain Events, I decided to refactor the code and improve it at the same time I practiced with the new concepts I was learning.
