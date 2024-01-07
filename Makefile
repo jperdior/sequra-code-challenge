@@ -6,7 +6,7 @@ DOCKER_COMPOSE=docker-compose -p ${PROJECT_NAME} -f ${CURRENT_PATH}/ops/docker/d
 
 restart: stop start
 
-start: docker-build docker-up
+start: docker-build docker-up logs
 
 stop:
 	@${DOCKER_COMPOSE} down --remove-orphans
