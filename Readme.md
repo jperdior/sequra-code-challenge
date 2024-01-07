@@ -8,6 +8,9 @@ The pair programming was not very successful, but as I kept learning and deepeni
 
 [For context here's the original requirements of the challenge.](Challenge.md)
 
+## TODO
+
+Implement the pair programming task, partial order cancellation.
 
 ## Requirements
 
