@@ -41,6 +41,20 @@ class DisbursementDoctrineRepository extends AbstractOrmRepository implements Di
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function getMerchantMonthDisbursementFeesSum(MerchantReference $merchantReference, \DateTime $firstDayOfMonth): float
+    {
+        $monthStart = $firstDayOfMonth->format('Y-m-01');
+        $monthEnd = $firstDayOfMonth->format('Y-m-t');
+        $qb = $this->createQueryBuilder('d');
+        $qb->select('SUM(d.fee.value)')
+            ->where('d.merchantReference = :merchantReference')
+            ->andWhere('d.disbursedAt.value BETWEEN :monthStart AND :monthEnd')
+            ->setParameter('merchantReference', $merchantReference)
+            ->setParameter('monthStart', $monthStart)
+            ->setParameter('monthEnd', $monthEnd);
+        return (float)$qb->getQuery()->getSingleScalarResult();
+    }
+
     public function save(Disbursement $disbursement): void
     {
         $this->persist($disbursement);

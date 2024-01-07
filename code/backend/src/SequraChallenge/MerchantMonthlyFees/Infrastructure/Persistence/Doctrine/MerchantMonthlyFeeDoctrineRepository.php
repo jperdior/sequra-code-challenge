@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\MerchantMonthlyFees\Infrastructure\Persistence\Doctrine;
 
-use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeMonth;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeFirstDayOfMonth;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\MerchantMonthlyFeeRepositoryInterface;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFee;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
@@ -24,8 +24,8 @@ class MerchantMonthlyFeeDoctrineRepository extends AbstractOrmRepository impleme
         $this->persist($disbursementMonthlyFee);
     }
 
-    public function search(MerchantReference $merchantReference, MerchantMonthlyFeeMonth $month): ?MerchantMonthlyFee
+    public function search(MerchantReference $merchantReference, MerchantMonthlyFeeFirstDayOfMonth $firstDayOfMonth): ?MerchantMonthlyFee
     {
-        return $this->findOneBy(['merchantReference' => $merchantReference->value, 'month.value' => $month->value]);
+        return $this->findOneBy(['merchantReference' => $merchantReference->value, 'firstDayOfMonth.value' => $firstDayOfMonth->value]);
     }
 }

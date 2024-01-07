@@ -45,8 +45,9 @@ Feature: Purchase created event received
     And A disbursement line with purchaseId "medium" with fee 0.95, amount 99.05 and fee percentage 95 should be created
     And A disbursement line with purchaseId "large" with fee 8.5, amount 991.5 and fee percentage 85 should be created
 
+  @developing
   Scenario: First disbursement of month with minimum monthly fee:
-    Given there's a merchant monthly fee in the database with reference "bb", date "2020-01-12" and fee amount 5
+    Given there's a merchant monthly fee in the database with reference "bb", date "2020-12-01" and fee amount 5
     When I receive a purchase event with body:
       """
       {"merchantReference":"bb", "amount": 40, "createdAt": "2021-01-01T00:00:00Z"}

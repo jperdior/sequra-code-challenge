@@ -7,7 +7,7 @@
             repository-class="App\SequraChallenge\MerchantMonthlyFees\Infrastructure\Persistence\Doctrine\MerchantMonthlyFeeDoctrineRepository">
 
         <unique-constraints>
-            <unique-constraint columns="merchant_reference,month" name="unique_monthly_fee" />
+            <unique-constraint columns="merchant_reference,first_day_of_month" name="unique_monthly_fee" />
         </unique-constraints>
 
         <id name="id" column="id" type="merchant_monthly_fee_id" length="26" >
@@ -16,7 +16,7 @@
         <field name="merchantReference" column="merchant_reference" type="merchant_reference" length="26" />
 
         <embedded name="feeAmount" class="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeAmount" use-column-prefix="false" />
-        <embedded name="month" class="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeMonth" use-column-prefix="false" />
+        <embedded name="firstDayOfMonth" class="App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeFirstDayOfMonth" use-column-prefix="false" />
 
     </entity>
 </doctrine-mapping>

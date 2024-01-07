@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\SequraChallenge\Merchants\Application\Find;
 
-use App\SequraChallenge\Shared\Application\Merchants\Find\FindMerchantQuery;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
+use App\Shared\Domain\Bus\Query\QueryHandler;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use function Lambdish\Phunctional\apply;
 
 #[AsMessageHandler]
-final readonly class FindMerchantQueryHandler
+final readonly class FindMerchantQueryHandler implements QueryHandler
 {
     public function __construct(
         private MerchantFinderUseCase $merchantFinderUseCase,

@@ -11,10 +11,10 @@ final class MerchantMonthlyFee extends AggregateRoot
 {
 
     public function __construct(
-        public readonly MerchantMonthlyFeeId    $id,
-        public readonly MerchantReference       $merchantReference,
-        public readonly MerchantMonthlyFeeMonth $month,
-        private MerchantMonthlyFeeAmount        $feeAmount,
+        public readonly MerchantMonthlyFeeId              $id,
+        public readonly MerchantReference                 $merchantReference,
+        public readonly MerchantMonthlyFeeFirstDayOfMonth $firstDayOfMonth,
+        private MerchantMonthlyFeeAmount                  $feeAmount,
     )
     {
     }
@@ -22,13 +22,13 @@ final class MerchantMonthlyFee extends AggregateRoot
     final public static function create(
         string $id,
         string $merchantReference,
-        \DateTime $month
+        \DateTime $date
     ): MerchantMonthlyFee
     {
         $disbursementMonthlyFee = new self(
             new MerchantMonthlyFeeId($id),
             new MerchantReference($merchantReference),
-            new MerchantMonthlyFeeMonth($month),
+            new MerchantMonthlyFeeFirstDayOfMonth($date),
             new MerchantMonthlyFeeAmount(0)
         );
 
@@ -40,9 +40,9 @@ final class MerchantMonthlyFee extends AggregateRoot
         return $this->feeAmount;
     }
 
-    public function increaseAmount(float $newAmount): void
+    public function updateAmount(float $newAmount): void
     {
-        $this->feeAmount = $this->feeAmount->add($newAmount);
+        $this->feeAmount = new MerchantMonthlyFeeAmount($newAmount);
     }
 
 

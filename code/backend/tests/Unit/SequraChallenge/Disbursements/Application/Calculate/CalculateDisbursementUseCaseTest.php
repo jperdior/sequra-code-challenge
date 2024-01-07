@@ -8,9 +8,11 @@ use App\SequraChallenge\Disbursements\Application\Calculate\CalculateDisbursemen
 use App\SequraChallenge\Disbursements\Domain\DisbursementCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementDateCalculator;
 use App\SequraChallenge\Disbursements\Domain\DisbursementRepositoryInterface;
+use App\SequraChallenge\Disbursements\Domain\Entity\Disbursement;
 use App\SequraChallenge\Merchants\Application\Find\MerchantResponse;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantDisbursementFrequency;
 use App\SequraChallenge\Merchants\Domain\Entity\MerchantMinimumMonthlyFee;
+use App\SequraChallenge\Shared\Domain\Disbursements\DisbursementReference;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
@@ -27,8 +29,6 @@ final class CalculateDisbursementUseCaseTest extends TestCase
 
     private DisbursementDateCalculator $disbursementDateCalculator;
 
-    private DisbursementCalculator $disbursementCalculator;
-
     private CalculateDisbursementUseCase $useCase;
 
     public function setUp(): void
@@ -38,14 +38,11 @@ final class CalculateDisbursementUseCaseTest extends TestCase
         $this->queryBus = $this->createMock(QueryBus::class);
         $this->disbursementRepository = $this->createMock(DisbursementRepositoryInterface::class);
         $this->disbursementDateCalculator = new DisbursementDateCalculator();
-        $this->disbursementCalculator = new DisbursementCalculator(
-            $this->disbursementRepository
-        );
         $this->useCase = new CalculateDisbursementUseCase(
             $this->eventBus,
             $this->queryBus,
             $this->disbursementDateCalculator,
-            $this->disbursementCalculator
+            $this->disbursementRepository
         );
     }
 
@@ -61,9 +58,19 @@ final class CalculateDisbursementUseCaseTest extends TestCase
             minimumMonthlyFee: MerchantMinimumMonthlyFee::random()->value
         );
 
+        $disbursement = Disbursement::create(
+            reference: DisbursementReference::random()->value,
+            merchantReference: $merchant->reference,
+            disbursedAt: new \DateTime('2021-01-01')
+        );
+
         $this->queryBus->expects($this->once())
             ->method('ask')
             ->willReturn($merchant);
+
+        $this->disbursementRepository->expects($this->once())->method('getByMerchantAndDisbursedDate')->willReturn($disbursement);
+
+        $this->disbursementRepository->expects($this->once())->method('save');
 
         $this->eventBus->expects($this->once())->method('publish');
 
@@ -74,7 +81,45 @@ final class CalculateDisbursementUseCaseTest extends TestCase
             purchaseAmount: 100
         );
 
+    }
 
+    /**
+     * @test
+     */
+    public function it_should_create_a_non_first_of_month_disbursement(): void
+    {
+        $merchant = new MerchantResponse(
+            reference: MerchantReference::random()->value,
+            liveOn: new \DateTime('2021-01-01'),
+            disbursementFrequency: MerchantDisbursementFrequency::DAILY,
+            minimumMonthlyFee: MerchantMinimumMonthlyFee::random()->value
+        );
+
+        $firstOfMonth = Disbursement::create(
+            reference: DisbursementReference::random()->value,
+            merchantReference: $merchant->reference,
+            disbursedAt: new \DateTime('2021-01-01'),
+            firstOfMonth: true
+        );
+
+        $this->queryBus->expects($this->once())
+            ->method('ask')
+            ->willReturn($merchant);
+
+        $this->disbursementRepository->expects($this->once())->method('getByMerchantAndDisbursedDate')->willReturn(null);
+
+        $this->disbursementRepository->expects($this->once())->method('getFirstOfMonth')->willReturn($firstOfMonth);
+
+        $this->disbursementRepository->expects($this->once())->method('save');
+
+        $this->eventBus->expects($this->once())->method('publish');
+
+        $this->useCase->__invoke(
+            merchantReference: new MerchantReference($merchant->reference),
+            createdAt: new \DateTime('2021-01-01'),
+            purchaseId: 'purchase-id',
+            purchaseAmount: 100
+        );
     }
 
 }

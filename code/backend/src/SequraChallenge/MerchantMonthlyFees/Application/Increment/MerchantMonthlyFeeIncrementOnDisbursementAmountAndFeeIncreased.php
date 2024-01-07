@@ -7,7 +7,7 @@ namespace App\SequraChallenge\MerchantMonthlyFees\Application\Increment;
 use App\SequraChallenge\DisbursementLines\Domain\Events\DisbursementLineCreatedEvent;
 use App\SequraChallenge\Disbursements\Domain\Events\DisbursementAmountAndFeeIncreasedEvent;
 use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeAmount;
-use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeMonth;
+use App\SequraChallenge\MerchantMonthlyFees\Domain\Entity\MerchantMonthlyFeeFirstDayOfMonth;
 use App\SequraChallenge\Shared\Domain\Merchants\MerchantReference;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use function Lambdish\Phunctional\apply;
 
 #[AsMessageHandler]
-class MerchantMonthlyFeeIncrementOnDisbursementAmountAndFeeIncreased implements DomainEventSubscriber
+final readonly class MerchantMonthlyFeeIncrementOnDisbursementAmountAndFeeIncreased implements DomainEventSubscriber
 {
 
     public function __construct(
@@ -35,8 +35,7 @@ class MerchantMonthlyFeeIncrementOnDisbursementAmountAndFeeIncreased implements 
             $this->useCase,
             [
                 new MerchantReference($event->merchantReference),
-                new MerchantMonthlyFeeAmount($event->feeAmount),
-                new MerchantMonthlyFeeMonth($event->disbursedAt),
+                new MerchantMonthlyFeeFirstDayOfMonth($event->disbursedAt),
             ]
         );
 

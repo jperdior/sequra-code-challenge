@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SequraChallenge\Shared\Application\Merchants\Find;
+namespace App\SequraChallenge\Merchants\Application\Find;
 
 use App\Shared\Domain\Bus\Query\Query;
 

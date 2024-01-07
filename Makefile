@@ -61,6 +61,9 @@ test:
 behat:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/behat --format=progress
 
+behat-developing:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/behat --format=progress --tags=developing
+
 #CODESTYLE
 
 fix-codestyle-dry:
@@ -68,6 +71,11 @@ fix-codestyle-dry:
 
 fix-codestyle:
 	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/php-cs-fixer fix
+
+#PHPSTAN
+
+phpstan:
+	@${DOCKER_COMPOSE} exec ${BACKEND_CONTAINER} php vendor/bin/phpstan analyse src
 
 #CONSUME ORDER
 

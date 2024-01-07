@@ -72,11 +72,6 @@ class Disbursement extends AggregateRoot
         $this->monthlyFee = new DisbursementMonthlyFee($monthlyFee);
     }
 
-    public function createdAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
     public function increaseAmountAndFee(float $amount, float $fee): void
     {
         $this->increaseAmount($amount);
